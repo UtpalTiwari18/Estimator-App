@@ -1,0 +1,196 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="homeStyle.css" />
+</head>
+
+<body>
+
+  <header class="navBar">
+    <div class="navInner">
+
+      <!-- Logo (Home link) -->
+      <a href="home.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <!-- Mobile toggle -->
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <!-- Nav content -->
+      <nav class="menuArea" id="menuArea">
+
+        <!-- Left navigation -->
+        <div class="navLinks">
+
+          <!-- Our Services (Mega Dropdown) -->
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <!-- Left column -->
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <!-- Right column -->
+              <div class="megaRight">
+
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="#service-ac">AC Sanitization</a>
+                  
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-windshield">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="#service-oil">Oil Change</a>
+                  <a class="megaItem" href="#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="#service-cooling">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="#service-lighting">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="#service-rim">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="#service-body-kit">Body Kit Installation</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Business signup -->
+          <a class="menuLink businessLink" href="#businessSignup">Sign up as Business</a>
+
+        </div>
+
+        <!-- Right actions (customers) -->
+        <div class="navActions">
+          <a class="actionLink" href="#customerSignup">
+            <button class="primaryButton" type="button">Sign up</button>
+          </a>
+          <a class="secondaryLink" href="#customerLogin">Log in</a>
+        </div>
+
+      </nav>
+
+    </div>
+  </header>
+
+
+<section class="heroSection">
+
+  <h1 class="heroTagline">
+    Where <span class="highlightCare">car care</span> meets
+    <span class="highlightConvenience">convenience</span>.
+  </h1>
+
+<div class="heroImageWrapper">
+    <img src="./images/EstimatorLogoBgRemoved.png" alt="Estimator Logo" class="heroLogo">
+</div>
+  
+  <!-- Search Bar (Below Image) -->
+  <form class="heroSearch" id="heroSearchForm">
+    <div class="searchBar">
+
+      <input
+        type="text"
+        class="searchInput"
+        id="keywordInput"
+        placeholder="Tell us what service your vehicle needs!"
+      />
+
+      <div class="divider"></div>
+
+      <input
+        type="text"
+        class="zipInput"
+        id="zipInput"
+        placeholder="Zip Code"
+        maxlength="5"
+        inputmode="numeric"
+      />
+
+      <button class="searchButton" type="submit">
+        Search
+      </button>
+
+    </div>
+  </form>
+
+</section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

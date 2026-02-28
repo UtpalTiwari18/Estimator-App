@@ -1,0 +1,475 @@
+/* =========================================================
+   homeStyle.css  (Red/Black/White/Grey theme + Montserrat)
+   Includes: navbar right alignment + mega dropdown stays open
+========================================================= */
+
+/* ===============================
+   GLOBAL RESET + FONT
+================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: "Montserrat", sans-serif;
+  background: #ffffff;
+  color: #111;
+}
+
+button,
+input,
+textarea,
+select,
+a {
+  font-family: "Montserrat", sans-serif;
+}
+
+
+/* ===============================
+   NAVBAR
+================================*/
+.navBar {
+  width: 100%;
+  background: #000000;
+  border-bottom: 2px solid #c40000;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Navbar container */
+.navInner {
+  max-width: 1300px;
+  margin: auto;
+  padding: 16px 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ===============================
+   LOGO
+================================*/
+.logoArea {
+  text-decoration: none;
+}
+
+.logoText {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+
+/* ===============================
+   MENU AREA (RIGHT)
+================================*/
+.menuArea {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* pushes links/actions to the right */
+}
+
+
+/* ===============================
+   NAV LINKS
+================================*/
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.menuLink {
+  text-decoration: none;
+  color: #e5e5e5;
+  font-weight: 500;
+  font-size: 15px;
+  transition: 0.25s;
+}
+
+.menuLink:hover {
+  color: #ff2b2b;
+}
+
+
+/* ===============================
+   ACTION BUTTONS
+================================*/
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 35px;
+}
+
+.primaryButton {
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: none;
+  background: #c40000;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.primaryButton:hover {
+  background: #ff1a1a;
+}
+
+.secondaryLink {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+.secondaryLink:hover {
+  color: #ff2b2b;
+}
+
+
+/* ===============================
+   MOBILE MENU BUTTON
+================================*/
+.menuButton {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menuLine {
+  width: 25px;
+  height: 3px;
+  background: white;
+}
+
+
+/* ===============================
+   SERVICES MENU
+================================*/
+.servicesMenu {
+  position: relative;
+}
+
+.servicesLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dropdownIcon {
+  font-size: 12px;
+}
+
+
+/* ===============================
+   MEGA DROPDOWN  (FIXED: stays open on hover)
+================================*/
+.megaDropdown {
+  position: absolute;
+  top: 50px;
+  left: 0;
+
+  width: 760px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+
+  display: none;          /* default hidden */
+  padding: 22px;
+  gap: 25px;
+}
+
+/* ✅ Keep dropdown open when hovering trigger OR dropdown area */
+.servicesMenu:hover .megaDropdown,
+.servicesMenu:focus-within .megaDropdown {
+  display: flex;
+}
+
+/* ✅ Optional: also supports click-open if you add .open class via JS */
+.servicesMenu.open .megaDropdown {
+  display: flex;
+}
+
+/* ✅ Invisible "hover bridge" so it won't close while moving into it */
+.megaDropdown::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -12px;
+  height: 12px;
+}
+
+
+/* LEFT PANEL */
+.megaLeft {
+  width: 260px;
+  border-right: 1px solid #ddd;
+}
+
+.megaSectionTitle {
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #c40000;
+}
+
+.megaCategory {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 6px;
+
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+  transition: 0.2s;
+}
+
+.megaCategory:hover,
+.megaCategory.isActive {
+  background: #f2f2f2;
+  color: #c40000;
+}
+
+
+/* RIGHT PANEL */
+.megaRight {
+  flex: 1;
+}
+
+.megaPanel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.megaPanel.isVisible {
+  display: flex;
+}
+
+.megaItem {
+  text-decoration: none;
+  color: #222;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.megaItem:hover {
+  color: #c40000;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================*/
+@media (max-width: 900px) {
+
+  .menuButton {
+    display: flex;
+  }
+
+  .menuArea {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #111;
+
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+
+    display: none;
+  }
+
+  .menuArea.active {
+    display: flex;
+  }
+
+  .navLinks {
+    flex-direction: column;
+    width: 100%;
+    gap: 14px;
+  }
+
+  .navActions {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+
+  /* Mega dropdown becomes stacked */
+  .megaDropdown {
+    position: static;
+    width: 100%;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .megaLeft {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+
+  .megaSectionTitle {
+    color: #ff2b2b;
+  }
+
+  .megaCategory {
+    color: #e5e5e5;
+  }
+
+  .megaCategory:hover,
+  .megaCategory.isActive {
+    background: #1a1a1a;
+    color: #ff2b2b;
+  }
+
+  .megaItem {
+    color: #e5e5e5;
+  }
+
+  .megaItem:hover {
+    color: #ff2b2b;
+  }
+
+  /* No need for hover bridge on mobile stacked dropdown */
+  .megaDropdown::before {
+    display: none;
+  }
+}
+/* ===============================
+   HERO SECTION (Thumbtack-style)
+================================*/
+.heroSection {
+  background: #f3f3f3;
+  text-align: center;
+
+  padding: 80px 20px 90px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Headline */
+.heroTagline {
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 800;
+  color: #111;
+  line-height: 1.05;
+  margin-bottom: 35px;
+}
+
+/* Word colors */
+.highlightCare {
+  color: #c40000;
+}
+.highlightConvenience {
+  color: #555;
+}
+
+
+.heroImageWrapper {
+  width: min(850px, 90vw);
+  height: 420px;          /* keeps SAME layout size */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;       /* hides overflow when image enlarges */
+}
+
+.heroLogo {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;    /* keeps proportions */
+  transform: scale(1.35); /* 🔥 enlarge image visually */
+
+  transition: transform 0.3s ease;
+}
+
+/* Wrap */
+.heroSearch {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Search bar container */
+.searchBar {
+  width: min(980px, 92vw);
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+
+  box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+}
+
+/* Main keyword input */
+.searchInput {
+  flex: 1;
+  padding: 18px 20px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #222;
+}
+
+/* Divider line */
+.divider {
+  width: 1px;
+  background: #e6e6e6;
+}
+
+/* Zip input */
+.zipInput {
+  width: 140px;
+  padding: 18px 16px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+
+  background: #f7f7f7;
+  text-align: center;
+}
+
+/* Search button (Red theme) */
+.searchButton {
+  padding: 18px 30px;
+  border: none;
+  background: #c40000;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.searchButton:hover {
+  background: #ff1a1a;
+}
