@@ -1,7 +1,3 @@
-/* =========================================================
-   homeStyle.css  (Red/Black/White/Grey theme + Montserrat)
-   Includes: navbar right alignment + mega dropdown stays open
-========================================================= */
 
 /* ===============================
    GLOBAL RESET + FONT
@@ -72,7 +68,7 @@ a {
 .menuArea {
   display: flex;
   align-items: center;
-  margin-left: auto; /* pushes links/actions to the right */
+  margin-left: auto; 
 }
 
 
@@ -185,23 +181,23 @@ a {
   border-radius: 10px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 
-  display: none;          /* default hidden */
+  display: none;          
   padding: 22px;
   gap: 25px;
 }
 
-/* ✅ Keep dropdown open when hovering trigger OR dropdown area */
+/* Keep dropdown open when hovering trigger OR dropdown area */
 .servicesMenu:hover .megaDropdown,
 .servicesMenu:focus-within .megaDropdown {
   display: flex;
 }
 
-/* ✅ Optional: also supports click-open if you add .open class via JS */
+/* Optional: also supports click-open if you add .open class via JS */
 .servicesMenu.open .megaDropdown {
   display: flex;
 }
 
-/* ✅ Invisible "hover bridge" so it won't close while moving into it */
+/*  Invisible "hover bridge" so it won't close while moving into it */
 .megaDropdown::before {
   content: "";
   position: absolute;
@@ -350,7 +346,7 @@ a {
     color: #ff2b2b;
   }
 
-  /* No need for hover bridge on mobile stacked dropdown */
+  
   .megaDropdown::before {
     display: none;
   }
@@ -403,7 +399,7 @@ a {
   height: 100%;
 
   object-fit: contain;    /* keeps proportions */
-  transform: scale(1.35); /* 🔥 enlarge image visually */
+  transform: scale(1.35); /* enlarge image visually */
 
   transition: transform 0.3s ease;
 }
@@ -472,4 +468,233 @@ a {
 
 .searchButton:hover {
   background: #ff1a1a;
+}
+
+/* ===============================
+   TESTIMONIALS SECTION 
+================================ */
+.testimonialsSection{
+  width: min(980px, 92vw);
+  margin: 40px auto;   
+  padding: 16px;
+
+  border-radius: 18px;
+  background: linear-gradient(
+      180deg,
+      rgba(196,0,0,0.06),
+      rgba(0,0,0,0.02)
+  );
+
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.testimonialsHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.testimonialsHeader h2{
+  margin: 0;
+  font-size: clamp(18px, 2.1vw, 24px);
+  font-weight: 900;
+  color:#111;
+  letter-spacing: -0.4px;
+}
+
+.testimonialsHeader p{
+  margin: 0;
+  color:#444;
+  font-size: 14px;
+  opacity: 0.9;
+  max-width: 520px;
+}
+
+/* Slider layout */
+.testimonialSlider{
+  display:grid;
+  grid-template-columns: 54px 1fr 54px;
+  gap: 12px;
+  align-items: center;
+}
+
+.sliderViewport{
+  overflow:hidden;
+  border-radius: 16px;
+}
+
+.sliderTrack{
+  display:flex;
+  transition: transform 450ms ease;
+  will-change: transform;
+}
+
+/* Card */
+.testimonialCard{
+  min-width: 100%;
+  padding: 18px 18px 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+}
+
+/* Speech-bubble tail */
+.testimonialCard::after{
+  content:"";
+  position:absolute;
+  left: 34px;
+  bottom: -10px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  transform: rotate(45deg);
+}
+
+.cardTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom: 10px;
+}
+
+.starRating{
+  color: #c40000;
+  font-size: 15px;
+  letter-spacing: 2px;
+  user-select:none;
+}
+
+.verifyBadge{
+  font-size: 12px;
+  font-weight: 800;
+  color:#111;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.06);
+  border: 1px dashed rgba(0,0,0,0.22);
+}
+
+.testimonialQuote{
+  margin: 0 0 14px;
+  color:#111;
+  line-height: 1.6;
+  font-size: 16px;
+  position: relative;
+  padding-left: 26px;
+}
+
+.testimonialQuote::before{
+  content: "“";
+  position:absolute;
+  left: 0;
+  top: -6px;
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(196,0,0,0.55);
+}
+
+.userInfo{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.userAvatar{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  font-weight: 900;
+  color:#fff;
+  background: linear-gradient(135deg, #111, #c40000);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  user-select:none;
+}
+
+.userName{
+  font-weight: 900;
+  color:#111;
+  line-height: 1.1;
+}
+
+.userMeta{
+  color:#555;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* Nav buttons */
+.navButton{
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #111;
+  color: #fff;
+  font-size: 22px;
+  cursor:pointer;
+  transition: transform 140ms ease, background 140ms ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.navButton:hover{
+  transform: translateY(-2px);
+  background: #c40000;
+}
+
+.navButton:active{
+  transform: translateY(0px) scale(0.98);
+}
+
+/* Dots */
+.sliderDots{
+  display:flex;
+  justify-content:center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.dotButton{
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.12);
+  cursor:pointer;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.dotButton.active{
+  background: #c40000;
+  border-color: rgba(196,0,0,0.6);
+  transform: scale(1.25);
+}
+
+/* Mobile */
+@media (max-width: 720px){
+  .testimonialsHeader{
+    flex-direction: column;
+    align-items:flex-start;
+  }
+  .testimonialSlider{
+    grid-template-columns: 44px 1fr 44px;
+  }
+  .navButton{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+  .testimonialQuote{
+    font-size: 15px;
+  }
 }
