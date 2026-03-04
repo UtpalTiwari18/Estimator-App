@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Global styles (header + footer + overall theme) -->
+  <link rel="stylesheet" href="homeStyle.css" />
+
+  <!-- Page-only styles (signup form + image layout) -->
+  <link rel="stylesheet" href="customerSignup.css" />
+
+  <title>Customer Sign Up | Estimator</title>
+</head>
+
+<body>
+
+  <!-- HEADER (UNCHANGED) -->
+  <header class="navBar">
+    <div class="navInner">
+
+      <!-- Logo (Home link) -->
+      <a href="home.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <!-- Mobile toggle -->
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <!-- Nav content -->
+      <nav class="menuArea" id="menuArea">
+
+        <!-- Left navigation -->
+        <div class="navLinks">
+
+          <!-- Our Services (Mega Dropdown) -->
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <!-- Left column -->
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <!-- Right column -->
+              <div class="megaRight">
+
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="#service-ac">AC Sanitization</a>
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-windshield">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="#service-oil">Oil Change</a>
+                  <a class="megaItem" href="#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="#service-cooling">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="#service-lighting">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="#service-rim">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="#service-body-kit">Body Kit Installation</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Business signup -->
+          <a class="menuLink businessLink" href="#businessSignup">Sign up as Business</a>
+
+        </div>
+
+        <!-- Right actions (customers) -->
+        <div class="navActions">
+          <a class="actionLink" href="#customerSignup">
+            <button class="primaryButton" type="button">Sign up</button>
+          </a>
+          <a class="secondaryLink" href="#customerLogin">Log in</a>
+        </div>
+
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ===============================
+       PAGE CONTENT (FORM + IMAGE)
+  ================================ -->
+ <main class="authPageWrap" id="customerSignup">
+  <section class="authCard authCardWide">
+
+    <!-- Top header (full width) -->
+    <div class="authTop">
+      <div class="authHeader">
+        <h1>Create your customer account</h1>
+        <p>Get quotes faster, save favorites, and book trusted local car services.</p>
+      </div>
+    </div>
+
+    <!-- Two-column content -->
+    <div class="authContent">
+
+      <!-- LEFT: image -->
+      <aside class="authImageCol" aria-hidden="true">
+        <img class="authIllustrationLarge" src="images/customerSignupBgRemoved.png" alt="" />
+      </aside>
+
+      <!-- RIGHT: form -->
+      <div class="authFormCol">
+        <form id="customerSignupForm" novalidate>
+          <div class="authGrid">
+
+            <div class="formField">
+              <label for="csFirstName">First name</label>
+              <input id="csFirstName" name="firstName" type="text" autocomplete="given-name" required />
+            </div>
+
+            <div class="formField">
+              <label for="csLastName">Last name</label>
+              <input id="csLastName" name="lastName" type="text" autocomplete="family-name" required />
+            </div>
+
+            <div class="formField full">
+              <label for="csEmail">Email</label>
+              <input id="csEmail" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="formField">
+              <label for="csPhone">Phone</label>
+              <input id="csPhone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555" />
+            </div>
+
+            <div class="formField">
+              <label for="csZip">Zip code</label>
+              <input id="csZip" name="zip" type="text" inputmode="numeric" maxlength="5" placeholder="75001" />
+            </div>
+
+            <div class="formField full">
+              <label for="csPassword">Password</label>
+              <input id="csPassword" name="password" type="password" minlength="8" autocomplete="new-password" required />
+              <small class="hint">Minimum 8 characters.</small>
+            </div>
+
+            <div class="formField full">
+              <label for="csConfirm">Confirm password</label>
+              <input id="csConfirm" name="confirm" type="password" minlength="8" autocomplete="new-password" required />
+            </div>
+
+            <div class="formField full checkboxRow">
+              <input id="csTerms" name="terms" type="checkbox" required />
+              <label for="csTerms">I agree to the Terms and Privacy Policy</label>
+            </div>
+
+            <div class="formField full formActions">
+              <button class="primaryButton formSubmit" type="submit">Create account</button>
+            </div>
+
+            <div class="formField full">
+              <p class="formAlt">
+                Already have an account?
+                <a class="altLink" href="#customerLogin">Log in</a>
+              </p>
+              <div class="formMessage" id="customerSignupMessage" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+  <!-- Signup form validation (kept inline so you don't need another JS file) -->
+  <script>
+    (function () {
+      const form = document.getElementById("customerSignupForm");
+      const msg = document.getElementById("customerSignupMessage");
+
+      function showMsg(type, text) {
+        if (!msg) return;
+        msg.className = "formMessage " + type;
+        msg.textContent = text;
+      }
+
+      if (!form) return;
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const firstName = (document.getElementById("csFirstName") || {}).value?.trim?.() || "";
+        const lastName = (document.getElementById("csLastName") || {}).value?.trim?.() || "";
+        const email = (document.getElementById("csEmail") || {}).value?.trim?.() || "";
+        const phone = (document.getElementById("csPhone") || {}).value?.trim?.() || "";
+        const zip = (document.getElementById("csZip") || {}).value?.trim?.() || "";
+        const pass = (document.getElementById("csPassword") || {}).value || "";
+        const confirm = (document.getElementById("csConfirm") || {}).value || "";
+        const terms = (document.getElementById("csTerms") || {}).checked || false;
+
+        if (!firstName || !lastName || !email || !pass || !confirm) {
+          showMsg("err", "Please fill in all required fields.");
+          return;
+        }
+
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+          showMsg("err", "Please enter a valid email address.");
+          return;
+        }
+
+        if (pass.length < 8) {
+          showMsg("err", "Password must be at least 8 characters.");
+          return;
+        }
+
+        if (pass !== confirm) {
+          showMsg("err", "Passwords do not match.");
+          return;
+        }
+
+        if (!terms) {
+          showMsg("err", "Please accept the Terms and Privacy Policy.");
+          return;
+        }
+
+        // Demo only (until backend is connected)
+        const customer = { firstName, lastName, email, phone, zip, createdAt: new Date().toISOString() };
+        localStorage.setItem("estimator_customer_signup_demo", JSON.stringify(customer));
+
+        showMsg("ok", "Account created (demo). Next step: connect this to your database.");
+        form.reset();
+      });
+    })();
+  </script>
+
+  <!-- FOOTER (UNCHANGED) -->
+  <footer class="mainFooter">
+
+    <div class="footerContainer">
+
+      <!-- Brand -->
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
+
+      <!-- Services -->
+      <div class="footerColumn">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Exterior Detailing</a></li>
+          <li><a href="#">Interior Cleaning</a></li>
+          <li><a href="#">Oil Change</a></li>
+          <li><a href="#">Brake Service</a></li>
+          <li><a href="#">Tire Repair</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Become a Business</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+
+  </footer>
+
+  <!-- Existing JS (navbar + mega menu logic) -->
+  <script src="homeScript.js"></script>
+
+</body>
+
+</html>
