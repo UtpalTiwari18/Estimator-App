@@ -788,3 +788,325 @@ a {
     margin:auto;
   }
 }
+/* ===============================
+   POPULAR SERVICES
+================================ */
+.popularServicesSection {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 40px 0 70px;
+}
+
+.popularServicesHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.popularServicesHeader h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.popularServicesHeader h2 span {
+  color: #d60000;
+}
+
+.popularServicesHeader p {
+  font-size: 1.05rem;
+  color: #000;
+  font-weight: 500;
+}
+
+.popularServicesSlider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.popularServicesViewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.popularServicesTrack {
+  display: flex;
+  gap: 22px;
+  transition: transform 0.4s ease;
+}
+
+.popularServiceCard {
+  min-width: calc(33.333% - 15px);
+  flex: 0 0 calc(33.333% - 15px);
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ececec;
+  transition: 0.3s ease;
+}
+
+.popularServiceCard:hover {
+  transform: translateY(-6px);
+}
+
+.popularServiceImageWrap {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.popularServiceImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.popularServiceContent {
+  padding: 20px;
+}
+
+.popularServiceContent h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.popularServiceContent p {
+  font-size: 0.97rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.serviceNavButton {
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: #0a0a0a;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.serviceNavButton:hover {
+  background: #d60000;
+}
+
+.serviceDots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.serviceDots button {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: none;
+  background: #cfcfcf;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.serviceDots button.active {
+  background: #d60000;
+  transform: scale(1.1);
+}
+
+@media (max-width: 992px) {
+  .popularServiceCard {
+    min-width: calc(50% - 11px);
+    flex: 0 0 calc(50% - 11px);
+  }
+}
+
+@media (max-width: 640px) {
+  .popularServiceCard {
+    min-width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .popularServiceImageWrap {
+    height: 200px;
+  }
+
+  .serviceNavButton {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+}
+/* ===============================
+   BUSINESS PROMO SECTION (UPDATED)
+================================ */
+.businessPromoSection {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 30px 0 80px;
+}
+
+.businessPromoWrapper {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: stretch;
+
+  background: linear-gradient(135deg, #fff6f6 0%, #ffffff 100%);
+  border: 1px solid #ececec;
+  border-radius: 30px;
+  padding: 45px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+}
+
+/* LEFT SIDE */
+.businessPromoBadge {
+  display: inline-block;
+  background: #ffe5e5;
+  color: #d60000;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.businessPromoLeft h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.businessPromoLeft h2 span {
+  color: #d60000;
+}
+
+.businessPromoLeft > p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 28px;
+  max-width: 650px;
+}
+
+.businessPromoPoints {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.businessPromoPoint {
+  background: #fff;
+  border: 1px solid #efefef;
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
+}
+
+.businessPromoPoint h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+.businessPromoPoint p {
+  color: #444;
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.businessPromoBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #d60000;
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: 0.25s ease;
+  box-shadow: 0 10px 25px rgba(214, 0, 0, 0.22);
+}
+
+.businessPromoBtn:hover {
+  background: #b80000;
+  transform: translateY(-2px);
+}
+
+/* ===============================
+   RIGHT IMAGE (🔥 FIXED PROPERLY)
+================================ */
+.businessPromoRight {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.businessPromoCard {
+  width: 630px;
+  margin-top: 230px;
+  height: 500px;
+
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.businessPromoImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+}
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 992px) {
+  .businessPromoWrapper {
+    grid-template-columns: 1fr;
+    padding: 32px;
+  }
+
+  .businessPromoCard {
+    height: 300px;
+  }
+}
+
+@media (max-width: 640px) {
+  .businessPromoSection {
+    width: min(1200px, calc(100% - 20px));
+    padding: 20px 0 60px;
+  }
+
+  .businessPromoWrapper {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .businessPromoLeft h2 {
+    font-size: 1.8rem;
+  }
+
+  .businessPromoCard {
+    height: 1000px; 
+}

@@ -154,3 +154,90 @@ if (testimonialSlider && sliderTrack && sliderDots) {
   renderSlider();
   startAutoSlide();
 }
+
+/* ===============================
+   POPULAR SERVICES SLIDER
+================================ */
+(function () {
+  const track = document.getElementById("popularServicesTrack");
+  const prevBtn = document.getElementById("servicePrevButton");
+  const nextBtn = document.getElementById("serviceNextButton");
+  const dotsWrap = document.getElementById("serviceDots");
+
+  if (!track || !prevBtn || !nextBtn || !dotsWrap) return;
+
+  const cards = Array.from(track.children);
+  let index = 0;
+  let cardsPerView = getCardsPerView();
+
+  function getCardsPerView() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 992) return 2;
+    return 3;
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, cards.length - cardsPerView);
+  }
+
+  function updateSlider() {
+    cardsPerView = getCardsPerView();
+
+    const cardStyle = window.getComputedStyle(cards[0]);
+    const cardWidth = cards[0].offsetWidth;
+    const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+    const moveX = index * (cardWidth + gap);
+
+    track.style.transform = `translateX(-${moveX}px)`;
+
+    updateDots();
+  }
+
+  function createDots() {
+    dotsWrap.innerHTML = "";
+    const totalDots = getMaxIndex() + 1;
+
+    for (let i = 0; i < totalDots; i++) {
+      const dot = document.createElement("button");
+      if (i === index) dot.classList.add("active");
+
+      dot.addEventListener("click", function () {
+        index = i;
+        updateSlider();
+      });
+
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const dots = dotsWrap.querySelectorAll("button");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+    });
+  }
+
+  prevBtn.addEventListener("click", function () {
+    if (index > 0) {
+      index--;
+      updateSlider();
+    }
+  });
+
+  nextBtn.addEventListener("click", function () {
+    if (index < getMaxIndex()) {
+      index++;
+      updateSlider();
+    }
+  });
+
+  window.addEventListener("resize", function () {
+    cardsPerView = getCardsPerView();
+    if (index > getMaxIndex()) index = getMaxIndex();
+    createDots();
+    updateSlider();
+  });
+
+  createDots();
+  updateSlider();
+})();
