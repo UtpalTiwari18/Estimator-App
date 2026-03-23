@@ -1,0 +1,241 @@
+/* ====================================
+   BUSINESS SIGNUP PAGE ONLY
+==================================== */
+
+.authPageWrap {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 40px 0 20px;
+}
+
+.authCardWide {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  padding: 28px;
+}
+
+.businessCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.authTop {
+  margin-bottom: 12px;
+}
+
+.authHeader h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111;
+}
+
+.authHeader p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.authContent {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 22px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.authImageCol {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.businessIllustrationCard {
+  width: 100%;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.authIllustrationLarge {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+  background: transparent;
+  display: block;
+}
+
+.authFormCol {
+  padding-top: 6px;
+}
+
+.authGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.formField.full {
+  grid-column: 1 / -1;
+}
+
+.formField label {
+  font-weight: 700;
+  font-size: 13px;
+  color: #222;
+}
+
+.optionalText {
+  font-weight: 600;
+  font-size: 12px;
+  color: #777;
+}
+
+.formField input,
+.formField select {
+  padding: 13px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fff;
+  font-family: inherit;
+  color: #111;
+}
+
+.formField input:focus,
+.formField select:focus {
+  border-color: #c40000;
+  box-shadow: 0 0 0 4px rgba(196, 0, 0, 0.10);
+}
+
+.formField select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.hint {
+  font-size: 12px;
+  color: #777;
+  margin-top: 2px;
+}
+
+.checkboxRow {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.checkboxRow input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.checkboxRow label {
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.formActions {
+  margin-top: 8px;
+}
+
+.formSubmit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.formAlt {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.altLink {
+  color: #c40000;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.altLink:hover {
+  text-decoration: underline;
+}
+
+.formMessage {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.formMessage.ok {
+  display: block;
+  background: rgba(0, 170, 90, 0.10);
+  border: 1px solid rgba(0, 170, 90, 0.25);
+  color: #0b6b3c;
+}
+
+.formMessage.err {
+  display: block;
+  background: rgba(196, 0, 0, 0.08);
+  border: 1px solid rgba(196, 0, 0, 0.20);
+  color: #8d0000;
+}
+
+@media (max-width: 992px) {
+  .authContent {
+    grid-template-columns: 1fr;
+  }
+
+  .businessIllustrationCard {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .authPageWrap {
+    width: min(94%, 1200px);
+    padding: 24px 0 12px;
+  }
+
+  .authCardWide {
+    padding: 20px;
+  }
+
+  .authHeader h1 {
+    font-size: 24px;
+  }
+
+  .authGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .businessIllustrationCard {
+    min-height: 280px;
+    padding: 18px;
+  }
+}
