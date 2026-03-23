@@ -19,25 +19,32 @@
   <header class="navBar">
     <div class="navInner">
 
+      <!-- Logo (Home link) -->
       <a href="home.html" class="logoArea">
         <h2 class="logoText">Estimator</h2>
       </a>
 
+      <!-- Mobile toggle -->
       <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
         <span class="menuLine"></span>
         <span class="menuLine"></span>
         <span class="menuLine"></span>
       </button>
 
+      <!-- Nav content -->
       <nav class="menuArea" id="menuArea">
+
+        <!-- Left navigation -->
         <div class="navLinks">
 
+          <!-- Our Services (Mega Dropdown) -->
           <div class="servicesMenu" id="servicesMenu">
             <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
               Our Services <span class="dropdownIcon">▾</span>
             </a>
 
             <div class="megaDropdown" id="megaDropdown">
+              <!-- Left column -->
               <div class="megaLeft">
                 <div class="megaSectionTitle">Workshop Services</div>
 
@@ -62,72 +69,87 @@
                 </button>
 
                 <button class="megaCategory" type="button" data-panel="upgradePanel">
-                  Upgrades & Installations <span class="chevronIcon">›</span>
+                  Customization & Upgrades <span class="chevronIcon">›</span>
                 </button>
               </div>
 
+              <!-- Right column -->
               <div class="megaRight">
+
                 <div class="megaPanel isVisible" id="interiorPanel">
-                  <a class="megaItem" href="#">Interior Detailing</a>
-                  <a class="megaItem" href="#">Deep Vacuum & Shampoo</a>
-                  <a class="megaItem" href="#">Leather Conditioning</a>
-                  <a class="megaItem" href="#">Odor Removal</a>
-                  <a class="megaItem" href="#">Seat Stain Removal</a>
+                  <a class="megaItem" href="#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="#service-ac">AC Sanitization</a>
+                  
                 </div>
 
                 <div class="megaPanel" id="exteriorPanel">
-                  <a class="megaItem" href="#">Car Wash</a>
-                  <a class="megaItem" href="#">Wax & Polish</a>
-                  <a class="megaItem" href="#">Ceramic Coating</a>
-                  <a class="megaItem" href="#">Scratch Removal</a>
-                  <a class="megaItem" href="#">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-windshield">Windshield Repair</a>
                 </div>
 
                 <div class="megaPanel" id="mechanicalPanel">
-                  <a class="megaItem" href="#">Oil Change</a>
-                  <a class="megaItem" href="#">Brake Service</a>
-                  <a class="megaItem" href="#">Engine Diagnostics</a>
-                  <a class="megaItem" href="#">Suspension Repair</a>
-                  <a class="megaItem" href="#">Battery Replacement</a>
+                  <a class="megaItem" href="#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="#service-oil">Oil Change</a>
+                  <a class="megaItem" href="#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="#service-cooling">Cooling System Repair</a>
                 </div>
 
                 <div class="megaPanel" id="electricalPanel">
-                  <a class="megaItem" href="#">ECU Diagnostics</a>
-                  <a class="megaItem" href="#">Sensor Replacement</a>
-                  <a class="megaItem" href="#">Wiring Repair</a>
-                  <a class="megaItem" href="#">Alternator Service</a>
-                  <a class="megaItem" href="#">Starter Repair</a>
+                  <a class="megaItem" href="#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="#service-lighting">Lighting Installation</a>
                 </div>
 
                 <div class="megaPanel" id="tirePanel">
-                  <a class="megaItem" href="#">Tire Replacement</a>
-                  <a class="megaItem" href="#">Wheel Alignment</a>
-                  <a class="megaItem" href="#">Wheel Balancing</a>
-                  <a class="megaItem" href="#">Tire Rotation</a>
-                  <a class="megaItem" href="#">Rim Repair</a>
+                  <a class="megaItem" href="#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="#service-rim">Rim Repair</a>
                 </div>
 
                 <div class="megaPanel" id="upgradePanel">
-                  <a class="megaItem" href="#">Audio Installation</a>
-                  <a class="megaItem" href="#">Reverse Camera Setup</a>
-                  <a class="megaItem" href="#">Window Tinting</a>
-                  <a class="megaItem" href="#">Performance Tuning</a>
-                  <a class="megaItem" href="#">Body Kit Installation</a>
+                  <a class="megaItem" href="#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="#service-body-kit">Body Kit Installation</a>
                 </div>
+
               </div>
             </div>
           </div>
 
-          <a class="menuLink businessLink" href="#businessSignup">Sign up as Business</a>
+          <!-- Business signup -->
+          <a class="menuLink businessLink" href="businessSignUp.html">Sign up as Business</a>
+
         </div>
 
+        <!-- Right actions (customers) -->
         <div class="navActions">
           <a class="actionLink" href="customerSignup.html">
             <button class="primaryButton" type="button">Sign up</button>
           </a>
           <a class="secondaryLink" href="customerLogin.html">Log in</a>
         </div>
+
       </nav>
+
     </div>
   </header>
 
