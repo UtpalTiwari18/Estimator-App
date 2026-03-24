@@ -1,0 +1,235 @@
+.authPageWrap {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+  padding: 42px 0 28px;
+}
+
+.authCardLogin {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+  padding: 28px;
+}
+
+.authTop {
+  margin-bottom: 16px;
+}
+
+.authHeader h1 {
+  margin: 0 0 6px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #111;
+}
+
+.authHeader p {
+  margin: 0;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* layout */
+.authContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* image */
+.authImageCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginImageCard {
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 24px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.loginSideImage {
+  width: 100%;
+  max-width: 470px;
+  border-radius: 24px;
+  display: block;
+}
+
+/* form side */
+.authFormCol {
+  padding: 0 4px;
+}
+
+/* slogan box matches customer size */
+.loginSloganBox {
+  width: 100%;
+  margin: -6px 0 20px;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 60%, #d81818 100%);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
+  position: relative;
+}
+
+.loginSloganBox h2 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.sloganBlack {
+  color: #fff;
+}
+
+.loginSloganBox p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 0;
+}
+
+/* form */
+.authGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.loginGrid .full {
+  grid-column: 1 / -1;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formField label {
+  font-weight: 700;
+  color: #111;
+}
+
+.formField input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: 0.2s ease;
+  background: #fff;
+}
+
+.formField input:focus {
+  border-color: #d81818;
+  box-shadow: 0 0 0 4px rgba(216, 24, 24, 0.1);
+}
+
+.optionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkboxWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Fix checkbox alignment */
+.checkboxWrap input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  transform: translateY(1px);
+  cursor: pointer;
+}
+
+/* Fix text alignment */
+.checkboxWrap span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.forgotLink {
+  color: #d81818;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.formSubmit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.formAlt {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+.altLink {
+  color: #d81818;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.altLink:hover {
+  text-decoration: underline;
+}
+
+.formMessage {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: none;
+}
+
+.formMessage.ok {
+  display: block;
+  background: #e6fff0;
+  color: #0b6b3c;
+}
+
+.formMessage.err {
+  display: block;
+  background: #ffe6e6;
+  color: #8f1010;
+}
+
+@media (max-width: 980px) {
+  .authContent {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .authCardLogin {
+    padding: 18px;
+  }
+
+  .loginSloganBox h2 {
+    font-size: 26px;
+  }
+
+  .optionsRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

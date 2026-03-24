@@ -35,7 +35,7 @@
   line-height:1.6;
 }
 
-/* Two-column layout like your screenshot */
+/* Two-column layout */
 .authContent{
   display:grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -50,13 +50,18 @@
   align-items:flex-start;
   justify-content:center;
   padding-top: 6px;
+  border-radius:20px;      /* 👈 rounded container */
+  overflow:hidden;         /* 👈 prevents overflow */
 }
 
+/* IMAGE */
 .authIllustrationLarge{
   width: 100%;
   max-width: 520px;
   height: auto;
   display:block;
+  border-radius:20px;      /* 👈 rounded image */
+  box-shadow:0 12px 30px rgba(0,0,0,0.12); /* 👈 premium feel */
 }
 
 /* RIGHT form column */
@@ -124,7 +129,7 @@
   cursor:pointer;
 }
 
-/* Button full width like screenshot */
+/* Button */
 .formActions{
   margin-top: 8px;
 }

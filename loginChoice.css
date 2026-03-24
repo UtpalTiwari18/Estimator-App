@@ -1,0 +1,196 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(196, 0, 0, 0.08), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.05), transparent 24%),
+    linear-gradient(135deg, #f7f7f8 0%, #efeff1 50%, #fafafb 100%);
+  color: #111;
+}
+
+.loginChoicePage {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.loginChoiceCard {
+  width: 100%;
+  max-width: 980px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+  padding: 42px 34px;
+}
+
+.loginChoiceTop {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.eyebrowText {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c40000;
+}
+
+.loginChoiceTop h1 {
+  margin: 0 0 12px;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #111;
+}
+
+.loginChoiceSubtitle {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #666;
+}
+
+.loginChoiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.roleCard {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+}
+
+.roleCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(196, 0, 0, 0.35);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.10);
+}
+
+.roleCard:focus-visible {
+  outline: 3px solid rgba(196, 0, 0, 0.18);
+  outline-offset: 3px;
+}
+
+.roleIcon {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fbe9ea;
+  font-size: 30px;
+  margin-bottom: 18px;
+}
+
+.businessRoleCard .roleIcon {
+  background: #f1f1f3;
+}
+
+.roleCard h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+}
+
+.roleCard p {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #5f5f68;
+}
+
+.roleAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.roleCard:hover .roleAction {
+  background: #c40000;
+}
+
+.loginChoiceBottom {
+  margin-top: 26px;
+  text-align: center;
+}
+
+.loginChoiceBottom p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.inlineLink {
+  color: #c40000;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .loginChoiceCard {
+    padding: 34px 20px;
+  }
+
+  .loginChoiceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .roleCard {
+    padding: 24px 20px;
+  }
+
+  .roleCard h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .loginChoicePage {
+    padding: 28px 12px;
+  }
+
+  .loginChoiceCard {
+    border-radius: 22px;
+    padding: 28px 16px;
+  }
+
+  .roleIcon {
+    width: 62px;
+    height: 62px;
+    font-size: 26px;
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Log In | Estimator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="homeStyle.css" />
+  <link rel="stylesheet" href="loginChoice.css" />
+</head>
+<body>
+
+  <header class="navBar">
+    <div class="navInner">
+      <a href="home.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+        <div class="navLinks">
+          <a class="menuLink businessLink" href="businessSignUp.html">Sign up as Business</a>
+        </div>
+
+        <div class="navActions">
+          <a class="actionLink" href="customerSignup.html">
+            <button class="primaryButton" type="button">Sign up</button>
+          </a>
+          <a class="secondaryLink" href="loginChoice.html">Log in</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="loginChoicePage">
+    <section class="loginChoiceCard">
+
+      <div class="loginChoiceTop">
+        <p class="eyebrowText">Welcome back</p>
+        <h1>Choose how you want to log in</h1>
+        <p class="loginChoiceSubtitle">
+          Select your account type to continue to the correct login page.
+        </p>
+      </div>
+
+      <div class="loginChoiceGrid">
+
+        <button class="roleCard" id="customerLoginCard" type="button">
+          <div class="roleIcon">👤</div>
+          <h2>Customer Login</h2>
+          <p>
+            Log in to request services, view quotes, and manage your bookings.
+          </p>
+          <span class="roleAction">Continue as Customer</span>
+        </button>
+
+        <button class="roleCard businessRoleCard" id="businessLoginCard" type="button">
+          <div class="roleIcon">🏪</div>
+          <h2>Business Login</h2>
+          <p>
+            Log in to manage your shop profile, leads, services, and customer requests.
+          </p>
+          <span class="roleAction">Continue as Business</span>
+        </button>
+
+      </div>
+
+      <div class="loginChoiceBottom">
+        <p>
+          Don’t have an account?
+          <a href="customerSignup.html" class="inlineLink">Customer sign up</a>
+          or
+          <a href="businessSignUp.html" class="inlineLink">Business sign up</a>
+        </p>
+      </div>    
+
+    </section>
+  </main>
+
+  <script src="loginChoice.js"></script>
+</body>
+</html>

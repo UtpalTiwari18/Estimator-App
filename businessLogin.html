@@ -5,17 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Montserrat Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- Global styles (header + footer + overall theme) -->
   <link rel="stylesheet" href="homeStyle.css" />
+  <link rel="stylesheet" href="businessLogin.css" />
 
-  <!-- Page-only styles (signup form + image layout) -->
-  <link rel="stylesheet" href="customerSignup.css" />
-
-  <title>Customer Sign Up | Estimator</title>
+  <title>Business Log In | Estimator</title>
 </head>
 
 <body>
@@ -157,102 +153,102 @@
     </div>
   </header>
 
-  <!-- ===============================
-       PAGE CONTENT (FORM + IMAGE)
-  ================================ -->
- <main class="authPageWrap" id="customerSignup">
-  <section class="authCard authCardWide">
+  <main class="authPageWrap">
+    <section class="authCard authCardLogin">
 
-    <!-- Top header (full width) -->
-    <div class="authTop">
-      <div class="authHeader">
-        <h1>Create your customer account</h1>
-        <p>Get quotes faster, save favorites, and book trusted local car services.</p>
+      <div class="authTop">
+        <div class="authHeader">
+          <h1>Business Log In</h1>
+          <p>
+            Access your Estimator business account, manage leads, update services,
+            and respond to customer requests.
+          </p>
+        </div>
       </div>
-    </div>
 
-    <!-- Two-column content -->
-    <div class="authContent">
+      <div class="authContent">
 
-      <!-- LEFT: image -->
-      <aside class="authImageCol" aria-hidden="true">
-        <img class="authIllustrationLarge" src="images/customerSignup.png" alt="" />
-      </aside>
-
-      <!-- RIGHT: form -->
-      <div class="authFormCol">
-        <form id="customerSignupForm" novalidate>
-          <div class="authGrid">
-
-            <div class="formField">
-              <label for="csFirstName">First name</label>
-              <input id="csFirstName" name="firstName" type="text" autocomplete="given-name" required />
-            </div>
-
-            <div class="formField">
-              <label for="csLastName">Last name</label>
-              <input id="csLastName" name="lastName" type="text" autocomplete="family-name" required />
-            </div>
-
-            <div class="formField full">
-              <label for="csEmail">Email</label>
-              <input id="csEmail" name="email" type="email" autocomplete="email" required />
-            </div>
-
-            <div class="formField">
-              <label for="csPhone">Phone</label>
-              <input id="csPhone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555" />
-            </div>
-
-            <div class="formField">
-              <label for="csZip">Zip code</label>
-              <input id="csZip" name="zip" type="text" inputmode="numeric" maxlength="5" placeholder="75001" />
-            </div>
-
-            <div class="formField full">
-              <label for="csPassword">Password</label>
-              <input id="csPassword" name="password" type="password" minlength="8" autocomplete="new-password" required />
-              <small class="hint">Minimum 8 characters.</small>
-            </div>
-
-            <div class="formField full">
-              <label for="csConfirm">Confirm password</label>
-              <input id="csConfirm" name="confirm" type="password" minlength="8" autocomplete="new-password" required />
-            </div>
-
-            <div class="formField full checkboxRow">
-              <input id="csTerms" name="terms" type="checkbox" required />
-              <label for="csTerms">I agree to the Terms and Privacy Policy</label>
-            </div>
-
-            <div class="formField full formActions">
-              <button class="primaryButton formSubmit" type="submit">Create account</button>
-            </div>
-
-            <div class="formField full">
-              <p class="formAlt">
-                Already have an account?
-                <a class="altLink" href="customerLogin.html">Log in</a>
-              </p>
-              <div class="formMessage" id="customerSignupMessage" aria-live="polite"></div>
-            </div>
-
+        <aside class="authImageCol">
+          <div class="loginImageCard">
+            <img src="./images/businessLogin.png" alt="Estimator business login illustration" class="loginSideImage">
           </div>
-        </form>
+        </aside>
+
+        <div class="authFormCol">
+
+          <div class="loginSloganBox">
+            <h2>
+              <span class="sloganBlack">Let’s fill your garage with bookings.</span>
+            </h2>
+            <p>More jobs. Less waiting. Keep your bays busy every day.</p>
+          </div>
+
+          <form id="businessLoginForm" novalidate>
+            <div class="authGrid loginGrid">
+
+              <div class="formField full">
+                <label for="blEmail">Business Email</label>
+                <input
+                  id="blEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="Enter your business email"
+                  required
+                />
+              </div>
+
+              <div class="formField full">
+                <label for="blPassword">Password</label>
+                <input
+                  id="blPassword"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+
+              <div class="formField full optionsRow">
+                <label class="checkboxWrap" for="blRemember">
+                  <input id="blRemember" type="checkbox" />
+                  <span>Remember me</span>
+                </label>
+
+                <a class="forgotLink" href="forgotPassword.html">Forgot password?</a>
+              </div>
+
+              <div class="formField full formActions">
+                <button class="primaryButton formSubmit" type="submit">Log In</button>
+              </div>
+
+              <div class="formField full">
+                <div class="formMessage" id="businessLoginMessage" aria-live="polite"></div>
+              </div>
+
+              <div class="formField full">
+                <p class="formAlt">
+                  Don’t have a business account?
+                  <a class="altLink" href="businessSignUp.html">Sign up as Business</a>
+                </p>
+                <p class="formAlt">
+                  Looking for customer login?
+                  <a class="altLink" href="customerLogin.html">Customer Log In</a>
+                </p>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
       </div>
+    </section>
+  </main>
 
-    </div>
-  </section>
-</main>
-
-
-
-  <!-- FOOTER (UNCHANGED) -->
   <footer class="mainFooter">
-
     <div class="footerContainer">
 
-      <!-- Brand -->
       <div class="footerBrand">
         <h2 class="footerLogo">Estimator</h2>
         <p>
@@ -261,7 +257,6 @@
         </p>
       </div>
 
-      <!-- Services -->
       <div class="footerColumn">
         <h3>Services</h3>
         <ul>
@@ -273,7 +268,6 @@
         </ul>
       </div>
 
-      <!-- Company -->
       <div class="footerColumn">
         <h3>Company</h3>
         <ul>
@@ -284,7 +278,6 @@
         </ul>
       </div>
 
-      <!-- Support -->
       <div class="footerColumn">
         <h3>Support</h3>
         <ul>
@@ -297,17 +290,12 @@
 
     </div>
 
-    <!-- Bottom Bar -->
     <div class="footerBottom">
       <p>© 2026 Estimator. All Rights Reserved.</p>
     </div>
-
   </footer>
 
-  <!-- Existing JS (navbar + mega menu logic) -->
   <script src="homeScript.js"></script>
-  <script src="customerSignUp.js"></script>
-
+  <script src="businessLogin.js"></script>
 </body>
-
 </html>
