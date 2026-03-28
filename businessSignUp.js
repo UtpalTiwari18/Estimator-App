@@ -1,14 +1,11 @@
 (function () {
   const form = document.getElementById("businessSignupForm");
-  const messageBox = document.getElementById("businessSignupMessage");
+  const msg = document.getElementById("businessSignupMessage");
 
-  if (!form || !messageBox) {
-    return;
-  }
-
-  function showMessage(type, text) {
-    messageBox.className = "formMessage " + type;
-    messageBox.textContent = text;
+  function showMsg(type, text) {
+    if (!msg) return;
+    msg.className = "formMessage " + type;
+    msg.textContent = text;
   }
 
   function isValidEmail(emailValue) {
@@ -24,26 +21,26 @@
     return /^\d{5}$/.test(zipValue);
   }
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  if (!form) return;
 
-    const businessName = document.getElementById("bsBusinessName").value.trim();
-    const ownerName = document.getElementById("bsOwnerName").value.trim();
-    const businessType = document.getElementById("bsBusinessType").value.trim();
-    const email = document.getElementById("bsEmail").value.trim();
-    const phone = document.getElementById("bsPhone").value.trim();
-    const website = document.getElementById("bsWebsite").value.trim();
-    const services = document.getElementById("bsServices").value.trim();
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-    const addressLine1 = document.getElementById("bsAddressLine1").value.trim();
-    const addressLine2 = document.getElementById("bsAddressLine2").value.trim();
-    const city = document.getElementById("bsCity").value.trim();
-    const state = document.getElementById("bsState").value.trim();
-    const zip = document.getElementById("bsZip").value.trim();
-
-    const password = document.getElementById("bsPassword").value;
-    const confirmPassword = document.getElementById("bsConfirm").value;
-    const termsAccepted = document.getElementById("bsTerms").checked;
+    const businessName = document.getElementById("bsBusinessName")?.value.trim() || "";
+    const ownerName = document.getElementById("bsOwnerName")?.value.trim() || "";
+    const businessType = document.getElementById("bsBusinessType")?.value.trim() || "";
+    const email = document.getElementById("bsEmail")?.value.trim() || "";
+    const phone = document.getElementById("bsPhone")?.value.trim() || "";
+    const website = document.getElementById("bsWebsite")?.value.trim() || "";
+    const services = document.getElementById("bsServices")?.value.trim() || "";
+    const addressLine1 = document.getElementById("bsAddressLine1")?.value.trim() || "";
+    const addressLine2 = document.getElementById("bsAddressLine2")?.value.trim() || "";
+    const city = document.getElementById("bsCity")?.value.trim() || "";
+    const state = document.getElementById("bsState")?.value.trim() || "";
+    const zip = document.getElementById("bsZip")?.value.trim() || "";
+    const password = document.getElementById("bsPassword")?.value || "";
+    const confirmPassword = document.getElementById("bsConfirm")?.value || "";
+    const terms = document.getElementById("bsTerms")?.checked || false;
 
     if (
       !businessName ||
@@ -59,64 +56,76 @@
       !password ||
       !confirmPassword
     ) {
-      showMessage("err", "Please fill in all required fields.");
+      showMsg("err", "Please fill in all required fields.");
       return;
     }
 
     if (!isValidEmail(email)) {
-      showMessage("err", "Please enter a valid business email address.");
+      showMsg("err", "Please enter a valid business email address.");
       return;
     }
 
     if (!isValidPhone(phone)) {
-      showMessage("err", "Please enter a valid phone number.");
+      showMsg("err", "Please enter a valid phone number.");
       return;
     }
 
     if (!isValidZip(zip)) {
-      showMessage("err", "Please enter a valid 5-digit zip code.");
+      showMsg("err", "Please enter a valid 5-digit zip code.");
       return;
     }
 
     if (password.length < 8) {
-      showMessage("err", "Password must be at least 8 characters.");
+      showMsg("err", "Password must be at least 8 characters.");
       return;
     }
 
     if (password !== confirmPassword) {
-      showMessage("err", "Passwords do not match.");
+      showMsg("err", "Passwords do not match.");
       return;
     }
 
-    if (!termsAccepted) {
-      showMessage("err", "Please accept the Terms of Service and Privacy Policy.");
+    if (!terms) {
+      showMsg("err", "Please accept the Terms of Service and Privacy Policy.");
       return;
     }
 
-    const businessData = {
-      businessName: businessName,
-      ownerName: ownerName,
-      businessType: businessType,
-      email: email,
-      phone: phone,
-      website: website,
-      services: services,
-      address: {
-        addressLine1: addressLine1,
-        addressLine2: addressLine2,
-        city: city,
-        state: state,
-        zip: zip
-      },
-      createdAt: new Date().toISOString()
-    };
+    try {
+      const res = await fetch("http://localhost:5000/api/business/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          businessName,
+          ownerName,
+          businessType,
+          email,
+          phone,
+          website,
+          services,
+          addressLine1,
+          addressLine2,
+          city,
+          state,
+          zip,
+          password,
+          terms
+        })
+      });
 
-    localStorage.setItem(
-      "estimator_business_signup_demo",
-      JSON.stringify(businessData)
-    );
+      const data = await res.json();
 
-    showMessage("ok", "Business account created successfully.");
-    form.reset();
+      if (!res.ok) {
+        showMsg("err", data.message || "Something went wrong");
+        return;
+      }
+
+      showMsg("ok", "Business account created successfully 🎉");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      showMsg("err", "Server not reachable");
+    }
   });
 })();
