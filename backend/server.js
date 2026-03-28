@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
   res.send("Estimator backend is running.");
 });
 
+// registering new customers
 app.post("/api/customers/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, phone, zip, password, terms } = req.body;
@@ -74,6 +75,66 @@ app.post("/api/customers/signup", async (req, res) => {
     });
   }
 });
+
+// validating customers login 
+
+app.post("/api/customers/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required."
+      });
+    }
+
+    const [users] = await pool.execute(
+      `SELECT id, first_name, last_name, email, password_hash
+       FROM customers
+       WHERE email = ?
+       LIMIT 1`,
+      [email]
+    );
+
+    if (users.length === 0) {
+      return res.status(401).json({
+        success: false,
+        message: "No account found with this email."
+      });
+    }
+
+    const customer = users[0];
+
+    const passwordMatch = await bcrypt.compare(password, customer.password_hash);
+
+    if (!passwordMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful.",
+      customerId: customer.id,
+      firstName: customer.first_name,
+      lastName: customer.last_name,
+      email: customer.email
+    });
+  } catch (error) {
+    console.error("Customer login error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error. Please try again later."
+    });
+  }
+});
+
+
+
+// registering new business owners
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -1,7 +1,9 @@
 CREATE DATABASE IF NOT EXISTS estimatorDb;
 
+# database for estimatorApp
 USE estimatorDb;
 
+# creating table for new customers
 CREATE TABLE IF NOT EXISTS customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100),
@@ -14,9 +16,14 @@ CREATE TABLE IF NOT EXISTS customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+# show the table for new customers
 select * from customers;
 
-CREATE TABLE business_users (
+# empty the table 
+truncate table customers;
+
+# creating table for business ownwers
+CREATE TABLE IF NOT EXISTS business_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     businessName VARCHAR(150) NOT NULL,
     ownerName VARCHAR(150) NOT NULL,
@@ -34,4 +41,8 @@ CREATE TABLE business_users (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+# table for business owners
 select * from business_users;
+
+# delete everything from business_users
+truncate table business_users;
