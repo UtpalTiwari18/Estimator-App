@@ -233,3 +233,24 @@ app.post("/api/business/signup", async (req, res) => {
     });
   }
 });
+
+
+// getting customer count from the database
+app.get("/api/customers/count", async (req, res) => {
+  try {
+    const [rows] = await pool.execute(
+      "SELECT COUNT(*) AS total FROM customers"
+    );
+
+    return res.json({
+      success: true,
+      total: rows[0].total
+    });
+  } catch (error) {
+    console.error("Count error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch count"
+    });
+  }
+});

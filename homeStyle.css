@@ -1111,3 +1111,62 @@ a {
   .businessPromoCard {
     height: 1000px; 
 }
+
+/* ===============================
+   CUSTOMER COUNT
+================================ */
+.customerCountWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.customerCountText {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(196, 0, 0, 0.14);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+  line-height: 1;
+}
+
+.customerCountIcon {
+  color: #c40000;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+#customerCountNumber {
+  color: #c40000 !important;
+  font-size: 18px;
+  font-weight: 800;
+  display: inline-block;
+  line-height: 1;
+}
+
+.customerCountLabel {
+  color: #222;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .customerCountText {
+    font-size: 13px;
+    padding: 9px 14px;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    line-height: 1.4;
+  }
+
+  #customerCountNumber {
+    font-size: 16px;
+  }
+}

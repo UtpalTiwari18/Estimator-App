@@ -241,3 +241,38 @@ if (testimonialSlider && sliderTrack && sliderDots) {
   createDots();
   updateSlider();
 })();
+
+async function loadCustomerCount() {
+  try {
+    const res = await fetch("http://localhost:5000/api/customers/count");
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById("customerCountNumber").textContent = data.total;
+    }
+  } catch (error) {
+    console.error("Failed to load customer count:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadCustomerCount);
+
+async function loadCustomerCount() {
+  try {
+    const res = await fetch("http://localhost:5000/api/customers/count");
+    const data = await res.json();
+
+    if (!data.success) return;
+
+    const numberEl = document.getElementById("customerCountNumber");
+    if (!numberEl) return;
+
+    numberEl.textContent = data.total;
+    numberEl.style.color = "#c40000";
+    numberEl.style.fontWeight = "800";
+  } catch (error) {
+    console.error("Failed to load customer count:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadCustomerCount);
