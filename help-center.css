@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f7fb;
+}
+
+.navBar {
+  padding: 20px;
+  background: #111;
+  color: white;
+}
+
+.logoText {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page {
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 25px;
+}
+
+p {
+  color: #444;
+  line-height: 1.6;
+}
