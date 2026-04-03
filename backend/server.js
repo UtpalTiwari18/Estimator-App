@@ -14,7 +14,10 @@ app.get("/", (req, res) => {
   res.send("Estimator backend is running.");
 });
 
-// registering new customers
+
+// ===============================
+// CUSTOMER SIGNUP
+// ===============================
 app.post("/api/customers/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, phone, zip, password, terms } = req.body;
@@ -76,8 +79,10 @@ app.post("/api/customers/signup", async (req, res) => {
   }
 });
 
-// validating customers login 
 
+// ===============================
+// CUSTOMER LOGIN (UPDATED)
+// ===============================
 app.post("/api/customers/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -100,7 +105,7 @@ app.post("/api/customers/login", async (req, res) => {
     if (users.length === 0) {
       return res.status(401).json({
         success: false,
-        message: "No account found with this email."
+        message: "Invalid email or password."
       });
     }
 
@@ -115,6 +120,7 @@ app.post("/api/customers/login", async (req, res) => {
       });
     }
 
+    // 🔥 THIS IS WHAT YOU NEED FOR FRONTEND
     return res.status(200).json({
       success: true,
       message: "Login successful.",
@@ -123,23 +129,20 @@ app.post("/api/customers/login", async (req, res) => {
       lastName: customer.last_name,
       email: customer.email
     });
+
   } catch (error) {
     console.error("Customer login error:", error);
     return res.status(500).json({
       success: false,
-      message: "Server error. Please try again later."
+      message: "Server error."
     });
   }
 });
 
 
-
-// registering new business owners
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-
+// ===============================
+// BUSINESS SIGNUP
+// ===============================
 app.post("/api/business/signup", async (req, res) => {
   try {
     const {
@@ -235,7 +238,9 @@ app.post("/api/business/signup", async (req, res) => {
 });
 
 
-// getting customer count from the database
+// ===============================
+// CUSTOMER COUNT
+// ===============================
 app.get("/api/customers/count", async (req, res) => {
   try {
     const [rows] = await pool.execute(
@@ -253,4 +258,12 @@ app.get("/api/customers/count", async (req, res) => {
       message: "Failed to fetch count"
     });
   }
+});
+
+
+// ===============================
+// START SERVER (LAST)
+// ===============================
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

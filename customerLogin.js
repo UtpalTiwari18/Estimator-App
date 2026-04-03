@@ -52,19 +52,23 @@
         return;
       }
 
-      localStorage.setItem("estimatorCustomerAuth", JSON.stringify({
-        customerId: data.customerId,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        remember: remember,
-        loggedInAt: new Date().toISOString()
-      }));
+      localStorage.setItem(
+        "estimatorCustomerAuth",
+        JSON.stringify({
+          customerId: data.customerId,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          remember: remember,
+          loggedInAt: new Date().toISOString()
+        })
+      );
 
       showMsg("ok", data.message || "Login successful.");
 
-      // optional redirect
-      // window.location.href = "customerDashboard.html";
+      setTimeout(function () {
+        window.location.href = "customerHomePage.html";
+      }, 500);
     } catch (error) {
       console.error("Customer login error:", error);
       showMsg("err", "Server not reachable.");
