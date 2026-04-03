@@ -2,6 +2,8 @@
   const form = document.getElementById("customerLoginForm");
   const msg = document.getElementById("customerLoginMessage");
 
+  const apiBaseUrl = "http://127.0.0.1:5000";
+
   function showMsg(type, text) {
     if (!msg) return;
     msg.className = "formMessage " + type;
@@ -33,7 +35,7 @@
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/customers/login", {
+      const res = await fetch(`${apiBaseUrl}/api/customers/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -55,7 +57,7 @@
       localStorage.setItem(
         "estimatorCustomerAuth",
         JSON.stringify({
-          customerId: data.customerId,
+          id: data.customerId,
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,

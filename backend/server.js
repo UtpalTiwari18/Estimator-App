@@ -81,7 +81,7 @@ app.post("/api/customers/signup", async (req, res) => {
 
 
 // ===============================
-// CUSTOMER LOGIN (UPDATED)
+// CUSTOMER LOGIN
 // ===============================
 app.post("/api/customers/login", async (req, res) => {
   try {
@@ -120,7 +120,6 @@ app.post("/api/customers/login", async (req, res) => {
       });
     }
 
-    // 🔥 THIS IS WHAT YOU NEED FOR FRONTEND
     return res.status(200).json({
       success: true,
       message: "Login successful.",
@@ -129,12 +128,96 @@ app.post("/api/customers/login", async (req, res) => {
       lastName: customer.last_name,
       email: customer.email
     });
-
   } catch (error) {
     console.error("Customer login error:", error);
     return res.status(500).json({
       success: false,
       message: "Server error."
+    });
+  }
+});
+
+
+// ===============================
+// GET CUSTOMER PROFILE
+// ===============================
+app.get("/api/customers/profile/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+
+    const [rows] = await pool.execute(
+      `SELECT id, first_name, last_name, email, phone, zip_code
+       FROM customers
+       WHERE id = ?
+       LIMIT 1`,
+      [customerId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Customer not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      customer: rows[0]
+    });
+  } catch (error) {
+    console.error("Fetch profile error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch profile."
+    });
+  }
+});
+
+
+// ===============================
+// UPDATE CUSTOMER PROFILE
+// ===============================
+app.put("/api/customers/profile/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const { firstName, lastName, phone, zipCode } = req.body;
+
+    if (!firstName || !lastName) {
+      return res.status(400).json({
+        success: false,
+        message: "First name and last name are required."
+      });
+    }
+
+    const [result] = await pool.execute(
+      `UPDATE customers
+       SET first_name = ?, last_name = ?, phone = ?, zip_code = ?
+       WHERE id = ?`,
+      [
+        firstName,
+        lastName,
+        phone || null,
+        zipCode || null,
+        customerId
+      ]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Customer not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully."
+    });
+  } catch (error) {
+    console.error("Update profile error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update profile."
     });
   }
 });
@@ -262,7 +345,7 @@ app.get("/api/customers/count", async (req, res) => {
 
 
 // ===============================
-// START SERVER (LAST)
+// START SERVER
 // ===============================
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
