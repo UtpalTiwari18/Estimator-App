@@ -1,0 +1,397 @@
+.reviewsPage {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.reviewsHero {
+  background: linear-gradient(180deg, #f3f3f3 0%, #ededed 100%);
+  padding: 70px 20px 45px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.reviewsHeroContent {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.reviewsEyebrow {
+  color: #c40000;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.reviewsHeroContent h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 16px;
+  line-height: 1.08;
+}
+
+.reviewsSubtext {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #4a4a4a;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.reviewOptionsSection {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 50px 0 20px;
+}
+
+.reviewOptionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.reviewOptionCard {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 34px 30px;
+  border: 1px solid #ebebeb;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.25s ease;
+}
+
+.reviewOptionCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.reviewIconWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  color: #fff;
+  font-size: 30px;
+  margin-bottom: 22px;
+}
+
+.reviewOptionCard h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+.reviewOptionCard p {
+  color: #444;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.reviewHighlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 26px;
+}
+
+.reviewHighlights li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 12px;
+  color: #222;
+  font-weight: 500;
+}
+
+.reviewHighlights li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  color: #c40000;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.reviewCardButton,
+.submitReviewButton,
+.selectBusinessButton {
+  border: none;
+  background: #c40000;
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  border-radius: 12px;
+  padding: 15px 24px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reviewCardButton:hover,
+.submitReviewButton:hover,
+.selectBusinessButton:hover {
+  background: #ff1a1a;
+}
+
+.reviewFormSection {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 20px 0 70px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.reviewFormCard {
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+}
+
+.reviewFormHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.formMiniTitle {
+  color: #c40000;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.reviewFormHeader h2 {
+  font-size: 1.9rem;
+  color: #111;
+  font-weight: 800;
+}
+
+.closeFormButton {
+  border: none;
+  background: #111;
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  flex-shrink: 0;
+}
+
+.closeFormButton:hover {
+  background: #c40000;
+}
+
+.reviewForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.formGroup label {
+  font-weight: 700;
+  color: #111;
+  font-size: 14px;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  border: 1px solid #dcdcdc;
+  border-radius: 14px;
+  padding: 15px 16px;
+  font-size: 15px;
+  color: #111;
+  outline: none;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: #c40000;
+  box-shadow: 0 0 0 3px rgba(196, 0, 0, 0.08);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.formActions {
+  margin-top: 6px;
+}
+
+.reviewMessage {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 6px;
+  min-height: 20px;
+}
+
+.reviewMessage.success {
+  color: #0a7a25;
+}
+
+.reviewMessage.error {
+  color: #c40000;
+}
+
+.businessSearchBox {
+  background: #fafafa;
+  border: 1px solid #ececec;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.searchTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 18px;
+}
+
+.searchActionRow {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.businessResultsList {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.businessResultCard {
+  border: 1px solid #e7e7e7;
+  border-radius: 16px;
+  padding: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.businessResultInfo h4 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.businessResultInfo p {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.businessServiceTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.businessServiceTag {
+  background: rgba(196, 0, 0, 0.08);
+  color: #c40000;
+  border: 1px solid rgba(196, 0, 0, 0.15);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.selectedBusinessCard {
+  background: #f9f9f9;
+  border: 1px solid #ebebeb;
+  border-left: 5px solid #c40000;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.selectedBusinessCard h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.selectedBusinessCard p {
+  color: #444;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .reviewOptionsGrid,
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .reviewFormHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .closeFormButton {
+    align-self: flex-end;
+  }
+
+  .businessResultCard {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .reviewOptionCard,
+  .reviewFormCard,
+  .businessSearchBox {
+    padding: 22px 18px;
+  }
+
+  .reviewsHero {
+    padding: 55px 16px 35px;
+  }
+
+  .reviewOptionCard h2,
+  .reviewFormHeader h2 {
+    font-size: 1.45rem;
+  }
+
+  .reviewCardButton,
+  .submitReviewButton,
+  .selectBusinessButton {
+    width: 100%;
+  }
+}

@@ -57,6 +57,7 @@
       localStorage.setItem(
         "estimatorCustomerAuth",
         JSON.stringify({
+          customerId: data.customerId,
           id: data.customerId,
           firstName: data.firstName,
           lastName: data.lastName,
