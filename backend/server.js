@@ -120,6 +120,7 @@ app.post("/api/customers/login", async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Login successful.",
+      id: customer.id,
       customerId: customer.id,
       firstName: customer.first_name,
       lastName: customer.last_name,
@@ -649,6 +650,171 @@ app.get("/api/reviews/app/customer/:customerId", async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to fetch customer app reviews."
+    });
+  }
+});
+
+// ===============================
+// ADD VEHICLE
+// ===============================
+app.post("/api/vehicles", async (req, res) => {
+  try {
+    const {
+      customerId,
+      make,
+      model,
+      year,
+      color,
+      licensePlate,
+      vin,
+      mileage
+    } = req.body;
+
+    if (!customerId || !make || !model) {
+      return res.status(400).json({
+        success: false,
+        message: "Customer, make, and model are required."
+      });
+    }
+
+    const [result] = await pool.execute(
+      `INSERT INTO vehicles
+       (customer_id, make, model, year, color, license_plate, vin, mileage)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        customerId,
+        make,
+        model,
+        year || null,
+        color || null,
+        licensePlate || null,
+        vin || null,
+        mileage || null
+      ]
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Vehicle added successfully.",
+      vehicleId: result.insertId
+    });
+  } catch (error) {
+    console.error("Add vehicle error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
+// ===============================
+// GET VEHICLES BY CUSTOMER
+// ===============================
+app.get("/api/vehicles/:customerId", async (req, res) => {
+  try {
+    const customerId = req.params.customerId;
+
+    const [rows] = await pool.execute(
+      `SELECT *
+       FROM vehicles
+       WHERE customer_id = ?
+       ORDER BY id DESC`,
+      [customerId]
+    );
+
+    return res.status(200).json({
+      success: true,
+      vehicles: rows
+    });
+  } catch (error) {
+    console.error("Fetch vehicles error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
+// ===============================
+// UPDATE VEHICLE
+// ===============================
+app.put("/api/vehicles/:id", async (req, res) => {
+  try {
+    const vehicleId = req.params.id;
+    const {
+      make,
+      model,
+      year,
+      color,
+      licensePlate,
+      vin,
+      mileage
+    } = req.body;
+
+    const [result] = await pool.execute(
+      `UPDATE vehicles
+       SET make = ?, model = ?, year = ?, color = ?, license_plate = ?, vin = ?, mileage = ?
+       WHERE id = ?`,
+      [
+        make,
+        model,
+        year || null,
+        color || null,
+        licensePlate || null,
+        vin || null,
+        mileage || null,
+        vehicleId
+      ]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Vehicle not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Vehicle updated successfully."
+    });
+  } catch (error) {
+    console.error("Update vehicle error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
+// ===============================
+// DELETE VEHICLE
+// ===============================
+app.delete("/api/vehicles/:id", async (req, res) => {
+  try {
+    const vehicleId = req.params.id;
+
+    const [result] = await pool.execute(
+      "DELETE FROM vehicles WHERE id = ?",
+      [vehicleId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Vehicle not found."
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Vehicle deleted successfully."
+    });
+  } catch (error) {
+    console.error("Delete vehicle error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
     });
   }
 });

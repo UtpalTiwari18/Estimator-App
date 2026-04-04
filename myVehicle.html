@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customerHomePage.css" />
+  <link rel="stylesheet" href="myVehicle.css" />
+
+  <title>My Vehicles | Estimator</title>
+</head>
+<body>
+
+  <!-- =========================
+      SAME HEADER AS HOMEPAGE
+  ========================== -->
+  <header class="navBar">
+    <div class="navInner">
+
+      <a href="customerHomePage.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+        <div class="navLinks">
+
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <div class="megaRight">
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="#">Interior Detailing</a>
+                  <a class="megaItem" href="#">Seat Cleaning</a>
+                  <a class="megaItem" href="#">Carpet Shampoo</a>
+                  <a class="megaItem" href="#">Dashboard Restoration</a>
+                  <a class="megaItem" href="#">Odor Removal</a>
+                  <a class="megaItem" href="#">AC Sanitization</a>
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="#">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#">Paint Correction</a>
+                  <a class="megaItem" href="#">Ceramic Coating</a>
+                  <a class="megaItem" href="#">Wax & Polish</a>
+                  <a class="megaItem" href="#">Scratch Removal</a>
+                  <a class="megaItem" href="#">Headlight Restoration</a>
+                  <a class="megaItem" href="#">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="#">Engine Diagnostics</a>
+                  <a class="megaItem" href="#">Oil Change</a>
+                  <a class="megaItem" href="#">Brake Service</a>
+                  <a class="megaItem" href="#">Suspension Repair</a>
+                  <a class="megaItem" href="#">Battery Replacement</a>
+                  <a class="megaItem" href="#">Transmission Service</a>
+                  <a class="megaItem" href="#">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="#">ECU Diagnostics</a>
+                  <a class="megaItem" href="#">Sensor Replacement</a>
+                  <a class="megaItem" href="#">Wiring Repair</a>
+                  <a class="megaItem" href="#">Alternator Service</a>
+                  <a class="megaItem" href="#">Starter Repair</a>
+                  <a class="megaItem" href="#">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="#">Tire Replacement</a>
+                  <a class="megaItem" href="#">Wheel Alignment</a>
+                  <a class="megaItem" href="#">Wheel Balancing</a>
+                  <a class="megaItem" href="#">Tire Rotation</a>
+                  <a class="megaItem" href="#">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="#">Audio Installation</a>
+                  <a class="megaItem" href="#">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#">Window Tinting</a>
+                  <a class="megaItem" href="#">Performance Tuning</a>
+                  <a class="megaItem" href="#">Body Kit Installation</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="menuLink" href="savedBusinesses.html">Saved Businesses</a>
+          <a class="menuLink" href="customerReviewPage.html">Leave Reviews</a>
+          <a class="menuLink submitRequestLink" href="submitRequest.html">Submit a Request</a>
+        </div>
+
+        <div class="navActions">
+          <div class="userMenu" id="userMenu">
+            <button class="userButton" id="userButton" type="button">
+              Welcome, <span id="userName">John</span>
+              <span class="userArrow">▾</span>
+            </button>
+
+            <div class="userDropdown" id="userDropdown">
+              <a href="customerProfile.html">Profile</a>
+              <a href="myVehicle.html">My Vehicle</a>
+              <a href="myReviews.html">My Reviews</a>
+              <div class="dropdownDivider"></div>
+              <a href="#" id="logoutBtn">Log out</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================
+      MY VEHICLE PAGE
+  ========================== -->
+  <main class="vehiclePage">
+    <section class="vehicleHero">
+      <div class="vehicleHeroText">
+        <p class="vehicleMiniText">Customer Garage</p>
+        <h1>My Vehicles</h1>
+        <p class="vehicleSubText">
+          Add and manage your vehicles so future service requests are faster, easier, and more accurate.
+        </p>
+      </div>
+
+      <button class="addVehicleHeroButton" id="addVehicleBtn" type="button">
+        + Add Vehicle
+      </button>
+    </section>
+
+    <section class="vehicleSummaryGrid">
+      <div class="vehicleSummaryCard">
+        <span class="summaryLabel">Saved Vehicles</span>
+        <strong id="vehicleCount">0</strong>
+      </div>
+
+      <div class="vehicleSummaryCard">
+        <span class="summaryLabel">Primary Use</span>
+        <strong>Quick service requests</strong>
+      </div>
+
+      <div class="vehicleSummaryCard">
+        <span class="summaryLabel">Why add vehicles?</span>
+        <strong>Faster quotes & better matches</strong>
+      </div>
+    </section>
+
+    <section class="vehicleContentCard">
+      <div class="vehicleContentHeader">
+        <div>
+          <h2>Your Garage</h2>
+          <p>All your saved vehicles appear here.</p>
+        </div>
+      </div>
+
+      <div id="vehicleEmptyState" class="vehicleEmptyState">
+        <div class="emptyIcon">🚘</div>
+        <h3>No vehicles added yet</h3>
+        <p>Add your first vehicle to keep your account ready for service requests.</p>
+      </div>
+
+      <div id="vehicleList" class="vehicleList"></div>
+    </section>
+  </main>
+
+  <!-- =========================
+      VEHICLE MODAL
+  ========================== -->
+  <div id="vehicleModal" class="vehicleModal">
+    <div class="vehicleModalContent">
+      <div class="vehicleModalHeader">
+        <div>
+          <p class="modalMiniText">Estimator Garage</p>
+          <h2 id="modalTitle">Add Vehicle</h2>
+        </div>
+        <button class="modalCloseIcon" id="modalCloseIcon" type="button">✕</button>
+      </div>
+
+      <form id="vehicleForm" class="vehicleForm">
+        <div class="vehicleFormGrid">
+          <div class="vehicleFormGroup">
+            <label for="make">Make</label>
+            <input id="make" type="text" placeholder="Toyota" required />
+          </div>
+
+          <div class="vehicleFormGroup">
+            <label for="model">Model</label>
+            <input id="model" type="text" placeholder="Camry" required />
+          </div>
+
+          <div class="vehicleFormGroup">
+            <label for="year">Year</label>
+            <input id="year" type="number" placeholder="2020" min="1900" max="2099" />
+          </div>
+
+          <div class="vehicleFormGroup">
+            <label for="color">Color</label>
+            <input id="color" type="text" placeholder="White" />
+          </div>
+
+          <div class="vehicleFormGroup">
+            <label for="licensePlate">License Plate</label>
+            <input id="licensePlate" type="text" placeholder="ABC-1234" />
+          </div>
+
+          <div class="vehicleFormGroup">
+            <label for="vin">VIN</label>
+            <input id="vin" type="text" placeholder="Enter VIN" />
+          </div>
+
+          <div class="vehicleFormGroup fullWidth">
+            <label for="mileage">Mileage</label>
+            <input id="mileage" type="number" placeholder="45000" min="0" />
+          </div>
+        </div>
+
+        <div id="vehicleFormMessage" class="vehicleFormMessage"></div>
+
+        <div class="vehicleModalActions">
+          <button class="cancelVehicleButton" id="closeModalBtn" type="button">Cancel</button>
+          <button class="saveVehicleButton" id="saveVehicleBtn" type="submit">Save Vehicle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===============================
+              FOOTER
+  ================================ -->
+  <footer class="mainFooter">
+    <div class="footerContainer">
+
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Exterior Detailing</a></li>
+          <li><a href="#">Interior Cleaning</a></li>
+          <li><a href="#">Oil Change</a></li>
+          <li><a href="#">Brake Service</a></li>
+          <li><a href="#">Tire Repair</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="become-a-business.html">Become a Business</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="help-center.html">Help Center</a></li>
+          <li><a href="safety.html">Safety</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="myVehicle.js"></script>
+</body>
+</html>

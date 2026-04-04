@@ -77,7 +77,23 @@ CREATE TABLE IF NOT EXISTS app_reviews (
     CONSTRAINT fk_app_review_customer FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE SET NULL
 );
 
+CREATE TABLE vehicles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  make VARCHAR(100),
+  model VARCHAR(100),
+  year INT,
+  color VARCHAR(50),
+  license_plate VARCHAR(50),
+  vin VARCHAR(100),
+  mileage INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+);
+
 SELECT * FROM customers;
 SELECT * FROM business_users;
 SELECT * FROM business_reviews;
 SELECT * FROM app_reviews;
+SELECT * FROM vehicles;
