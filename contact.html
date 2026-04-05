@@ -1,37 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact | Estimator</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="contact.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Estimator App</title>
+  <link rel="stylesheet" href="contact.css">
 </head>
-
 <body>
+  <header class="navbar">
+    <div class="container nav-wrap">
+      <a href="about.html" class="logo">Estimator<span>App</span></a>
+      <button class="menu-btn" aria-label="Open menu">☰</button>
+      <nav class="nav-links">
+        
+      <a href="about.html" class="">About Us</a>
+      <a href="how-it-works.html" class="">How It Works</a>
+      <a href="become-a-business.html" class="">Become a Business</a>
+      <a href="contact.html" class="active">Contact</a>
+    
+      </nav>
+    </div>
+  </header>
 
-<header class="navBar">
-  <a href="home.html" class="logoText">Estimator</a>
-</header>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Company</span>
+        <h1>Contact Estimator App</h1>
+        <p>Have a question, need support, or want to learn more about the platform? Reach out and our team will be ready to help.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary">Contact Us</a>
+          <a href="become-a-business.html" class="btn btn-secondary">Join as a Business</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Professional. Simple. Reliable.</h3>
+        <p>Estimator App is designed to make the customer and business experience cleaner, faster, and easier to manage.</p>
+        <div class="mini">
+          <div class="cardish"><strong>Modern</strong><br>Interface</div>
+          <div class="cardish"><strong>Fast</strong><br>Workflow</div>
+          <div class="cardish"><strong>Clear</strong><br>Process</div>
+          <div class="cardish"><strong>Easy</strong><br>Navigation</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<main class="page">
+  
+<section class="section">
   <div class="container">
-    <h1>Contact</h1>
-    <p>Email: support@estimator.com</p>
-    <p>Phone: (123) 456-7890</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="badge">Get In Touch</span>
+        <h3>Send us a message</h3>
+        <form id="contactForm" class="grid">
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input class="input" id="fullName" type="text" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input class="input" id="email" type="email" required>
+          </div>
+          <div class="form-group">
+            <label for="topic">Topic *</label>
+            <select id="topic" required>
+              <option value="">Select a topic</option>
+              <option>General Question</option>
+              <option>Business Inquiry</option>
+              <option>Technical Support</option>
+              <option>Partnership</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" required></textarea>
+          </div>
+          <div>
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <div id="formNotice" class="notice"></div>
+          </div>
+        </form>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <span class="badge">Contact Details</span>
+          <h3>Reach our team</h3>
+          <p><strong>Email:</strong> support@estimatorapp.com</p>
+          <p><strong>Phone:</strong> (555) 123-4567</p>
+          <p><strong>Location:</strong> Dallas, Texas</p>
+        </div>
+        <div class="card">
+          <span class="badge">Support Hours</span>
+          <h3>Availability</h3>
+          <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+          <p>Saturday: 10:00 AM - 2:00 PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+      </div>
+    </div>
   </div>
-</main>
+</section>
 
-<footer class="footer">
-  <ul>
-    <li><a href="about.html">About Us</a></li>
-    <li><a href="how-it-works.html">How It Works</a></li>
-    <li><a href="become-a-business.html">Become a Business</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</footer>
+<section class="section alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge">FAQ</span>
+      <h2>Frequently asked questions</h2>
+      <p>Quick answers for common questions about Estimator App.</p>
+    </div>
+    <div class="grid">
+      <div class="accordion-item">
+        <button class="accordion-header">How do I request an estimate? <span>+</span></button>
+        <div class="accordion-content">
+          Submit your project information through the platform, review the details, and follow the next steps shown on your screen.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Can businesses join the platform? <span>+</span></button>
+        <div class="accordion-content">
+          Yes. Businesses can register, provide service details, and use the platform to handle estimate-related requests more efficiently.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Is Estimator App mobile friendly? <span>+</span></button>
+        <div class="accordion-content">
+          Yes. The pages are designed to be responsive and work across desktop, tablet, and mobile devices.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script src="contact.js"></script>
+
+  <footer class="footer">
+    <div class="container footer-wrap">
+      <div>© 2026 Estimator App. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="become-a-business.html">Become a Business</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="contact.js"></script>
 </body>
 </html>

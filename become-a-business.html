@@ -1,49 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Become a Business | Estimator</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="become-a-business.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Business | Estimator App</title>
+  <link rel="stylesheet" href="become-a-business.css">
 </head>
-
 <body>
+  <header class="navbar">
+    <div class="container nav-wrap">
+      <a href="about.html" class="logo">Estimator<span>App</span></a>
+      <button class="menu-btn" aria-label="Open menu">☰</button>
+      <nav class="nav-links">
+        
+      <a href="about.html" class="">About Us</a>
+      <a href="how-it-works.html" class="">How It Works</a>
+      <a href="become-a-business.html" class="active">Become a Business</a>
+      <a href="contact.html" class="">Contact</a>
+    
+      </nav>
+    </div>
+  </header>
 
-<header class="navBar">
-  <a href="home.html" class="logoText">Estimator</a>
-</header>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Company</span>
+        <h1>Grow with Estimator App</h1>
+        <p>Join Estimator App as a business partner and connect with customers through a platform designed for speed, professionalism, and better project intake.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary">Contact Us</a>
+          <a href="become-a-business.html" class="btn btn-secondary">Join as a Business</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Professional. Simple. Reliable.</h3>
+        <p>Estimator App is designed to make the customer and business experience cleaner, faster, and easier to manage.</p>
+        <div class="mini">
+          <div class="cardish"><strong>Modern</strong><br>Interface</div>
+          <div class="cardish"><strong>Fast</strong><br>Workflow</div>
+          <div class="cardish"><strong>Clear</strong><br>Process</div>
+          <div class="cardish"><strong>Easy</strong><br>Navigation</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<main class="page">
+  
+<section class="section">
   <div class="container">
-    <h1>Become a Business</h1>
-
-    <p>Join Estimator and connect with customers actively searching for automotive services near you.</p>
-
-    <h2>Why Join?</h2>
-    <ul>
-      <li>Get more local leads</li>
-      <li>Showcase your services</li>
-      <li>Grow your business faster</li>
-    </ul>
-
-    <h2>Get Started</h2>
-    <p>Click below to create your business account.</p>
-
-    <a href="businessSignUp.html" class="ctaButton">Sign Up as Business</a>
+    <div class="section-header">
+      <span class="badge">Business Growth</span>
+      <h2>Why businesses join our platform</h2>
+      <p>Estimator App gives businesses a cleaner way to receive requests, present services, and manage customer interest.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>Professional Presence</h3>
+        <p>Stand out with a modern platform that helps customers trust your business from the first interaction.</p>
+      </div>
+      <div class="card">
+        <h3>Better Lead Intake</h3>
+        <p>Collect project details in a structured way so your team can respond more efficiently.</p>
+      </div>
+      <div class="card">
+        <h3>Scalable Workflow</h3>
+        <p>Use a process that supports business growth without adding unnecessary complexity.</p>
+      </div>
+    </div>
   </div>
-</main>
+</section>
 
-<footer class="footer">
-  <ul>
-    <li><a href="about.html">About Us</a></li>
-    <li><a href="how-it-works.html">How It Works</a></li>
-    <li><a href="become-a-business.html">Become a Business</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</footer>
+<section class="section alt">
+  <div class="container">
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="badge">How to Join</span>
+        <h3>Simple onboarding process</h3>
+        <ol class="list-clean">
+          <li>Complete your business registration form</li>
+          <li>Add your service and company details</li>
+          <li>Review your setup information</li>
+          <li>Start receiving customer estimate requests</li>
+        </ol>
+      </div>
+      <div class="card">
+        <span class="badge">Requirements</span>
+        <h3>What you will need</h3>
+        <ul class="list-clean">
+          <li>Basic business information</li>
+          <li>Contact details</li>
+          <li>Description of services offered</li>
+          <li>A commitment to professional customer communication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-<script src="become-a-business.js"></script>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge">Apply Today</span>
+      <h2>Business interest form</h2>
+      <p>This demo form shows how businesses can express interest in joining the platform.</p>
+    </div>
+    <div class="card">
+      <form id="contactForm" class="grid grid-2">
+        <div class="form-group">
+          <label for="businessName">Business Name *</label>
+          <input class="input" id="businessName" name="businessName" type="text" required>
+        </div>
+        <div class="form-group">
+          <label for="ownerName">Owner / Representative *</label>
+          <input class="input" id="ownerName" name="ownerName" type="text" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Business Email *</label>
+          <input class="input" id="email" name="email" type="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input class="input" id="phone" name="phone" type="tel" required>
+        </div>
+        <div class="form-group">
+          <label for="serviceType">Service Type *</label>
+          <select id="serviceType" required>
+            <option value="">Select one</option>
+            <option>Construction</option>
+            <option>Repairs</option>
+            <option>Home Services</option>
+            <option>Commercial Services</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input class="input" id="city" name="city" type="text" required>
+        </div>
+        <div class="form-group" style="grid-column:1 / -1;">
+          <label for="message">Tell us about your business *</label>
+          <textarea id="message" required></textarea>
+        </div>
+        <div style="grid-column:1 / -1;">
+          <button class="btn btn-primary" type="submit">Submit Interest</button>
+          <div id="formNotice" class="notice"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+  <footer class="footer">
+    <div class="container footer-wrap">
+      <div>© 2026 Estimator App. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="become-a-business.html">Become a Business</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="become-a-business.js"></script>
 </body>
 </html>
