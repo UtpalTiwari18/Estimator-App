@@ -1,151 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact | Estimator App</title>
-  <link rel="stylesheet" href="contact.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact | Estimator</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- SAME shared site CSS as home -->
+  <link rel="stylesheet" href="homeStyle.css" />
+
+  <!-- Contact page body-only CSS -->
+  <link rel="stylesheet" href="contact.css" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="container nav-wrap">
-      <a href="about.html" class="logo">Estimator<span>App</span></a>
-      <button class="menu-btn" aria-label="Open menu">☰</button>
-      <nav class="nav-links">
-        
-      <a href="about.html" class="">About Us</a>
-      <a href="how-it-works.html" class="">How It Works</a>
-      <a href="become-a-business.html" class="">Become a Business</a>
-      <a href="contact.html" class="active">Contact</a>
-    
+
+  <!-- ================= HEADER (same as home.html) ================= -->
+  <header class="navBar">
+    <div class="navInner">
+
+      <a href="home.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+
+        <div class="navLinks">
+
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <div class="megaRight">
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="home.html#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="home.html#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="home.html#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="home.html#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="home.html#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="home.html#service-ac">AC Sanitization</a>
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="home.html#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="home.html#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="home.html#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="home.html#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="home.html#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="home.html#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="home.html#service-windshield">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="home.html#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="home.html#service-oil">Oil Change</a>
+                  <a class="megaItem" href="home.html#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="home.html#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="home.html#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="home.html#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="home.html#service-cooling">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="home.html#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="home.html#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="home.html#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="home.html#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="home.html#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="home.html#service-lighting">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="home.html#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="home.html#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="home.html#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="home.html#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="home.html#service-rim">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="home.html#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="home.html#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="home.html#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="home.html#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="home.html#service-body-kit">Body Kit Installation</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="menuLink businessLink" href="businessSignUp.html">Sign up as Business</a>
+        </div>
+
+        <div class="navActions">
+          <a class="actionLink" href="customerSignup.html">
+            <button class="primaryButton" type="button">Sign up</button>
+          </a>
+          <a class="secondaryLink" href="loginChoice.html">Log in</a>
+        </div>
+
       </nav>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="badge">Company</span>
-        <h1>Contact Estimator App</h1>
-        <p>Have a question, need support, or want to learn more about the platform? Reach out and our team will be ready to help.</p>
-        <div class="hero-actions">
-          <a href="contact.html" class="btn btn-primary">Contact Us</a>
-          <a href="become-a-business.html" class="btn btn-secondary">Join as a Business</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <h3>Professional. Simple. Reliable.</h3>
-        <p>Estimator App is designed to make the customer and business experience cleaner, faster, and easier to manage.</p>
-        <div class="mini">
-          <div class="cardish"><strong>Modern</strong><br>Interface</div>
-          <div class="cardish"><strong>Fast</strong><br>Workflow</div>
-          <div class="cardish"><strong>Clear</strong><br>Process</div>
-          <div class="cardish"><strong>Easy</strong><br>Navigation</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ================= BODY ================= -->
+  <main class="contactPageMain">
 
-  
-<section class="section">
-  <div class="container">
-    <div class="grid grid-2">
-      <div class="card">
-        <span class="badge">Get In Touch</span>
-        <h3>Send us a message</h3>
-        <form id="contactForm" class="grid">
-          <div class="form-group">
-            <label for="fullName">Full Name *</label>
-            <input class="input" id="fullName" type="text" required>
+    <section class="contactHero">
+      <div class="contactContainer contactHeroGrid">
+        <div class="contactHeroLeft">
+          <span class="contactBadge">Contact</span>
+          <h1>Get in touch with Estimator</h1>
+          <p>
+            Have a question, need support, or want to learn more about the platform?
+            Reach out and our team will be ready to help.
+          </p>
+
+          <div class="contactHeroActions">
+            <a href="#contactFormSection" class="contactBtn contactBtnPrimary">Send a Message</a>
+            <a href="businessSignUp.html" class="contactBtn contactBtnSecondary">Join as a Business</a>
           </div>
-          <div class="form-group">
-            <label for="email">Email *</label>
-            <input class="input" id="email" type="email" required>
+        </div>
+
+        <div class="contactHeroCard">
+          <h3>Professional. Simple. Reliable.</h3>
+          <p>
+            Estimator is designed to make the customer and business experience cleaner,
+            faster, and easier to manage.
+          </p>
+
+          <div class="contactMiniGrid">
+            <div class="contactMiniCard"><strong>Modern</strong><span>Interface</span></div>
+            <div class="contactMiniCard"><strong>Fast</strong><span>Workflow</span></div>
+            <div class="contactMiniCard"><strong>Clear</strong><span>Process</span></div>
+            <div class="contactMiniCard"><strong>Easy</strong><span>Navigation</span></div>
           </div>
-          <div class="form-group">
-            <label for="topic">Topic *</label>
-            <select id="topic" required>
-              <option value="">Select a topic</option>
-              <option>General Question</option>
-              <option>Business Inquiry</option>
-              <option>Technical Support</option>
-              <option>Partnership</option>
-            </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="contactSection" id="contactFormSection">
+      <div class="contactContainer">
+        <div class="contactGridTwo">
+
+          <div class="contactCard">
+            <span class="contactBadge light">Get In Touch</span>
+            <h2>Send us a message</h2>
+
+            <form id="contactForm" class="contactFormGrid">
+              <div class="contactFormGroup">
+                <label for="fullName">Full Name *</label>
+                <input class="contactInput" id="fullName" type="text" required />
+              </div>
+
+              <div class="contactFormGroup">
+                <label for="email">Email *</label>
+                <input class="contactInput" id="email" type="email" required />
+              </div>
+
+              <div class="contactFormGroup">
+                <label for="topic">Topic *</label>
+                <select id="topic" class="contactInput" required>
+                  <option value="">Select a topic</option>
+                  <option>General Question</option>
+                  <option>Business Inquiry</option>
+                  <option>Technical Support</option>
+                  <option>Partnership</option>
+                </select>
+              </div>
+
+              <div class="contactFormGroup">
+                <label for="message">Message *</label>
+                <textarea id="message" class="contactInput contactTextarea" required></textarea>
+              </div>
+
+              <div>
+                <button class="contactBtn contactBtnPrimary" type="submit">Send Message</button>
+                <div id="formNotice" class="contactNotice"></div>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="message">Message *</label>
-            <textarea id="message" required></textarea>
+
+          <div class="contactInfoStack">
+            <div class="contactCard">
+              <span class="contactBadge light">Contact Details</span>
+              <h2>Reach our team</h2>
+              <p><strong>Email:</strong> support@estimatorapp.com</p>
+              <p><strong>Phone:</strong> (555) 123-4567</p>
+              <p><strong>Location:</strong> Dallas, Texas</p>
+            </div>
+
+            <div class="contactCard">
+              <span class="contactBadge light">Support Hours</span>
+              <h2>Availability</h2>
+              <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+              <p>Saturday: 10:00 AM - 2:00 PM</p>
+              <p>Sunday: Closed</p>
+            </div>
           </div>
-          <div>
-            <button class="btn btn-primary" type="submit">Send Message</button>
-            <div id="formNotice" class="notice"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="contactSection contactSectionAlt">
+      <div class="contactContainer">
+        <div class="contactSectionHeader">
+          <span class="contactBadge light">FAQ</span>
+          <h2>Frequently asked questions</h2>
+          <p>Quick answers for common questions about Estimator.</p>
+        </div>
+
+        <div class="contactFaqGrid">
+          <div class="contactAccordionItem">
+            <button class="contactAccordionHeader" type="button">
+              <span>How do I request an estimate?</span>
+              <span>+</span>
+            </button>
+            <div class="contactAccordionContent">
+              Submit your project information through the platform, review the details,
+              and follow the next steps shown on your screen.
+            </div>
           </div>
-        </form>
+
+          <div class="contactAccordionItem">
+            <button class="contactAccordionHeader" type="button">
+              <span>Can businesses join the platform?</span>
+              <span>+</span>
+            </button>
+            <div class="contactAccordionContent">
+              Yes. Businesses can register, provide service details, and use the
+              platform to handle estimate-related requests more efficiently.
+            </div>
+          </div>
+
+          <div class="contactAccordionItem">
+            <button class="contactAccordionHeader" type="button">
+              <span>Is Estimator mobile friendly?</span>
+              <span>+</span>
+            </button>
+            <div class="contactAccordionContent">
+              Yes. The pages are designed to be responsive and work across desktop,
+              tablet, and mobile devices.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER (same as home.html) ================= -->
+  <footer class="mainFooter">
+
+    <div class="footerContainer">
+
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <span class="badge">Contact Details</span>
-          <h3>Reach our team</h3>
-          <p><strong>Email:</strong> support@estimatorapp.com</p>
-          <p><strong>Phone:</strong> (555) 123-4567</p>
-          <p><strong>Location:</strong> Dallas, Texas</p>
-        </div>
-        <div class="card">
-          <span class="badge">Support Hours</span>
-          <h3>Availability</h3>
-          <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-          <p>Saturday: 10:00 AM - 2:00 PM</p>
-          <p>Sunday: Closed</p>
-        </div>
+      <div class="footerColumn">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Exterior Detailing</a></li>
+          <li><a href="#">Interior Cleaning</a></li>
+          <li><a href="#">Oil Change</a></li>
+          <li><a href="#">Brake Service</a></li>
+          <li><a href="#">Tire Repair</a></li>
+        </ul>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="section alt">
-  <div class="container">
-    <div class="section-header">
-      <span class="badge">FAQ</span>
-      <h2>Frequently asked questions</h2>
-      <p>Quick answers for common questions about Estimator App.</p>
-    </div>
-    <div class="grid">
-      <div class="accordion-item">
-        <button class="accordion-header">How do I request an estimate? <span>+</span></button>
-        <div class="accordion-content">
-          Submit your project information through the platform, review the details, and follow the next steps shown on your screen.
-        </div>
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="businessSignUp.html">Become a Business</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
-      <div class="accordion-item">
-        <button class="accordion-header">Can businesses join the platform? <span>+</span></button>
-        <div class="accordion-content">
-          Yes. Businesses can register, provide service details, and use the platform to handle estimate-related requests more efficiently.
-        </div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-header">Is Estimator App mobile friendly? <span>+</span></button>
-        <div class="accordion-content">
-          Yes. The pages are designed to be responsive and work across desktop, tablet, and mobile devices.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-
-  <footer class="footer">
-    <div class="container footer-wrap">
-      <div>© 2026 Estimator App. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="about.html">About Us</a>
-        <a href="how-it-works.html">How It Works</a>
-        <a href="become-a-business.html">Become a Business</a>
-        <a href="contact.html">Contact</a>
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="help-center.html">Help Center</a></li>
+          <li><a href="safety.html">Safety</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
       </div>
+
     </div>
+
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+
   </footer>
 
+  <!-- shared header/nav script -->
+  <script src="homeScript.js"></script>
+
+  <!-- contact page script -->
   <script src="contact.js"></script>
 </body>
 </html>
