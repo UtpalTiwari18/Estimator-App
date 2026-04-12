@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customerHomePage.css" />
+  <link rel="stylesheet" href="myRequests.css" />
+
+  <title>My Requests | Estimator</title>
+</head>
+<body>
+
+<header class="navBar">
+    <div class="navInner">
+
+      <a href="customerHomePage.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+
+        <div class="navLinks">
+
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <div class="megaRight">
+
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="#service-ac">AC Sanitization</a>
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-windshield">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="#service-oil">Oil Change</a>
+                  <a class="megaItem" href="#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="#service-cooling">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="#service-lighting">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="#service-rim">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="#service-body-kit">Body Kit Installation</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <a class="menuLink" href="customerSavedBusiness.html">Saved Businesses</a>
+          <a class="menuLink" href="customerReviewPage.html">Leave Reviews</a>
+          <a class="menuLink submitRequestLink" href="submitRequest.html">Submit a Request</a>
+        </div>
+
+        <div class="navActions">
+          <div class="userMenu" id="userMenu">
+            <button class="userButton" id="userButton" type="button">
+              Welcome, <span id="userName">John</span>
+              <span class="userArrow">▾</span>
+            </button>
+
+            <div class="userDropdown" id="userDropdown">
+              <a href="customerProfile.html">Profile</a>
+              <a href="myVehicle.html">My Vehicle</a>
+              <a href="myReviews.html">My Reviews</a>
+              <a href="myRequests.html">My Requests</a>
+              <div class="dropdownDivider"></div>
+              <a href="#" id="logoutBtn">Log out</a>
+            </div>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <main class="myRequestsPage">
+    <section class="myRequestsHero">
+      <p class="myRequestsMiniText">Customer Dashboard</p>
+      <h1>My Requests</h1>
+      <p class="myRequestsSubText">
+        View all the service requests you have submitted so far and update them whenever needed.
+      </p>
+    </section>
+
+    <section class="myRequestsSummary">
+      <div class="myRequestsSummaryCard">
+        <p>Total Requests</p>
+        <h2 id="requestCount">0</h2>
+      </div>
+    </section>
+
+    <section class="myRequestsListSection">
+      <div id="myRequestsMessage" class="myRequestsMessage"></div>
+      <div id="myRequestsContainer" class="myRequestsContainer"></div>
+    </section>
+  </main>
+
+  <footer class="mainFooter">
+    <div class="footerContainer">
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Exterior Detailing</a></li>
+          <li><a href="#">Interior Cleaning</a></li>
+          <li><a href="#">Oil Change</a></li>
+          <li><a href="#">Brake Service</a></li>
+          <li><a href="#">Tire Repair</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Become a Business</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="myRequests.js"></script>
+</body>
+</html>
