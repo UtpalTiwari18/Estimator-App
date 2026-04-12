@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customerHomePage.css" />
+  <link rel="stylesheet" href="businessHomePage.css" />
+  <title>Business Home | Estimator</title>
+</head>
+
+<body>
+  <header class="navBar">
+    <div class="navInner">
+
+      <a href="businessHomePage.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+        <div class="navLinks">
+          <a class="menuLink" href="businessHomePage.html">Dashboard</a>
+          <a class="menuLink" href="businessIncomingRequests.html">Incoming Requests</a>
+          <a class="menuLink" href="businessActiveJobs.html">Active Jobs</a>
+          <a class="menuLink" href="businessReviews.html">Reviews</a>
+        </div>
+
+    <div class="navActions">
+        <div class="userMenu" id="userMenu">
+        <button class="userButton" id="userButton" type="button">
+            Welcome, <span id="managerName">Mg.</span>
+            <span class="userArrow">▾</span>
+        </button>
+
+    <div class="userDropdown" id="userDropdown">
+      <a href="businessProfile.html">Business Profile</a>
+      <div class="dropdownDivider"></div>
+      <a href="#" id="logoutBtn">Log out</a>
+    </div>
+  </div>
+</div>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="businessHomeWrap">
+    <section class="businessHero">
+      <div class="businessHeroContent">
+        <p class="businessEyebrow">Business Dashboard</p>
+        <h1>Manage leads, active jobs, and customer trust from one place.</h1>
+        <p class="businessSubtext">
+          Review new requests, track work in progress, and monitor what customers are saying about your business.
+        </p>
+      </div>
+    </section>
+
+    <section class="businessStats">
+      <div class="statCard">
+        <h3>12</h3>
+        <p>Incoming Requests</p>
+      </div>
+
+      <div class="statCard">
+        <h3>5</h3>
+        <p>Active Jobs</p>
+      </div>
+
+      <div class="statCard">
+        <h3>32</h3>
+        <p>Completed Jobs</p>
+      </div>
+
+      <div class="statCard">
+        <h3>4.8 ★</h3>
+        <p>Average Rating</p>
+      </div>
+    </section>
+
+    <section class="businessPanelGrid">
+      <div class="businessPanel">
+        <div class="panelHeader">
+          <h2>Incoming Requests</h2>
+          <a href="businessIncomingRequests.html">View all</a>
+        </div>
+
+        <div class="requestItem">
+          <h3>Brake Repair</h3>
+          <p>Customer: John D.</p>
+          <p>ZIP: 75001</p>
+          <p>Vehicle: 2018 Honda Civic</p>
+          <p>Description: Front brakes making grinding noise.</p>
+        </div>
+
+        <div class="requestItem">
+          <h3>Oil Change</h3>
+          <p>Customer: Sarah M.</p>
+          <p>ZIP: 76010</p>
+          <p>Vehicle: 2020 Toyota Camry</p>
+          <p>Description: Looking for same-day oil change service.</p>
+        </div>
+      </div>
+
+      <div class="businessPanel">
+        <div class="panelHeader">
+          <h2>Active Jobs</h2>
+          <a href="businessActiveJobs.html">View all</a>
+        </div>
+
+        <div class="jobItem">
+          <h3>Battery Replacement</h3>
+          <p>Customer: Alex T.</p>
+          <p>Status: In Progress</p>
+        </div>
+
+        <div class="jobItem">
+          <h3>Tire Replacement</h3>
+          <p>Customer: Maria R.</p>
+          <p>Status: Waiting for pickup</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="businessPanel reviewsPanel">
+      <div class="panelHeader">
+        <h2>Recent Reviews</h2>
+        <a href="businessReviews.html">View all</a>
+      </div>
+
+      <div class="reviewItem">
+        <strong>★★★★★</strong>
+        <p>“Fast service and very professional. Highly recommended.”</p>
+        <span>- James R.</span>
+      </div>
+
+      <div class="reviewItem">
+        <strong>★★★★☆</strong>
+        <p>“Good work and fair pricing. Would come back again.”</p>
+        <span>- Ashley M.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mainFooter">
+    <div class="footerContainer">
+
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Business Tools</h3>
+        <ul>
+          <li><a href="businessHomePage.html">Dashboard</a></li>
+          <li><a href="businessIncomingRequests.html">Incoming Requests</a></li>
+          <li><a href="businessActiveJobs.html">Active Jobs</a></li>
+          <li><a href="businessReviews.html">Reviews</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="howItWorks.html">How It Works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="businessSignUp.html">Become a Business</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="businessHomePage.js"></script>
+</body>
+</html>
