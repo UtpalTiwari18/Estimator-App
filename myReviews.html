@@ -14,7 +14,6 @@
 
   <header class="navBar">
     <div class="navInner">
-
       <a href="customerHomePage.html" class="logoArea">
         <h2 class="logoText">Estimator</h2>
       </a>
@@ -27,99 +26,6 @@
 
       <nav class="menuArea" id="menuArea">
         <div class="navLinks">
-
-          <div class="servicesMenu" id="servicesMenu">
-            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
-              Our Services <span class="dropdownIcon">▾</span>
-            </a>
-
-            <div class="megaDropdown" id="megaDropdown">
-              <div class="megaLeft">
-                <div class="megaSectionTitle">Workshop Services</div>
-
-                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
-                  Interior Services <span class="chevronIcon">›</span>
-                </button>
-
-                <button class="megaCategory" type="button" data-panel="exteriorPanel">
-                  Exterior Services <span class="chevronIcon">›</span>
-                </button>
-
-                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
-                  Mechanical Services <span class="chevronIcon">›</span>
-                </button>
-
-                <button class="megaCategory" type="button" data-panel="electricalPanel">
-                  Electrical Services <span class="chevronIcon">›</span>
-                </button>
-
-                <button class="megaCategory" type="button" data-panel="tirePanel">
-                  Tire & Wheel Services <span class="chevronIcon">›</span>
-                </button>
-
-                <button class="megaCategory" type="button" data-panel="upgradePanel">
-                  Customization & Upgrades <span class="chevronIcon">›</span>
-                </button>
-              </div>
-
-              <div class="megaRight">
-                <div class="megaPanel isVisible" id="interiorPanel">
-                  <a class="megaItem" href="#">Interior Detailing</a>
-                  <a class="megaItem" href="#">Seat Cleaning</a>
-                  <a class="megaItem" href="#">Carpet Shampoo</a>
-                  <a class="megaItem" href="#">Dashboard Restoration</a>
-                  <a class="megaItem" href="#">Odor Removal</a>
-                  <a class="megaItem" href="#">AC Sanitization</a>
-                </div>
-
-                <div class="megaPanel" id="exteriorPanel">
-                  <a class="megaItem" href="#">Car Wash & Detailing</a>
-                  <a class="megaItem" href="#">Paint Correction</a>
-                  <a class="megaItem" href="#">Ceramic Coating</a>
-                  <a class="megaItem" href="#">Wax & Polish</a>
-                  <a class="megaItem" href="#">Scratch Removal</a>
-                  <a class="megaItem" href="#">Headlight Restoration</a>
-                  <a class="megaItem" href="#">Windshield Repair</a>
-                </div>
-
-                <div class="megaPanel" id="mechanicalPanel">
-                  <a class="megaItem" href="#">Engine Diagnostics</a>
-                  <a class="megaItem" href="#">Oil Change</a>
-                  <a class="megaItem" href="#">Brake Service</a>
-                  <a class="megaItem" href="#">Suspension Repair</a>
-                  <a class="megaItem" href="#">Battery Replacement</a>
-                  <a class="megaItem" href="#">Transmission Service</a>
-                  <a class="megaItem" href="#">Cooling System Repair</a>
-                </div>
-
-                <div class="megaPanel" id="electricalPanel">
-                  <a class="megaItem" href="#">ECU Diagnostics</a>
-                  <a class="megaItem" href="#">Sensor Replacement</a>
-                  <a class="megaItem" href="#">Wiring Repair</a>
-                  <a class="megaItem" href="#">Alternator Service</a>
-                  <a class="megaItem" href="#">Starter Repair</a>
-                  <a class="megaItem" href="#">Lighting Installation</a>
-                </div>
-
-                <div class="megaPanel" id="tirePanel">
-                  <a class="megaItem" href="#">Tire Replacement</a>
-                  <a class="megaItem" href="#">Wheel Alignment</a>
-                  <a class="megaItem" href="#">Wheel Balancing</a>
-                  <a class="megaItem" href="#">Tire Rotation</a>
-                  <a class="megaItem" href="#">Rim Repair</a>
-                </div>
-
-                <div class="megaPanel" id="upgradePanel">
-                  <a class="megaItem" href="#">Audio Installation</a>
-                  <a class="megaItem" href="#">Reverse Camera Setup</a>
-                  <a class="megaItem" href="#">Window Tinting</a>
-                  <a class="megaItem" href="#">Performance Tuning</a>
-                  <a class="megaItem" href="#">Body Kit Installation</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <a class="menuLink" href="savedBusinesses.html">Saved Businesses</a>
           <a class="menuLink" href="customerReviewPage.html">Leave Reviews</a>
           <a class="menuLink submitRequestLink" href="submitRequest.html">Submit a Request</a>
@@ -142,18 +48,19 @@
           </div>
         </div>
       </nav>
-
     </div>
   </header>
 
   <main class="myReviewsPage">
+
     <section class="myReviewsHero">
       <div class="myReviewsHeroContent">
         <p class="myReviewsEyebrow">Customer Dashboard</p>
         <h1>My Reviews</h1>
         <p class="myReviewsSubtext">
-          View all the business reviews and Estimator app reviews you have submitted so far.
+          Keep track of the feedback you’ve shared with local businesses and the Estimator platform.
         </p>
+        <a href="customerReviewPage.html" class="heroReviewButton">+ Write a New Review</a>
       </div>
     </section>
 
@@ -161,17 +68,20 @@
       <div class="reviewsSummaryGrid">
         <div class="summaryCard">
           <p class="summaryLabel">Business Reviews</p>
-          <h2 id="businessReviewCount">0</h2>
+          <h2 id="businessReviewCount">3</h2>
+          <span class="summarySmallText">For shops and services</span>
         </div>
 
         <div class="summaryCard">
           <p class="summaryLabel">Estimator Reviews</p>
-          <h2 id="appReviewCount">0</h2>
+          <h2 id="appReviewCount">2</h2>
+          <span class="summarySmallText">About your app experience</span>
         </div>
 
         <div class="summaryCard">
           <p class="summaryLabel">Total Reviews</p>
-          <h2 id="totalReviewCount">0</h2>
+          <h2 id="totalReviewCount">5</h2>
+          <span class="summarySmallText">All submitted feedback</span>
         </div>
       </div>
     </section>
@@ -185,13 +95,125 @@
           Estimator Reviews
         </button>
       </div>
+
+      <div class="reviewTools">
+        <input type="text" class="reviewSearchInput" placeholder="Search reviews..." />
+        <select class="reviewSortSelect">
+          <option>Most Recent</option>
+          <option>Highest Rated</option>
+          <option>Lowest Rated</option>
+        </select>
+      </div>
     </section>
 
     <section class="reviewListSection">
-      <div id="reviewPageMessage" class="pageMessage"></div>
+      <div id="reviewPageMessage" class="pageMessage">
+        Here are the reviews you have submitted so far.
+      </div>
 
-      <div id="businessReviewsContainer" class="reviewCardsContainer"></div>
-      <div id="appReviewsContainer" class="reviewCardsContainer hidden"></div>
+      <!-- BUSINESS REVIEWS -->
+      <div id="businessReviewsContainer" class="reviewCardsContainer">
+
+        <div class="reviewCard">
+          <div class="reviewCardTop">
+            <div>
+              <h3 class="reviewTitle">Elite Auto Detailing</h3>
+              <p class="reviewMeta">Reviewed on April 9, 2026</p>
+            </div>
+            <span class="reviewBadge">Business</span>
+          </div>
+
+          <div class="reviewRating">★★★★★ <span>5.0</span></div>
+
+          <p class="reviewText">
+            Amazing service from start to finish. The team was professional, on time, and my car looked brand new after the detailing. I would definitely book with them again.
+          </p>
+
+          <div class="reviewFooter">
+            <span class="serviceTag">Interior Detailing</span>
+            <span class="serviceTag">Exterior Wash</span>
+          </div>
+        </div>
+
+        <div class="reviewCard">
+          <div class="reviewCardTop">
+            <div>
+              <h3 class="reviewTitle">QuickFix Brakes & Tires</h3>
+              <p class="reviewMeta">Reviewed on March 28, 2026</p>
+            </div>
+            <span class="reviewBadge">Business</span>
+          </div>
+
+          <div class="reviewRating">★★★★☆ <span>4.0</span></div>
+
+          <p class="reviewText">
+            The brake service was good and the staff explained everything clearly. The wait time was a little longer than expected, but overall I had a positive experience.
+          </p>
+
+          <div class="reviewFooter">
+            <span class="serviceTag">Brake Service</span>
+          </div>
+        </div>
+
+        <div class="reviewCard">
+          <div class="reviewCardTop">
+            <div>
+              <h3 class="reviewTitle">Shine Pro Mobile Wash</h3>
+              <p class="reviewMeta">Reviewed on March 14, 2026</p>
+            </div>
+            <span class="reviewBadge">Business</span>
+          </div>
+
+          <div class="reviewRating">★★★★★ <span>5.0</span></div>
+
+          <p class="reviewText">
+            Very convenient and easy to book. They came to my location, finished quickly, and my vehicle looked spotless. Great customer service and fair pricing.
+          </p>
+
+          <div class="reviewFooter">
+            <span class="serviceTag">Mobile Wash</span>
+            <span class="serviceTag">Wax & Polish</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- APP REVIEWS -->
+      <div id="appReviewsContainer" class="reviewCardsContainer hidden">
+
+        <div class="reviewCard">
+          <div class="reviewCardTop">
+            <div>
+              <h3 class="reviewTitle">Estimator App Experience</h3>
+              <p class="reviewMeta">Reviewed on April 4, 2026</p>
+            </div>
+            <span class="reviewBadge appBadge">Estimator</span>
+          </div>
+
+          <div class="reviewRating">★★★★★ <span>5.0</span></div>
+
+          <p class="reviewText">
+            The app made it very easy to compare service providers and request quotes quickly. I like how simple the layout is and how fast I got responses.
+          </p>
+        </div>
+
+        <div class="reviewCard">
+          <div class="reviewCardTop">
+            <div>
+              <h3 class="reviewTitle">Estimator App Experience</h3>
+              <p class="reviewMeta">Reviewed on March 20, 2026</p>
+            </div>
+            <span class="reviewBadge appBadge">Estimator</span>
+          </div>
+
+          <div class="reviewRating">★★★★☆ <span>4.0</span></div>
+
+          <p class="reviewText">
+            Overall a really useful platform. I would like to see more service categories and maybe a better saved businesses section, but I enjoyed using it.
+          </p>
+        </div>
+
+      </div>
     </section>
   </main>
 
