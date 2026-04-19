@@ -171,19 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
 
             <p class="businessReplyText">${escapeHtml(review.business_reply_text)}</p>
-
-            <div class="replyActions" style="margin-top: 12px;">
-              <button
-                type="button"
-                class="replyEditButton replyButton openReplyEditorButton"
-                data-review-id="${escapeHtml(review.id)}"
-                data-existing-reply="${escapeAttribute(review.business_reply_text)}"
-              >
-                Edit Reply
-              </button>
-            </div>
-
-            <div class="replyFormContainer"></div>
           </div>
         </div>
       `;
@@ -195,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
           type="button"
           class="replyButton openReplyEditorButton"
           data-review-id="${escapeHtml(review.id)}"
-          data-existing-reply=""
         >
           Reply
         </button>
@@ -212,14 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", function () {
         const reviewCard = button.closest(".reviewCard");
         const replySection = button.closest(".replySection");
-        const existingReply = button.getAttribute("data-existing-reply") || "";
 
         closeAllReplyEditors();
-
-        const existingReplyCard = replySection.querySelector(".businessReplyCard");
-        if (existingReplyCard) {
-          existingReplyCard.style.display = "none";
-        }
 
         const container = replySection.querySelector(".replyFormContainer");
 
@@ -234,16 +214,13 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         `;
 
-        if (!existingReplyCard) {
-          button.style.display = "none";
-        }
+        button.style.display = "none";
 
         const textarea = container.querySelector(".replyTextarea");
         const submitBtn = container.querySelector(".replySubmitButton");
         const cancelBtn = container.querySelector(".replyCancelButton");
         const statusText = container.querySelector(".replyStatusText");
 
-        textarea.value = existingReply;
         textarea.focus();
 
         submitBtn.addEventListener("click", async function () {
@@ -307,12 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cancelBtn.addEventListener("click", function () {
           container.innerHTML = "";
-
-          if (existingReplyCard) {
-            existingReplyCard.style.display = "";
-          } else {
-            button.style.display = "";
-          }
+          button.style.display = "";
         });
       });
     });
@@ -325,10 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".openReplyEditorButton").forEach((button) => {
       button.style.display = "";
-    });
-
-    document.querySelectorAll(".businessReplyCard").forEach((card) => {
-      card.style.display = "";
     });
   }
 
@@ -369,13 +337,5 @@ document.addEventListener("DOMContentLoaded", function () {
     const div = document.createElement("div");
     div.textContent = value == null ? "" : String(value);
     return div.innerHTML;
-  }
-
-  function escapeAttribute(value) {
-    return String(value == null ? "" : value)
-      .replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
   }
 });

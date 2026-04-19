@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const myRequestsContainer = document.getElementById("myRequestsContainer");
   const requestCount = document.getElementById("requestCount");
   const myRequestsMessage = document.getElementById("myRequestsMessage");
+  const requestStatusFilter = document.getElementById("requestStatusFilter");
 
   if (userName) {
     userName.textContent =
@@ -230,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .join(" ");
 
     return `
-      <div class="requestItemCard" data-request-id="${escapeHtml(requestId)}">
+      <div class="requestItemCard" data-request-id="${escapeHtml(requestId)}" data-status="${escapeHtml(status)}">
         <div class="requestItemTop">
           <div>
             <h3>${escapeHtml(serviceNeeded || "Service Request")}</h3>
@@ -293,6 +294,42 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
 
+  function applyStatusFilter() {
+    if (!myRequestsContainer) return;
+
+    const selectedStatus = requestStatusFilter ? requestStatusFilter.value : "all";
+    const cards = myRequestsContainer.querySelectorAll(".requestItemCard");
+
+    cards.forEach(function (card) {
+      const cardStatus = card.getAttribute("data-status") || "Pending";
+
+      if (selectedStatus === "all" || cardStatus === selectedStatus) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    const visibleCards = Array.from(cards).filter(function (card) {
+      return card.style.display !== "none";
+    });
+
+    const existingEmptyFilterState = myRequestsContainer.querySelector(".emptyFilterState");
+    if (existingEmptyFilterState) {
+      existingEmptyFilterState.remove();
+    }
+
+    if (cards.length > 0 && visibleCards.length === 0) {
+      const emptyFilterState = document.createElement("div");
+      emptyFilterState.className = "emptyRequestsState emptyFilterState";
+      emptyFilterState.innerHTML = `
+        <h3>No matching requests</h3>
+        <p>No requests were found for the selected status.</p>
+      `;
+      myRequestsContainer.appendChild(emptyFilterState);
+    }
+  }
+
   async function loadMyRequests() {
     if (!myRequestsContainer) return;
 
@@ -335,6 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       myRequestsContainer.innerHTML = requests.map(createRequestCardHtml).join("");
       attachDeleteEvents();
+      applyStatusFilter();
     } catch (error) {
       console.error("Load requests error:", error);
 
@@ -388,6 +426,12 @@ document.addEventListener("DOMContentLoaded", function () {
           button.textContent = originalText;
         }
       });
+    });
+  }
+
+  if (requestStatusFilter) {
+    requestStatusFilter.addEventListener("change", function () {
+      applyStatusFilter();
     });
   }
 
