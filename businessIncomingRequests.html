@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customerHomePage.css" />
+  <link rel="stylesheet" href="businessHomePage.css" />
+  <link rel="stylesheet" href="businessIncomingRequests.css" />
+  <title>Incoming Requests | Estimator</title>
+</head>
+<body>
+  <header class="navBar">
+    <div class="navInner">
+      <a href="businessHomePage.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+        <div class="navLinks">
+          <a class="menuLink " href="businessHomePage.html">Dashboard</a>
+          <a class="menuLink activePage" href="businessIncomingRequests.html">Incoming Requests</a>
+          <a class="menuLink" href="businessActiveJobs.html">Active Jobs</a>
+          <a class="menuLink" href="businessCompletedJobs.html">Completed Jobs</a>
+          <a class="menuLink" href="businessReviews.html">Reviews</a>
+        </div>
+
+        <div class="navActions">
+          <div class="userMenu" id="userMenu">
+            <button class="userButton" id="userButton" type="button">
+              Welcome, <span id="managerName">Mg.</span>
+              <span class="userArrow">▾</span>
+            </button>
+
+            <div class="userDropdown" id="userDropdown">
+              <a href="businessProfile.html">Business Profile</a>
+              <div class="dropdownDivider"></div>
+              <a href="#" id="logoutBtn">Log out</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="businessHomeWrap">
+    <section class="businessHero incomingHero">
+      <div class="businessHeroContent">
+        <p class="businessEyebrow">Incoming Requests</p>
+        <h1>Full request details from your ZIP code</h1>
+        <p class="businessSubtext">View every pending request submitted by customers near your business.</p>
+      </div>
+    </section>
+
+    <section class="businessPanel">
+      <div class="panelHeader">
+        <h2>All Incoming Requests</h2>
+        <span id="incomingRequestsTotal">0 Requests</span>
+      </div>
+
+      <div id="incomingRequestsList">
+        <div class="emptyState">Loading requests...</div>
+      </div>
+    </section>
+
+    <section class="businessPanel acceptedPanel">
+      <div class="panelHeader">
+        <h2>Accepted Jobs</h2>
+        <span id="acceptedJobsTotal">0 Jobs</span>
+      </div>
+
+      <div id="acceptedJobsList">
+        <div class="emptyState">Loading accepted jobs...</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="businessIncomingRequests.js"></script>
+</body>
+</html>

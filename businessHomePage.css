@@ -1,0 +1,302 @@
+.businessHomeWrap {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 40px 0 70px;
+}
+
+.businessHero {
+  background: linear-gradient(135deg, #111 0%, #1e1e1e 60%, #c40000 100%);
+  color: #fff;
+  border-radius: 24px;
+  padding: 42px 34px;
+  margin-bottom: 30px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.businessEyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.businessHero h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.1;
+  margin-bottom: 14px;
+  font-weight: 800;
+}
+
+.businessSubtext {
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #f0f0f0;
+}
+
+/* ===================== */
+/* STAT CARDS */
+/* ===================== */
+
+.businessStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ededed;
+}
+
+.statCard h3 {
+  font-size: 30px;
+  color: #c40000;
+  margin-bottom: 8px;
+}
+
+.statCard p {
+  color: #444;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.statLinkCard {
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.statLinkCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  border-color: rgba(196, 0, 0, 0.18);
+}
+
+/* ===================== */
+/* PANELS */
+/* ===================== */
+
+.businessPanelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.businessPanel {
+  background: #fff;
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ececec;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.panelHeader h2 {
+  font-size: 24px;
+  color: #111;
+}
+
+/* View all link */
+.panelHeader a {
+  color: #c40000;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.panelHeader a:hover {
+  opacity: 0.7;
+}
+
+/* ===================== */
+/* DASHBOARD CARDS */
+/* ===================== */
+
+.requestItem,
+.jobItem,
+.reviewItem {
+  background: #f8f8f8;
+  border: 1px solid #ececec;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease,
+              box-shadow 0.18s ease,
+              border-color 0.18s ease,
+              background 0.18s ease;
+}
+
+.requestItem:hover,
+.jobItem:hover,
+.reviewItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
+  border-color: rgba(196, 0, 0, 0.2);
+  background: #ffffff;
+}
+
+.requestItem h3,
+.jobItem h3 {
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.requestItem p,
+.jobItem p,
+.reviewItem p,
+.reviewItem span {
+  color: #555;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.reviewItem strong {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #c40000;
+}
+
+.reviewsPanel {
+  margin-top: 0;
+}
+
+/* ===================== */
+/* EMPTY STATE */
+/* ===================== */
+
+.emptyState {
+  background: #f8f8f8;
+  border: 1px dashed #d7d7d7;
+  border-radius: 16px;
+  padding: 18px;
+  color: #666;
+  text-align: center;
+  font-weight: 600;
+}
+
+.requestItem strong,
+.jobItem strong,
+.reviewItem strong {
+  color: #111;
+}
+
+/* ===================== */
+/* MODAL */
+/* ===================== */
+
+.requestModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 20px;
+}
+
+.requestModalOverlay.show {
+  display: flex;
+}
+
+.requestModal {
+  width: min(700px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.requestModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.requestModalHeader h2 {
+  margin: 0;
+  color: #111;
+  font-size: 24px;
+}
+
+.closeModalBtn {
+  border: none;
+  background: #f3f3f3;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.closeModalBtn:hover {
+  background: #e7e7e7;
+}
+
+/* ===================== */
+/* NAVBAR */
+/* ===================== */
+
+.menuLink,
+.menuLink:visited,
+.menuLink:focus,
+.menuLink:active {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.menuLink:hover {
+  color: #c40000;
+}
+
+.activePage {
+  color: #fff !important;
+  font-weight: 500;
+}
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media (max-width: 900px) {
+  .businessStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .businessPanelGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .businessStats {
+    grid-template-columns: 1fr;
+  }
+
+  .businessHero {
+    padding: 28px 20px;
+  }
+}
