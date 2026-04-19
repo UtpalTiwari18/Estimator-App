@@ -1,0 +1,288 @@
+.completedJobsHero {
+  margin-bottom: 24px;
+}
+
+.completedJobCard {
+  background: #f8f8f8;
+  border: 1px solid #ececec;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.completedDateTop {
+  margin-bottom: 14px;
+  color: #18733b;
+  font-size: 14px;
+  font-weight: 700;
+}
+.completedJobCard h3 {
+  margin-bottom: 10px;
+  color: #111;
+  font-size: 20px;
+}
+
+.completedJobMeta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 18px;
+  margin-bottom: 12px;
+}
+
+.completedJobMeta p,
+.completedJobDescription {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.completedJobActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.completedJobBtn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.completedJobBtn.messageBtn {
+  background: #111;
+  color: #fff;
+}
+
+.completedJobBtn.messageBtn:hover {
+  background: #2b2b2b;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-width: 110px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.statusBadge.completed {
+  background: #eefbf1;
+  color: #18733b;
+  border: 1px solid #cdeed6;
+}
+
+.emptyState {
+  background: #f8f8f8;
+  border: 1px dashed #d7d7d7;
+  border-radius: 16px;
+  padding: 18px;
+  color: #666;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Message modal */
+.messageModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 3000;
+}
+
+.messageModalOverlay.show {
+  display: flex;
+}
+
+.messageModal {
+  width: min(680px, 100%);
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.messageModalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #ececec;
+}
+
+.messageModalHeader h3 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.messageModalHeader p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.messageModalClose {
+  border: none;
+  background: #f3f4f6;
+  color: #111;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.messageModalClose:hover {
+  background: #e5e7eb;
+}
+
+.messageForm {
+  padding: 22px 24px 24px;
+}
+
+.messageFieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.messageFieldGroup label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+}
+
+.messageFieldGroup input,
+.messageFieldGroup textarea {
+  width: 100%;
+  border: 1px solid #dcdcdc;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #111;
+  background: #fff;
+  outline: none;
+  transition: 0.2s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.messageFieldGroup input:focus,
+.messageFieldGroup textarea:focus {
+  border-color: #c40000;
+  box-shadow: 0 0 0 3px rgba(196, 0, 0, 0.08);
+}
+
+.messageFieldGroup input[readonly] {
+  background: #f8f8f8;
+  color: #555;
+}
+
+.messageFieldGroup textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+.messageModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.messageCancelBtn,
+.messageSendBtn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+.messageCancelBtn {
+  background: #f3f4f6;
+  color: #111;
+}
+
+.messageCancelBtn:hover {
+  background: #e5e7eb;
+}
+
+.messageSendBtn {
+  background: #0f766e;
+  color: #fff;
+}
+
+.messageSendBtn:hover {
+  background: #115e59;
+}
+
+.messageSendBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.messageFormNote {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #18733b;
+}
+
+@media (max-width: 700px) {
+  .completedJobMeta {
+    grid-template-columns: 1fr;
+  }
+
+  .completedJobActions {
+    flex-direction: column;
+  }
+
+  .completedJobBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .messageModalHeader {
+    padding: 20px 18px 14px;
+  }
+
+  .messageForm {
+    padding: 18px;
+  }
+
+  .messageModalHeader h3 {
+    font-size: 22px;
+  }
+
+  .messageModalActions {
+    flex-direction: column;
+  }
+
+  .messageCancelBtn,
+  .messageSendBtn {
+    width: 100%;
+  }
+}

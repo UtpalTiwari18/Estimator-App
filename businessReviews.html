@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="customerHomePage.css" />
+  <link rel="stylesheet" href="businessHomePage.css" />
+  <link rel="stylesheet" href="businessReviews.css" />
+  <title>Business Reviews | Estimator</title>
+</head>
+<body>
+  <header class="navBar">
+    <div class="navInner">
+      <a href="businessHomePage.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <nav class="menuArea" id="menuArea">
+        <div class="navLinks">
+          <a class="menuLink" href="businessHomePage.html">Dashboard</a>
+          <a class="menuLink" href="businessIncomingRequests.html">Incoming Requests</a>
+          <a class="menuLink" href="businessActiveJobs.html">Active Jobs</a>
+          <a class="menuLink" href="businessCompletedJobs.html">Completed Jobs</a>
+          <a class="menuLink activePage" href="businessReviews.html">Reviews</a>
+        </div>
+
+        <div class="navActions">
+          <div class="userMenu" id="userMenu">
+            <button class="userButton" id="userButton" type="button">
+              Welcome, <span id="managerName">Mg.</span>
+              <span class="userArrow">▾</span>
+            </button>
+
+            <div class="userDropdown" id="userDropdown">
+              <a href="businessProfile.html">Business Profile</a>
+              <div class="dropdownDivider"></div>
+              <a href="#" id="logoutBtn">Log out</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="businessHomeWrap">
+    <section class="businessHero reviewsHero">
+      <div class="businessHeroContent">
+        <p class="businessEyebrow">Customer Reviews</p>
+        <h1>See what customers are saying about your business</h1>
+        <p class="businessSubtext">
+          Read recent customer feedback, ratings, and service experiences for your business.
+        </p>
+      </div>
+    </section>
+
+    <section class="businessStats reviewsStats">
+      <div class="statCard">
+        <h3 id="reviewCount">0</h3>
+        <p>Total Reviews</p>
+      </div>
+
+      <div class="statCard">
+        <h3 id="averageRating">0.0 ★</h3>
+        <p>Average Rating</p>
+      </div>
+    </section>
+
+    <section class="businessPanel">
+      <div class="panelHeader">
+        <h2>All Reviews</h2>
+        <span id="reviewsSummaryText">Loading reviews...</span>
+      </div>
+
+      <div id="businessReviewsList">
+        <div class="emptyState">Loading reviews...</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mainFooter">
+    <div class="footerContainer">
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Business Tools</h3>
+        <ul>
+          <li><a href="businessHomePage.html">Dashboard</a></li>
+          <li><a href="businessIncomingRequests.html">Incoming Requests</a></li>
+          <li><a href="businessActiveJobs.html">Active Jobs</a></li>
+          <li><a href="businessCompletedJobs.html">Completed Jobs</a></li>
+          <li><a href="businessReviews.html">Reviews</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="howItWorks.html">How It Works</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="businessSignUp.html">Become a Business</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="businessReviews.js"></script>
+</body>
+</html>

@@ -152,52 +152,65 @@
 
 <section class="heroSection">
 
-  <h1 class="heroTagline">
-    Where <span class="highlightCare">car care</span> meets
-    <span class="highlightConvenience">convenience</span>.
-  </h1>
+    <h1 class="heroTagline">
+      Where <span class="highlightCare">car care</span> meets
+      <span class="highlightConvenience">convenience</span>.
+    </h1>
 
-<div class="heroImageWrapper">
-    <img src="./images/EstimatorLogoBgRemoved.png" alt="Estimator Logo" class="heroLogo">
-</div>
-  
-  <!-- Search Bar (Below Image) -->
-  <form class="heroSearch" id="heroSearchForm">
-    <div class="searchBar">
-
-      <input
-        type="text"
-        class="searchInput"
-        id="keywordInput"
-        placeholder="Tell us what service your vehicle needs!"
-      />
-
-      <div class="divider"></div>
-
-      <input
-        type="text"
-        class="zipInput"
-        id="zipInput"
-        placeholder="Zip Code"
-        maxlength="5"
-        inputmode="numeric"
-      />
-
-      <button class="searchButton" type="submit">
-        Search
-      </button>
-
+    <div class="heroImageWrapper">
+      <img src="./images/EstimatorLogoBgRemoved.png" alt="Estimator Logo" class="heroLogo">
     </div>
-  </form>
-<div class="customerCountWrap">
-  <p class="customerCountText">
-    <span class="customerCountIcon">✦</span>
-    <span id="customerCountNumber" class="customerCountNumber">0</span>
-    <span class="customerCountLabel">drivers proudly served on time — your car is next!</span>
-    <span class="customerCountIcon">✦</span>
-  </p>
-</div>
+
+    <form class="heroSearch" id="heroSearchForm">
+      <div class="searchBar searchBarWrap">
+
+        <div class="searchFieldWrap">
+          <input
+            type="text"
+            class="searchInput"
+            id="keywordInput"
+            placeholder="Enter a service needed"
+            autocomplete="off"
+          />
+          <div id="suggestionsBox" class="suggestionsBox"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <input
+          type="text"
+          class="zipInput"
+          id="zipInput"
+          placeholder="Zip Code "
+          maxlength="5"
+          inputmode="numeric"
+        />
+
+        <button class="searchButton" type="submit">
+          Search
+        </button>
+
+      </div>
+    </form>
+
+    <span class="customerCountText">
+  <span class="customerCountIcon">✦</span>
+  <span class="customerCountNumber">102</span>
+  <span class="customerCountMessage">
+    drivers proudly served on time — your car is next!
+  </span>
+  <span class="customerCountIcon">✦</span>
+</span>
+  </section>
+
+  <section class="searchResultsSection" id="searchResultsSection" style="display: none;">
+  <div class="searchResultsHeader">
+    <h2>Matching Businesses</h2>
+    <p id="searchResultsText">Search by service. Zip code is optional.</p>
+  </div>
+  <div id="searchResultsList" class="searchResultsList"></div>
 </section>
+
 
 <!-- ===============================
         POPULAR SERVICES

@@ -61,6 +61,7 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
   border: 1px solid #ececec;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+   cursor: pointer;
 }
 
 .aboutBodyCard:hover {

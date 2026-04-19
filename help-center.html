@@ -1,1 +1,356 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Help Center | Estimator App</title><link rel="stylesheet" href="help-center.css"></head><body><header class="navbar"><div class="container nav-wrap"><a href="home.html" class="logo">Estimator<span>App</span></a><button class="menu-btn" aria-label="Open menu">☰</button><nav class="nav-links"><a href="help-center.html" class="active">Help Center</a><a href="safety.html" class="">Safety</a><a href="privacy-policy.html" class="">Privacy Policy</a><a href="terms-of-service.html" class="">Terms of Service</a></nav></div></header><section class="hero"><div class="container"><span class="badge">Support</span><h1>Help Center</h1><p>Find answers, learn how the platform works, and get support for common questions related to estimates, accounts, and using Estimator App.</p><div class="hero-actions"><a href="contact.html" class="btn btn-primary">Contact Support</a><a href="help-center.html" class="btn btn-secondary">Visit Help Center</a></div></div></section><section class="section"><div class="container"><div class="section-header"><span class="badge">Support</span><h2>How can we help?</h2><p>The Help Center guides users through common issues and platform features.</p></div><div class="grid grid-3"><div class="card"><h3>Getting Started</h3><p>Learn how to create an account, submit project details, and navigate the platform easily.</p></div><div class="card"><h3>Estimate Requests</h3><p>Understand how to request estimates, review information, and track next steps clearly.</p></div><div class="card"><h3>Account Support</h3><p>Find help with login issues, profile updates, and basic account management questions.</p></div></div></div></section><section class="section alt"><div class="container"><div class="section-header"><span class="badge">FAQs</span><h2>Common questions</h2><p>Quick answers to the questions users ask most often.</p></div><div class="grid"><div class="accordion-item"><button class="accordion-header">How do I request an estimate? <span>+</span></button><div class="accordion-content">Create or log into your account, enter your project details, then submit the request through the platform.</div></div><div class="accordion-item"><button class="accordion-header">Can I update my information later? <span>+</span></button><div class="accordion-content">Yes, users can return to update account and project details as needed.</div></div><div class="accordion-item"><button class="accordion-header">What if I need more help? <span>+</span></button><div class="accordion-content">You can use the support request form to reach the team for further assistance.</div></div></div></div></section><section class="section"><div class="container"><div class="card"><span class="badge">Support Request</span><h3>Send a help request</h3><form id="supportForm" class="grid grid-2"><div class="form-group"><label>Name</label><input class="input" type="text" required></div><div class="form-group"><label>Email</label><input class="input" type="email" required></div><div class="form-group" style="grid-column:1 / -1;"><label>Describe the issue</label><textarea required></textarea></div><div style="grid-column:1 / -1;"><button class="btn btn-primary" type="submit">Submit Request</button><div id="formNotice" class="notice"></div></div></form></div></div></section><footer class="footer"><div class="container footer-wrap"><div>© 2026 Estimator App. All rights reserved.</div><div class="footer-links"><a href="help-center.html">Help Center</a><a href="safety.html">Safety</a><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div></div></footer><script src="help-center.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help Center | Estimator App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="help-center.css" />
+  <link rel="stylesheet" href="homeStyle.css">
+</head>
+<body>
+  <header class="navBar">
+    <div class="navInner">
+
+      <!-- Logo (Home link) -->
+      <a href="home.html" class="logoArea">
+        <h2 class="logoText">Estimator</h2>
+      </a>
+
+      <!-- Mobile toggle -->
+      <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+        <span class="menuLine"></span>
+      </button>
+
+      <!-- Nav content -->
+      <nav class="menuArea" id="menuArea">
+
+        <!-- Left navigation -->
+        <div class="navLinks">
+
+          <!-- Our Services (Mega Dropdown) -->
+          <div class="servicesMenu" id="servicesMenu">
+            <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
+              Our Services <span class="dropdownIcon">▾</span>
+            </a>
+
+            <div class="megaDropdown" id="megaDropdown">
+              <!-- Left column -->
+              <div class="megaLeft">
+                <div class="megaSectionTitle">Workshop Services</div>
+
+                <button class="megaCategory isActive" type="button" data-panel="interiorPanel">
+                  Interior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="exteriorPanel">
+                  Exterior Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="mechanicalPanel">
+                  Mechanical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="electricalPanel">
+                  Electrical Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="tirePanel">
+                  Tire & Wheel Services <span class="chevronIcon">›</span>
+                </button>
+
+                <button class="megaCategory" type="button" data-panel="upgradePanel">
+                  Customization & Upgrades <span class="chevronIcon">›</span>
+                </button>
+              </div>
+
+              <!-- Right column -->
+              <div class="megaRight">
+
+                <div class="megaPanel isVisible" id="interiorPanel">
+                  <a class="megaItem" href="#service-interior-detailing">Interior Detailing</a>
+                  <a class="megaItem" href="#service-seat-cleaning">Seat Cleaning</a>
+                  <a class="megaItem" href="#service-carpet-shampoo">Carpet Shampoo</a>
+                  <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
+                  <a class="megaItem" href="#service-odor">Odor Removal</a>
+                  <a class="megaItem" href="#service-ac">AC Sanitization</a>
+                  
+                </div>
+
+                <div class="megaPanel" id="exteriorPanel">
+                  <a class="megaItem" href="#service-wash">Car Wash & Detailing</a>
+                  <a class="megaItem" href="#service-paint-correction">Paint Correction</a>
+                  <a class="megaItem" href="#service-ceramic">Ceramic Coating</a>
+                  <a class="megaItem" href="#service-wax">Wax & Polish</a>
+                  <a class="megaItem" href="#service-scratch">Scratch Removal</a>
+                  <a class="megaItem" href="#service-headlight">Headlight Restoration</a>
+                  <a class="megaItem" href="#service-windshield">Windshield Repair</a>
+                </div>
+
+                <div class="megaPanel" id="mechanicalPanel">
+                  <a class="megaItem" href="#service-diagnostics">Engine Diagnostics</a>
+                  <a class="megaItem" href="#service-oil">Oil Change</a>
+                  <a class="megaItem" href="#service-brakes">Brake Service</a>
+                  <a class="megaItem" href="#service-suspension">Suspension Repair</a>
+                  <a class="megaItem" href="#service-battery">Battery Replacement</a>
+                  <a class="megaItem" href="#service-transmission">Transmission Service</a>
+                  <a class="megaItem" href="#service-cooling">Cooling System Repair</a>
+                </div>
+
+                <div class="megaPanel" id="electricalPanel">
+                  <a class="megaItem" href="#service-ecu">ECU Diagnostics</a>
+                  <a class="megaItem" href="#service-sensors">Sensor Replacement</a>
+                  <a class="megaItem" href="#service-wiring">Wiring Repair</a>
+                  <a class="megaItem" href="#service-alternator">Alternator Service</a>
+                  <a class="megaItem" href="#service-starter">Starter Repair</a>
+                  <a class="megaItem" href="#service-lighting">Lighting Installation</a>
+                </div>
+
+                <div class="megaPanel" id="tirePanel">
+                  <a class="megaItem" href="#service-tires">Tire Replacement</a>
+                  <a class="megaItem" href="#service-alignment">Wheel Alignment</a>
+                  <a class="megaItem" href="#service-balancing">Wheel Balancing</a>
+                  <a class="megaItem" href="#service-rotation">Tire Rotation</a>
+                  <a class="megaItem" href="#service-rim">Rim Repair</a>
+                </div>
+
+                <div class="megaPanel" id="upgradePanel">
+                  <a class="megaItem" href="#service-audio">Audio Installation</a>
+                  <a class="megaItem" href="#service-camera">Reverse Camera Setup</a>
+                  <a class="megaItem" href="#service-tint">Window Tinting</a>
+                  <a class="megaItem" href="#service-tuning">Performance Tuning</a>
+                  <a class="megaItem" href="#service-body-kit">Body Kit Installation</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Business signup -->
+          <a class="menuLink businessLink" href="businessSignUp.html">Sign up as Business</a>
+
+        </div>
+
+        <!-- Right actions (customers) -->
+        <div class="navActions">
+          <a class="actionLink" href="customerSignup.html">
+            <button class="primaryButton" type="button">Sign up</button>
+          </a>
+          <a class="secondaryLink" href="loginChoice.html">Log in</a>
+        </div>
+
+      </nav>
+
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container">
+      <span class="badge">Support</span>
+      <h1>Help Center</h1>
+      <p>
+        Find answers, learn how the platform works, and get support for common
+        questions related to estimates, accounts, and using Estimator App.
+      </p>
+
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">Contact Support</a>
+        <a href="#support-form" class="btn btn-secondary">Send Help Request</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge">Support</span>
+        <h2>How can we help?</h2>
+        <p>
+          The Help Center guides users through common issues and platform features.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Getting Started</h3>
+          <p>
+            Learn how to create an account, submit project details, and navigate
+            the platform easily.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Estimate Requests</h3>
+          <p>
+            Understand how to request estimates, review information, and track
+            next steps clearly.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Account Support</h3>
+          <p>
+            Find help with login issues, profile updates, and basic account
+            management questions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge">FAQs</span>
+        <h2>Common questions</h2>
+        <p>Quick answers to the questions users ask most often.</p>
+      </div>
+
+      <div class="grid">
+        <div class="accordion-item">
+          <button class="accordion-header" type="button" aria-expanded="false">
+            How do I request an estimate? <span>+</span>
+          </button>
+          <div class="accordion-content">
+            Create or log into your account, enter your project details, then
+            submit the request through the platform.
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" type="button" aria-expanded="false">
+            Can I update my information later? <span>+</span>
+          </button>
+          <div class="accordion-content">
+            Yes, users can return to update account and project details as needed.
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header" type="button" aria-expanded="false">
+            What if I need more help? <span>+</span>
+          </button>
+          <div class="accordion-content">
+            You can use the support request form to reach the team for further
+            assistance.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="support-form">
+    <div class="container">
+      <div class="card">
+        <span class="badge">Support Request</span>
+        <h3>Send a help request</h3>
+
+        <form id="supportForm" class="grid grid-2">
+          <div class="form-group">
+            <label for="supportName">Name</label>
+            <input
+              id="supportName"
+              name="name"
+              class="input"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="supportEmail">Email</label>
+            <input
+              id="supportEmail"
+              name="email"
+              class="input"
+              type="email"
+              required
+            />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="supportMessage">Describe the issue</label>
+            <textarea
+              id="supportMessage"
+              name="message"
+              required
+            ></textarea>
+          </div>
+
+          <div style="grid-column: 1 / -1;">
+            <button class="btn btn-primary" type="submit">
+              Submit Request
+            </button>
+            <div id="formNotice" class="notice"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===============================
+            FOOTER
+================================ -->
+<footer class="mainFooter">
+
+  <div class="footerContainer">
+
+    <!-- Brand -->
+    <div class="footerBrand">
+      <h2 class="footerLogo">Estimator</h2>
+      <p>
+        Connecting drivers with trusted local car service professionals.
+        Fast. Local. Trusted.
+      </p>
+    </div>
+
+    <!-- Services -->
+    <div class="footerColumn">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="#">Exterior Detailing</a></li>
+        <li><a href="#">Interior Cleaning</a></li>
+        <li><a href="#">Oil Change</a></li>
+        <li><a href="#">Brake Service</a></li>
+        <li><a href="#">Tire Repair</a></li>
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div class="footerColumn">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="become-a-business.html">Become a Business</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    
+
+</section>
+
+    <!-- Support -->
+    <div class="footerColumn">
+      <h3>Support</h3>
+      <ul>
+        <li><a href="help-center.html">Help Center</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="terms-of-service.html">Terms of Service</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footerBottom">
+    <p>© 2026 Estimator. All Rights Reserved.</p>
+  </div>
+
+</footer>
+
+  <script src="help-center.js"></script>
+</body>
+</html>

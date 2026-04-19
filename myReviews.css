@@ -254,3 +254,40 @@
     flex-direction: column;
   }
 }
+.businessReplyBlock {
+  margin-top: 16px;
+  background: #fff7f7;
+  border: 1px solid #f0d3d3;
+  border-left: 4px solid #c40000;
+  border-radius: 16px;
+  padding: 16px 18px;
+}
+
+.businessReplyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.businessReplyHeader h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.businessReplyMeta {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.businessReplyText {
+  color: #333;
+  line-height: 1.7;
+  font-size: 15px;
+  white-space: pre-wrap;
+}

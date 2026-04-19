@@ -1,150 +1,270 @@
-// ===============================
-// USER DROPDOWN + NAME
-// ===============================
-const userButton = document.getElementById("userButton");
-const userMenu = document.getElementById("userMenu");
-const logoutBtn = document.getElementById("logoutBtn");
-const userName = document.getElementById("userName");
+const API_BASE_URL =
+  window.location.hostname === "127.0.0.1" ||
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:5000"
+    : "https://estimator-app-icmp.onrender.com";
 
-const savedCustomer = JSON.parse(localStorage.getItem("estimatorCustomerAuth"));
-const apiBaseUrl = "http://localhost:5000";
-
-if (!savedCustomer) {
-  window.location.href = "customerLogin.html";
-}
-
-if (savedCustomer && savedCustomer.firstName && userName) {
-  userName.textContent = savedCustomer.firstName;
-} else if (userName) {
-  userName.textContent = "Guest";
-}
-
-if (userButton && userMenu) {
-  userButton.addEventListener("click", function (e) {
-    e.stopPropagation();
-    userMenu.classList.toggle("active");
-  });
-
-  document.querySelectorAll(".userDropdown a").forEach(function (link) {
-    link.addEventListener("click", function () {
-      userMenu.classList.remove("active");
-    });
-  });
-
-  document.addEventListener("click", function (e) {
-    if (!userMenu.contains(e.target)) {
-      userMenu.classList.remove("active");
-    }
-  });
-}
-
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    localStorage.removeItem("estimatorCustomerAuth");
-    window.location.href = "home.html";
-  });
-}
-
-// ===============================
-// MOBILE MENU
-// ===============================
-const menuButton = document.getElementById("menuButton");
-const menuArea = document.getElementById("menuArea");
-
-if (menuButton && menuArea) {
-  menuButton.addEventListener("click", function () {
-    menuArea.classList.toggle("active");
-  });
-}
-
-// ===============================
-// MEGA DROPDOWN PANELS
-// ===============================
-const megaCategoryButtons = document.querySelectorAll(".megaCategory");
-const megaPanels = document.querySelectorAll(".megaPanel");
-
-megaCategoryButtons.forEach(function (button) {
-  button.addEventListener("click", function () {
-    const targetPanelId = button.getAttribute("data-panel");
-
-    megaCategoryButtons.forEach(function (btn) {
-      btn.classList.remove("isActive");
-    });
-
-    megaPanels.forEach(function (panel) {
-      panel.classList.remove("isVisible");
-    });
-
-    button.classList.add("isActive");
-
-    const targetPanel = document.getElementById(targetPanelId);
-    if (targetPanel) {
-      targetPanel.classList.add("isVisible");
-    }
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  setupHeaderMenu();
+  setupUserDropdown();
+  loadUserName();
+  setupReviewTabs();
+  loadMyReviews();
 });
 
-// ===============================
-// PAGE ELEMENTS
-// ===============================
-const reviewPageMessage = document.getElementById("reviewPageMessage");
-const businessReviewsContainer = document.getElementById("businessReviewsContainer");
-const appReviewsContainer = document.getElementById("appReviewsContainer");
+function setupHeaderMenu() {
+  const menuButton = document.getElementById("menuButton");
+  const menuArea = document.getElementById("menuArea");
+  const servicesMenu = document.getElementById("servicesMenu");
+  const servicesLink = document.getElementById("servicesLink");
+  const categories = document.querySelectorAll(".megaCategory");
 
-const businessReviewCount = document.getElementById("businessReviewCount");
-const appReviewCount = document.getElementById("appReviewCount");
-const totalReviewCount = document.getElementById("totalReviewCount");
+  if (menuButton && menuArea) {
+    menuButton.addEventListener("click", () => {
+      menuArea.classList.toggle("open");
+      menuButton.classList.toggle("open");
+    });
+  }
 
-const showBusinessReviewsBtn = document.getElementById("showBusinessReviewsBtn");
-const showAppReviewsBtn = document.getElementById("showAppReviewsBtn");
+  if (servicesMenu && servicesLink) {
+    servicesLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      servicesMenu.classList.toggle("open");
+    });
 
-// ===============================
-// HELPERS
-// ===============================
-function showPageMessage(type, text) {
-  if (!reviewPageMessage) return;
-  reviewPageMessage.className = "pageMessage " + type;
-  reviewPageMessage.textContent = text;
+    document.addEventListener("click", (e) => {
+      if (!servicesMenu.contains(e.target)) {
+        servicesMenu.classList.remove("open");
+      }
+    });
+  }
+
+  categories.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      categories.forEach((item) => item.classList.remove("isActive"));
+      btn.classList.add("isActive");
+
+      const panelId = btn.getAttribute("data-panel");
+      document.querySelectorAll(".megaPanel").forEach((panel) => {
+        panel.classList.remove("isVisible");
+      });
+
+      const selectedPanel = document.getElementById(panelId);
+      if (selectedPanel) {
+        selectedPanel.classList.add("isVisible");
+      }
+    });
+  });
 }
 
-function setCounts(businessCount, appCount) {
-  if (businessReviewCount) {
-    businessReviewCount.textContent = businessCount;
+function setupUserDropdown() {
+  const userMenu = document.getElementById("userMenu");
+  const userButton = document.getElementById("userButton");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (userMenu && userButton) {
+    userButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userMenu.classList.toggle("open");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!userMenu.contains(e.target)) {
+        userMenu.classList.remove("open");
+      }
+    });
   }
 
-  if (appReviewCount) {
-    appReviewCount.textContent = appCount;
-  }
-
-  if (totalReviewCount) {
-    totalReviewCount.textContent = businessCount + appCount;
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("estimatorCustomerAuth");
+      localStorage.removeItem("user");
+      window.location.href = "home.html";
+    });
   }
 }
 
-function formatDate(dateValue) {
-  if (!dateValue) return "-";
+function getLoggedInCustomer() {
+  return (
+    JSON.parse(localStorage.getItem("estimatorCustomerAuth")) ||
+    JSON.parse(localStorage.getItem("user"))
+  );
+}
 
-  const date = new Date(dateValue);
-  if (Number.isNaN(date.getTime())) return dateValue;
+function loadUserName() {
+  const userNameEl = document.getElementById("userName");
+  const savedCustomer = getLoggedInCustomer();
 
+  if (!savedCustomer) {
+    window.location.href = "customerLogin.html";
+    return;
+  }
+
+  if (userNameEl) {
+    userNameEl.textContent =
+      savedCustomer.first_name ||
+      savedCustomer.firstName ||
+      savedCustomer.name ||
+      "John";
+  }
+}
+
+function setupReviewTabs() {
+  const showBusinessReviewsBtn = document.getElementById("showBusinessReviewsBtn");
+  const showAppReviewsBtn = document.getElementById("showAppReviewsBtn");
+  const businessReviewsContainer = document.getElementById("businessReviewsContainer");
+  const appReviewsContainer = document.getElementById("appReviewsContainer");
+
+  if (!showBusinessReviewsBtn || !showAppReviewsBtn || !businessReviewsContainer || !appReviewsContainer) {
+    return;
+  }
+
+  showBusinessReviewsBtn.addEventListener("click", () => {
+    showBusinessReviewsBtn.classList.add("active");
+    showAppReviewsBtn.classList.remove("active");
+    businessReviewsContainer.classList.remove("hidden");
+    appReviewsContainer.classList.add("hidden");
+  });
+
+  showAppReviewsBtn.addEventListener("click", () => {
+    showAppReviewsBtn.classList.add("active");
+    showBusinessReviewsBtn.classList.remove("active");
+    appReviewsContainer.classList.remove("hidden");
+    businessReviewsContainer.classList.add("hidden");
+  });
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function formatDate(value) {
+  if (!value) return "Not provided";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not provided";
   return date.toLocaleDateString();
 }
 
-function createField(label, value) {
-  return `
-    <div class="reviewField">
-      <span class="reviewFieldLabel">${label}</span>
-      <div class="reviewFieldValue">${value || "-"}</div>
-    </div>
-  `;
+async function parseApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  const rawText = await response.text();
+
+  if (!contentType.includes("application/json")) {
+    if (rawText.trim().startsWith("<!DOCTYPE") || rawText.trim().startsWith("<html")) {
+      throw new Error("Server returned HTML instead of JSON.");
+    }
+    throw new Error(rawText || "Server did not return valid JSON.");
+  }
+
+  return JSON.parse(rawText);
+}
+
+async function loadMyReviews() {
+  const customer = getLoggedInCustomer();
+  const businessReviewsContainer = document.getElementById("businessReviewsContainer");
+  const appReviewsContainer = document.getElementById("appReviewsContainer");
+  const pageMessage = document.getElementById("reviewPageMessage");
+  const businessReviewCount = document.getElementById("businessReviewCount");
+  const appReviewCount = document.getElementById("appReviewCount");
+  const totalReviewCount = document.getElementById("totalReviewCount");
+
+  if (!customer) {
+    window.location.href = "customerLogin.html";
+    return;
+  }
+
+  const customerId = customer.id || customer.customer_id || customer.customerId || "";
+
+  if (!customerId) {
+    if (pageMessage) {
+      pageMessage.className = "pageMessage error";
+      pageMessage.textContent = "Customer session not found.";
+    }
+    return;
+  }
+
+  try {
+    if (pageMessage) {
+      pageMessage.className = "pageMessage";
+      pageMessage.textContent = "Loading your reviews...";
+    }
+
+    const [businessResponse, appResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/reviews/business/customer/${encodeURIComponent(customerId)}`),
+      fetch(`${API_BASE_URL}/api/reviews/app/customer/${encodeURIComponent(customerId)}`)
+    ]);
+
+    const businessData = await parseApiResponse(businessResponse);
+    const appData = await parseApiResponse(appResponse);
+
+    if (!businessResponse.ok) {
+      throw new Error(businessData.message || "Could not load business reviews.");
+    }
+
+    if (!appResponse.ok) {
+      throw new Error(appData.message || "Could not load app reviews.");
+    }
+
+    const businessReviews = Array.isArray(businessData.reviews) ? businessData.reviews : [];
+    const appReviews = Array.isArray(appData.reviews) ? appData.reviews : [];
+
+    console.log("BUSINESS REVIEWS RESPONSE:", businessReviews);
+
+    if (businessReviewCount) businessReviewCount.textContent = businessReviews.length;
+    if (appReviewCount) appReviewCount.textContent = appReviews.length;
+    if (totalReviewCount) totalReviewCount.textContent = businessReviews.length + appReviews.length;
+
+    renderBusinessReviews(businessReviews);
+    renderAppReviews(appReviews);
+
+    if (pageMessage) {
+      pageMessage.className = "pageMessage success";
+      pageMessage.textContent = "Your reviews loaded successfully.";
+    }
+  } catch (error) {
+    console.error("Load my reviews error:", error);
+
+    if (businessReviewCount) businessReviewCount.textContent = "0";
+    if (appReviewCount) appReviewCount.textContent = "0";
+    if (totalReviewCount) totalReviewCount.textContent = "0";
+
+    if (businessReviewsContainer) {
+      businessReviewsContainer.innerHTML = `
+        <div class="emptyState">
+          <h3>Could not load business reviews</h3>
+          <p>${escapeHtml(error.message || "Something went wrong.")}</p>
+        </div>
+      `;
+    }
+
+    if (appReviewsContainer) {
+      appReviewsContainer.innerHTML = `
+        <div class="emptyState">
+          <h3>Could not load app reviews</h3>
+          <p>${escapeHtml(error.message || "Something went wrong.")}</p>
+        </div>
+      `;
+    }
+
+    if (pageMessage) {
+      pageMessage.className = "pageMessage error";
+      pageMessage.textContent = error.message || "Could not load your reviews.";
+    }
+  }
 }
 
 function renderBusinessReviews(reviews) {
-  if (!businessReviewsContainer) return;
+  const container = document.getElementById("businessReviewsContainer");
+  if (!container) return;
 
-  if (!reviews || reviews.length === 0) {
-    businessReviewsContainer.innerHTML = `
+  if (!reviews.length) {
+    container.innerHTML = `
       <div class="emptyState">
         <h3>No business reviews yet</h3>
         <p>You have not submitted any business reviews yet.</p>
@@ -153,180 +273,168 @@ function renderBusinessReviews(reviews) {
     return;
   }
 
-  businessReviewsContainer.innerHTML = reviews.map(function (review) {
+  container.innerHTML = reviews.map((review) => {
+    const rating = Number(review.overall_rating ?? review.overallRating ?? 0);
+    const safeRating = Math.max(0, Math.min(5, rating));
+    const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+
+    const reviewTitle = review.review_title ?? review.reviewTitle ?? "Business Review";
+    const businessName = review.business_name ?? review.businessName ?? "Business";
+    const createdAt = review.created_at ?? review.createdAt ?? "";
+
+    const serviceUsed = review.service_used ?? review.serviceUsed ?? "Not provided";
+    const serviceDate = review.service_date ?? review.serviceDate ?? "";
+    const serviceLocation = review.service_location ?? review.serviceLocation ?? "Not provided";
+    const serviceState = review.service_state ?? review.serviceState ?? "Not provided";
+    const wouldRecommend = review.would_recommend ?? review.wouldRecommend ?? "Not provided";
+    const valueForMoney = review.value_for_money ?? review.valueForMoney ?? "Not provided";
+    const reviewText = review.review_text ?? review.reviewText ?? "No review text provided.";
+
+    const replyText = review.business_reply_text ?? review.businessReplyText ?? "";
+    const repliedAt = review.business_replied_at ?? review.businessRepliedAt ?? "";
+    const repliedBy = review.business_replied_by ?? review.businessRepliedBy ?? "Business Owner";
+    const hasBusinessReply = String(replyText).trim() !== "";
+
     return `
       <div class="reviewCard">
         <div class="reviewCardTop">
           <div class="reviewCardTitleWrap">
-            <h3>${review.review_title}</h3>
-            <div class="reviewCardMeta">
-              ${review.business_name} • Submitted on ${formatDate(review.created_at)}
-            </div>
+            <h3>${escapeHtml(reviewTitle)}</h3>
+            <p class="reviewCardMeta">
+              For ${escapeHtml(businessName)} · ${escapeHtml(formatDate(createdAt))}
+            </p>
           </div>
-          <div class="reviewBadge">Business Review</div>
+
+          <div class="reviewBadge">${escapeHtml(stars)}</div>
         </div>
 
         <div class="reviewGrid">
-          ${createField("Business Name", review.business_name)}
-          ${createField("Business Zip", review.business_zip)}
-          ${createField("Service Used", review.service_used)}
-          ${createField("Overall Rating", review.overall_rating + " / 5")}
-          ${createField("Value for Money", review.value_for_money + " / 5")}
-          ${createField("Would Recommend", review.would_recommend)}
-          ${createField("Service Date", formatDate(review.service_date))}
-          ${createField("Service State", review.service_state)}
-          ${createField("Service Location", review.service_location)}
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Service Used</span>
+            <div class="reviewFieldValue">${escapeHtml(serviceUsed)}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Service Date</span>
+            <div class="reviewFieldValue">${escapeHtml(formatDate(serviceDate))}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Location</span>
+            <div class="reviewFieldValue">${escapeHtml(serviceLocation)}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">State</span>
+            <div class="reviewFieldValue">${escapeHtml(serviceState)}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Would Recommend</span>
+            <div class="reviewFieldValue">${escapeHtml(wouldRecommend)}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Value for Money</span>
+            <div class="reviewFieldValue">${escapeHtml(String(valueForMoney))}</div>
+          </div>
         </div>
 
         <div class="reviewTextBlock">
           <h4>Your Review</h4>
-          <p>${review.review_text}</p>
+          <p>${escapeHtml(reviewText)}</p>
         </div>
+
+        ${hasBusinessReply ? `
+          <div class="businessReplyBlock">
+            <div class="businessReplyHeader">
+              <h4>Business Owner Reply</h4>
+              <div class="businessReplyMeta">
+                ${escapeHtml(repliedBy)} · ${escapeHtml(formatDate(repliedAt))}
+              </div>
+            </div>
+            <div class="businessReplyText">${escapeHtml(replyText)}</div>
+          </div>
+        ` : ""}
       </div>
     `;
   }).join("");
 }
 
 function renderAppReviews(reviews) {
-  if (!appReviewsContainer) return;
+  const container = document.getElementById("appReviewsContainer");
+  if (!container) return;
 
-  if (!reviews || reviews.length === 0) {
-    appReviewsContainer.innerHTML = `
+  if (!reviews.length) {
+    container.innerHTML = `
       <div class="emptyState">
         <h3>No Estimator reviews yet</h3>
-        <p>You have not submitted any Estimator app reviews yet.</p>
+        <p>You have not submitted any app reviews yet.</p>
       </div>
     `;
     return;
   }
 
-  appReviewsContainer.innerHTML = reviews.map(function (review) {
+  container.innerHTML = reviews.map((review) => {
+    const rating = Number(review.overall_rating ?? review.overallRating ?? 0);
+    const safeRating = Math.max(0, Math.min(5, rating));
+    const stars = "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+
     return `
       <div class="reviewCard">
         <div class="reviewCardTop">
           <div class="reviewCardTitleWrap">
-            <h3>${review.review_title}</h3>
-            <div class="reviewCardMeta">
-              Estimator App • Submitted on ${formatDate(review.created_at)}
-            </div>
+            <h3>${escapeHtml(review.review_title ?? review.reviewTitle ?? "Estimator Review")}</h3>
+            <p class="reviewCardMeta">
+              Estimator App · ${escapeHtml(formatDate(review.created_at ?? review.createdAt))}
+            </p>
           </div>
-          <div class="reviewBadge">Estimator Review</div>
+
+          <div class="reviewBadge">${escapeHtml(stars)}</div>
         </div>
 
         <div class="reviewGrid">
-          ${createField("Service Used", review.service_used)}
-          ${createField("Overall Rating", review.overall_rating + " / 5")}
-          ${createField("Ease of Use", review.ease_of_use + " / 5")}
-          ${createField("Business Match Quality", review.business_match_quality + " / 5")}
-          ${createField("Would Recommend", review.would_recommend)}
-          ${createField("Zip Code", review.zip_code)}
-          ${createField("Address", review.address)}
-          ${createField("Improvement Suggestion", review.improvement_suggestion)}
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Service Used</span>
+            <div class="reviewFieldValue">${escapeHtml(review.service_used ?? review.serviceUsed ?? "Not provided")}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Address</span>
+            <div class="reviewFieldValue">${escapeHtml(review.address ?? "Not provided")}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">ZIP Code</span>
+            <div class="reviewFieldValue">${escapeHtml(review.zip_code ?? review.zipCode ?? "Not provided")}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Ease of Use</span>
+            <div class="reviewFieldValue">${escapeHtml(String(review.ease_of_use ?? review.easeOfUse ?? "Not provided"))}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Business Match Quality</span>
+            <div class="reviewFieldValue">${escapeHtml(String(review.business_match_quality ?? review.businessMatchQuality ?? "Not provided"))}</div>
+          </div>
+
+          <div class="reviewField">
+            <span class="reviewFieldLabel">Would Recommend</span>
+            <div class="reviewFieldValue">${escapeHtml(review.would_recommend ?? review.wouldRecommend ?? "Not provided")}</div>
+          </div>
+        </div>
+
+        <div class="reviewTextBlock" style="margin-bottom: 14px;">
+          <h4>Your Review</h4>
+          <p>${escapeHtml(review.review_text ?? review.reviewText ?? "No review text provided.")}</p>
         </div>
 
         <div class="reviewTextBlock">
-          <h4>Your Review</h4>
-          <p>${review.review_text}</p>
+          <h4>Improvement Suggestion</h4>
+          <p>${escapeHtml(review.improvement_suggestion ?? review.improvementSuggestion ?? "No suggestion provided.")}</p>
         </div>
       </div>
     `;
   }).join("");
 }
-
-function showBusinessTab() {
-  if (businessReviewsContainer) {
-    businessReviewsContainer.classList.remove("hidden");
-  }
-
-  if (appReviewsContainer) {
-    appReviewsContainer.classList.add("hidden");
-  }
-
-  if (showBusinessReviewsBtn) {
-    showBusinessReviewsBtn.classList.add("active");
-  }
-
-  if (showAppReviewsBtn) {
-    showAppReviewsBtn.classList.remove("active");
-  }
-}
-
-function showAppTab() {
-  if (appReviewsContainer) {
-    appReviewsContainer.classList.remove("hidden");
-  }
-
-  if (businessReviewsContainer) {
-    businessReviewsContainer.classList.add("hidden");
-  }
-
-  if (showAppReviewsBtn) {
-    showAppReviewsBtn.classList.add("active");
-  }
-
-  if (showBusinessReviewsBtn) {
-    showBusinessReviewsBtn.classList.remove("active");
-  }
-}
-
-// ===============================
-// LOAD REVIEWS
-// ===============================
-async function loadMyReviews() {
-  try {
-    showPageMessage("success", "Loading your reviews...");
-
-    const customerId = savedCustomer?.customerId || savedCustomer?.id;
-
-    if (!customerId) {
-      showPageMessage("error", "Customer ID not found. Please log in again.");
-      return;
-    }
-
-    const [businessResponse, appResponse] = await Promise.all([
-      fetch(`${apiBaseUrl}/api/reviews/business/customer/${customerId}`),
-      fetch(`${apiBaseUrl}/api/reviews/app/customer/${customerId}`)
-    ]);
-
-    const businessData = await businessResponse.json();
-    const appData = await appResponse.json();
-
-    if (!businessResponse.ok || !businessData.success) {
-      throw new Error(businessData.message || "Failed to load business reviews.");
-    }
-
-    if (!appResponse.ok || !appData.success) {
-      throw new Error(appData.message || "Failed to load app reviews.");
-    }
-
-    const businessReviews = businessData.reviews || [];
-    const appReviews = appData.reviews || [];
-
-    renderBusinessReviews(businessReviews);
-    renderAppReviews(appReviews);
-    setCounts(businessReviews.length, appReviews.length);
-
-    showPageMessage("success", "Your reviews were loaded successfully.");
-  } catch (error) {
-    console.error("Load my reviews error:", error);
-    showPageMessage("error", "Could not load your reviews. Please try again.");
-  }
-}
-
-// ===============================
-// TAB EVENTS
-// ===============================
-if (showBusinessReviewsBtn) {
-  showBusinessReviewsBtn.addEventListener("click", showBusinessTab);
-}
-
-if (showAppReviewsBtn) {
-  showAppReviewsBtn.addEventListener("click", showAppTab);
-}
-
-// ===============================
-// INIT
-// ===============================
-window.addEventListener("DOMContentLoaded", function () {
-  loadMyReviews();
-});
