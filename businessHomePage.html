@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="customerHomePage.css" />
   <link rel="stylesheet" href="businessHomePage.css" />
   <title>Business Home | Estimator</title>
 </head>
-
 <body>
   <header class="navBar">
     <div class="navInner">
-
       <a href="businessHomePage.html" class="logoArea">
         <h2 class="logoText">Estimator</h2>
       </a>
@@ -26,28 +23,28 @@
 
       <nav class="menuArea" id="menuArea">
         <div class="navLinks">
-          <a class="menuLink" href="businessHomePage.html">Dashboard</a>
+          <a class="menuLink activePage" href="businessHomePage.html">Dashboard</a>
           <a class="menuLink" href="businessIncomingRequests.html">Incoming Requests</a>
           <a class="menuLink" href="businessActiveJobs.html">Active Jobs</a>
+          <a class="menuLink" href="businessCompletedJobs.html">Completed Jobs</a>
           <a class="menuLink" href="businessReviews.html">Reviews</a>
         </div>
 
-    <div class="navActions">
-        <div class="userMenu" id="userMenu">
-        <button class="userButton" id="userButton" type="button">
-            Welcome, <span id="managerName">Mg.</span>
-            <span class="userArrow">▾</span>
-        </button>
+        <div class="navActions">
+          <div class="userMenu" id="userMenu">
+            <button class="userButton" id="userButton" type="button">
+              Welcome, <span id="managerName">Mg.</span>
+              <span class="userArrow">▾</span>
+            </button>
 
-    <div class="userDropdown" id="userDropdown">
-      <a href="businessProfile.html">Business Profile</a>
-      <div class="dropdownDivider"></div>
-      <a href="#" id="logoutBtn">Log out</a>
-    </div>
-  </div>
-</div>
+            <div class="userDropdown" id="userDropdown">
+              <a href="businessProfile.html">Business Profile</a>
+              <div class="dropdownDivider"></div>
+              <a href="" id="logoutBtn">Log out</a>
+            </div>
+          </div>
+        </div>
       </nav>
-
     </div>
   </header>
 
@@ -55,34 +52,34 @@
     <section class="businessHero">
       <div class="businessHeroContent">
         <p class="businessEyebrow">Business Dashboard</p>
-        <h1>Manage leads, active jobs, and customer trust from one place.</h1>
-        <p class="businessSubtext">
+        <h1 id="heroTitle">Manage leads, active jobs, and customer trust from one place.</h1>
+        <p class="businessSubtext" id="heroSubtext">
           Review new requests, track work in progress, and monitor what customers are saying about your business.
         </p>
       </div>
     </section>
 
     <section class="businessStats">
-      <div class="statCard">
-        <h3>12</h3>
-        <p>Incoming Requests</p>
-      </div>
+  <a class="statCard statLinkCard" href="businessIncomingRequests.html">
+    <h3 id="incomingRequestCount">0</h3>
+    <p>Incoming Requests</p>
+  </a>
 
-      <div class="statCard">
-        <h3>5</h3>
-        <p>Active Jobs</p>
-      </div>
+  <a class="statCard statLinkCard" href="businessActiveJobs.html">
+    <h3 id="activeJobCount">0</h3>
+    <p>Active Jobs</p>
+  </a>
 
-      <div class="statCard">
-        <h3>32</h3>
-        <p>Completed Jobs</p>
-      </div>
+  <a class="statCard statLinkCard" href="businessCompletedJobs.html">
+    <h3 id="completedJobCount">0</h3>
+    <p>Completed Jobs</p>
+  </a>
 
-      <div class="statCard">
-        <h3>4.8 ★</h3>
-        <p>Average Rating</p>
-      </div>
-    </section>
+  <a class="statCard statLinkCard" href="businessReviews.html">
+    <h3 id="averageRating">0.0 ★</h3>
+    <p>Average Rating</p>
+  </a>
+</section>
 
     <section class="businessPanelGrid">
       <div class="businessPanel">
@@ -90,21 +87,8 @@
           <h2>Incoming Requests</h2>
           <a href="businessIncomingRequests.html">View all</a>
         </div>
-
-        <div class="requestItem">
-          <h3>Brake Repair</h3>
-          <p>Customer: John D.</p>
-          <p>ZIP: 75001</p>
-          <p>Vehicle: 2018 Honda Civic</p>
-          <p>Description: Front brakes making grinding noise.</p>
-        </div>
-
-        <div class="requestItem">
-          <h3>Oil Change</h3>
-          <p>Customer: Sarah M.</p>
-          <p>ZIP: 76010</p>
-          <p>Vehicle: 2020 Toyota Camry</p>
-          <p>Description: Looking for same-day oil change service.</p>
+        <div id="dashboardIncomingRequests">
+          <div class="emptyState">Loading requests...</div>
         </div>
       </div>
 
@@ -113,17 +97,8 @@
           <h2>Active Jobs</h2>
           <a href="businessActiveJobs.html">View all</a>
         </div>
-
-        <div class="jobItem">
-          <h3>Battery Replacement</h3>
-          <p>Customer: Alex T.</p>
-          <p>Status: In Progress</p>
-        </div>
-
-        <div class="jobItem">
-          <h3>Tire Replacement</h3>
-          <p>Customer: Maria R.</p>
-          <p>Status: Waiting for pickup</p>
+        <div id="dashboardActiveJobs">
+          <div class="emptyState">Loading active jobs...</div>
         </div>
       </div>
     </section>
@@ -133,24 +108,24 @@
         <h2>Recent Reviews</h2>
         <a href="businessReviews.html">View all</a>
       </div>
-
-      <div class="reviewItem">
-        <strong>★★★★★</strong>
-        <p>“Fast service and very professional. Highly recommended.”</p>
-        <span>- James R.</span>
-      </div>
-
-      <div class="reviewItem">
-        <strong>★★★★☆</strong>
-        <p>“Good work and fair pricing. Would come back again.”</p>
-        <span>- Ashley M.</span>
+      <div id="dashboardRecentReviews">
+        <div class="emptyState">Loading reviews...</div>
       </div>
     </section>
   </main>
 
+  <div class="requestModalOverlay" id="requestModalOverlay">
+    <div class="requestModal">
+      <div class="requestModalHeader">
+        <h2>Incoming Requests</h2>
+        <button type="button" class="closeModalBtn" id="closeRequestModal">×</button>
+      </div>
+      <div id="requestModalList"></div>
+    </div>
+  </div>
+
   <footer class="mainFooter">
     <div class="footerContainer">
-
       <div class="footerBrand">
         <h2 class="footerLogo">Estimator</h2>
         <p>
@@ -188,7 +163,6 @@
           <li><a href="#">Terms of Service</a></li>
         </ul>
       </div>
-
     </div>
 
     <div class="footerBottom">
