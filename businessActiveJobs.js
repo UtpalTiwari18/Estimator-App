@@ -114,15 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadActiveJobs() {
     try {
       const zip = String(savedBusiness.zip || "").trim();
+      const businessId = Number(savedBusiness.id);
 
-      if (!zip) {
-        activeJobsList.innerHTML = `<div class="emptyState">Business ZIP not found in login session.</div>`;
+      if (!zip || !businessId) {
+        activeJobsList.innerHTML = `<div class="emptyState">Business ZIP or business ID not found in login session.</div>`;
         activeJobsTotal.textContent = "0 Jobs";
         return;
       }
 
       const response = await fetch(
-        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}`
+        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}&business_id=${encodeURIComponent(businessId)}`
       );
 
       const data = await response.json();
@@ -133,8 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const allRequests = Array.isArray(data.requests) ? data.requests : [];
       const activeJobs = allRequests.filter(
-        (item) => normalizeStatus(item.status) === "Work in progress"
-      );
+        (item) => normalizeStatus(item.my_action_status) === "Work in progress");
 
       activeJobsTotal.textContent = `${activeJobs.length} Job${activeJobs.length === 1 ? "" : "s"}`;
 
@@ -206,8 +206,9 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", async function () {
         const requestId = this.dataset.requestId;
         const status = this.dataset.status;
+        const businessId = Number(savedBusiness.id);
 
-        if (!requestId || !status) return;
+        if (!requestId || !status || !businessId) return;
 
         this.disabled = true;
         this.textContent = "Updating...";
@@ -220,7 +221,10 @@ document.addEventListener("DOMContentLoaded", function () {
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify({ status })
+              body: JSON.stringify({
+                status,
+                businessId
+              })
             }
           );
 
@@ -234,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
           await loadActiveJobs();
         } catch (error) {
           console.error("Complete job error:", error);
-          alert("Unable to update job.");
+          alert(error.message || "Unable to update job.");
           this.disabled = false;
           this.textContent = "Mark as Completed";
         }
@@ -336,10 +340,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function escapeAttribute(value) {
-    return String(value ?? "")
+    return String(value == null ? "" : value)
       .replace(/&/g, "&amp;")
       .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
   }
-});     
+});

@@ -563,43 +563,62 @@ app.get("/api/requests/my-requests", async (req, res) => {
 app.get("/api/business/requests", async (req, res) => {
   try {
     const zip = String(req.query.zip || "").trim();
+    const businessId = Number(req.query.business_id);
 
-    if (!zip) {
+    if (!zip || !businessId) {
       return res.status(400).json({
         success: false,
-        message: "Business zip is required."
+        message: "Business zip and business id are required."
       });
     }
 
     const [rows] = await db.execute(
-      `SELECT
-        id,
-        customer_id,
-        customer_name,
-        customer_email,
-        zip_code,
-        service_category,
-        service_needed,
-        problem_description,
-        preferred_date,
-        preferred_time,
-        budget,
-        vehicle_source,
-        saved_vehicle_id,
-        vehicle_make,
-        vehicle_model,
-        vehicle_year,
-        vehicle_color,
-        vehicle_license_plate,
-        vehicle_vin,
-        vehicle_mileage,
-        status,
-        completed_at,
-        created_at
-       FROM customer_requests
-       WHERE zip_code = ?
-       ORDER BY created_at DESC`,
-      [zip]
+      `
+      SELECT
+        cr.id,
+        cr.customer_id,
+        cr.customer_name,
+        cr.customer_email,
+        cr.zip_code,
+        cr.service_category,
+        cr.service_needed,
+        cr.problem_description,
+        cr.preferred_date,
+        cr.preferred_time,
+        cr.budget,
+        cr.vehicle_source,
+        cr.saved_vehicle_id,
+        cr.vehicle_make,
+        cr.vehicle_model,
+        cr.vehicle_year,
+        cr.vehicle_color,
+        cr.vehicle_license_plate,
+        cr.vehicle_vin,
+        cr.vehicle_mileage,
+        cr.status,
+        cr.accepted_at,
+        cr.started_at,
+        cr.completed_at,
+        cr.created_at,
+        bra.action_status AS my_action_status
+      FROM customer_requests cr
+      LEFT JOIN business_request_actions bra
+        ON bra.request_id = cr.id
+       AND bra.business_id = ?
+      WHERE cr.zip_code = ?
+        AND (
+          (
+            cr.status = 'Pending'
+            AND (bra.action_status IS NULL OR bra.action_status <> 'Declined')
+          )
+          OR
+          (
+            bra.action_status IN ('Accepted', 'Work in progress', 'Completed')
+          )
+        )
+      ORDER BY cr.created_at DESC
+      `,
+      [businessId, zip]
     );
 
     return res.status(200).json({
@@ -619,9 +638,19 @@ app.get("/api/business/requests", async (req, res) => {
 // BUSINESS: UPDATE REQUEST STATUS
 // ===============================
 app.put("/api/business/requests/:id/status", async (req, res) => {
+  const connection = await db.getConnection();
+
   try {
-    const requestId = req.params.id;
+    const requestId = Number(req.params.id);
+    const businessId = Number(req.body.businessId);
     const normalizedStatus = normalizeRequestStatus(req.body.status);
+
+    if (!requestId || !businessId) {
+      return res.status(400).json({
+        success: false,
+        message: "Request id and business id are required."
+      });
+    }
 
     if (!normalizedStatus || !ALLOWED_REQUEST_STATUSES.includes(normalizedStatus)) {
       return res.status(400).json({
@@ -630,69 +659,262 @@ app.put("/api/business/requests/:id/status", async (req, res) => {
       });
     }
 
-    let query = "";
-    let values = [];
+    await connection.beginTransaction();
 
-    if (normalizedStatus === "Accepted") {
-      query = `
-        UPDATE customer_requests
-        SET status = ?,
-            accepted_at = NOW()
-        WHERE id = ?
-      `;
-      values = [normalizedStatus, requestId];
-    } else if (normalizedStatus === "Work in progress") {
-      query = `
-        UPDATE customer_requests
-        SET status = ?,
-            started_at = NOW()
-        WHERE id = ?
-      `;
-      values = [normalizedStatus, requestId];
-    } else if (normalizedStatus === "Completed") {
-      query = `
-        UPDATE customer_requests
-        SET status = ?,
-            completed_at = NOW()
-        WHERE id = ?
-      `;
-      values = [normalizedStatus, requestId];
-    } else if (normalizedStatus === "Declined") {
-      query = `
-        UPDATE customer_requests
-        SET status = ?
-        WHERE id = ?
-      `;
-      values = [normalizedStatus, requestId];
-    } else {
-      query = `
-        UPDATE customer_requests
-        SET status = ?
-        WHERE id = ?
-      `;
-      values = [normalizedStatus, requestId];
-    }
+    const [requestRows] = await connection.execute(
+      `SELECT id, zip_code, status
+       FROM customer_requests
+       WHERE id = ?
+       LIMIT 1`,
+      [requestId]
+    );
 
-    const [result] = await db.execute(query, values);
-
-    if (result.affectedRows === 0) {
+    if (!requestRows.length) {
+      await connection.rollback();
       return res.status(404).json({
         success: false,
         message: "Request not found."
       });
     }
 
-    return res.status(200).json({
-      success: true,
-      message: "Request status updated successfully.",
-      status: normalizedStatus
+    const request = requestRows[0];
+    const currentMainStatus = String(request.status || "").trim();
+
+    if (
+      currentMainStatus === "Accepted" ||
+      currentMainStatus === "Work in progress" ||
+      currentMainStatus === "Completed"
+    ) {
+      if (normalizedStatus === "Accepted") {
+        await connection.rollback();
+        return res.status(400).json({
+          success: false,
+          message: "This request has already been taken."
+        });
+      }
+    }
+
+    if (normalizedStatus === "Declined") {
+      await connection.execute(
+        `
+        INSERT INTO business_request_actions
+          (request_id, business_id, action_status, action_at)
+        VALUES (?, ?, 'Declined', NOW())
+        ON DUPLICATE KEY UPDATE
+          action_status = 'Declined',
+          action_at = NOW()
+        `,
+        [requestId, businessId]
+      );
+
+      const [zipBusinesses] = await connection.execute(
+        `SELECT id FROM business_users WHERE zip = ?`,
+        [request.zip_code]
+      );
+
+      const totalBusinessesInZip = zipBusinesses.length;
+
+      const [declinedRows] = await connection.execute(
+        `
+        SELECT COUNT(*) AS declinedCount
+        FROM business_request_actions
+        WHERE request_id = ?
+          AND action_status = 'Declined'
+        `,
+        [requestId]
+      );
+
+      const declinedCount = Number(declinedRows[0].declinedCount || 0);
+
+      if (
+        totalBusinessesInZip > 0 &&
+        declinedCount >= totalBusinessesInZip &&
+        currentMainStatus === "Pending"
+      ) {
+        await connection.execute(
+          `
+          UPDATE customer_requests
+          SET status = 'Declined'
+          WHERE id = ?
+          `,
+          [requestId]
+        );
+      }
+
+      await connection.commit();
+
+      return res.status(200).json({
+        success: true,
+        message: "Request declined successfully.",
+        status: "Declined"
+      });
+    }
+
+    if (normalizedStatus === "Accepted") {
+      if (currentMainStatus !== "Pending") {
+        await connection.rollback();
+        return res.status(400).json({
+          success: false,
+          message: "This request is no longer available."
+        });
+      }
+
+      await connection.execute(
+        `
+        INSERT INTO business_request_actions
+          (request_id, business_id, action_status, action_at)
+        VALUES (?, ?, 'Accepted', NOW())
+        ON DUPLICATE KEY UPDATE
+          action_status = 'Accepted',
+          action_at = NOW()
+        `,
+        [requestId, businessId]
+      );
+
+      const [updateResult] = await connection.execute(
+        `
+        UPDATE customer_requests
+        SET status = 'Accepted',
+            accepted_at = NOW()
+        WHERE id = ?
+          AND status = 'Pending'
+        `,
+        [requestId]
+      );
+
+      if (updateResult.affectedRows === 0) {
+        await connection.rollback();
+        return res.status(400).json({
+          success: false,
+          message: "This request was already taken by another business."
+        });
+      }
+
+      await connection.commit();
+
+      return res.status(200).json({
+        success: true,
+        message: "Request accepted successfully.",
+        status: "Accepted"
+      });
+    }
+
+    if (normalizedStatus === "Work in progress") {
+      const [actionRows] = await connection.execute(
+        `
+        SELECT id
+        FROM business_request_actions
+        WHERE request_id = ?
+          AND business_id = ?
+          AND action_status = 'Accepted'
+        LIMIT 1
+        `,
+        [requestId, businessId]
+      );
+
+      if (!actionRows.length) {
+        await connection.rollback();
+        return res.status(403).json({
+          success: false,
+          message: "Only the accepted business can start this job."
+        });
+      }
+
+      await connection.execute(
+        `
+        UPDATE business_request_actions
+        SET action_status = 'Work in progress',
+            started_at = NOW()
+        WHERE request_id = ?
+          AND business_id = ?
+        `,
+        [requestId, businessId]
+      );
+
+      await connection.execute(
+        `
+        UPDATE customer_requests
+        SET status = 'Work in progress',
+            started_at = NOW()
+        WHERE id = ?
+        `,
+        [requestId]
+      );
+
+      await connection.commit();
+
+      return res.status(200).json({
+        success: true,
+        message: "Job started successfully.",
+        status: "Work in progress"
+      });
+    }
+
+    if (normalizedStatus === "Completed") {
+      const [actionRows] = await connection.execute(
+        `
+        SELECT id
+        FROM business_request_actions
+        WHERE request_id = ?
+          AND business_id = ?
+          AND action_status IN ('Accepted', 'Work in progress')
+        LIMIT 1
+        `,
+        [requestId, businessId]
+      );
+
+      if (!actionRows.length) {
+        await connection.rollback();
+        return res.status(403).json({
+          success: false,
+          message: "Only the accepted business can complete this job."
+        });
+      }
+
+      await connection.execute(
+        `
+        UPDATE business_request_actions
+        SET action_status = 'Completed',
+            completed_at = NOW()
+        WHERE request_id = ?
+          AND business_id = ?
+        `,
+        [requestId, businessId]
+      );
+
+      await connection.execute(
+        `
+        UPDATE customer_requests
+        SET status = 'Completed',
+            completed_at = NOW()
+        WHERE id = ?
+        `,
+        [requestId]
+      );
+
+      await connection.commit();
+
+      return res.status(200).json({
+        success: true,
+        message: "Job completed successfully.",
+        status: "Completed"
+      });
+    }
+
+    await connection.rollback();
+    return res.status(400).json({
+      success: false,
+      message: "Unsupported status update."
     });
   } catch (error) {
+    await connection.rollback();
     console.error("Update request status error:", error);
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to update request status."
     });
+  } finally {
+    connection.release();
   }
 });
 

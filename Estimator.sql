@@ -194,6 +194,27 @@ CREATE TABLE IF NOT EXISTS help_support_requests (
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS business_request_actions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    request_id INT NOT NULL,
+    business_id INT NOT NULL,
+    action_status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    action_at DATETIME NULL,
+    started_at DATETIME NULL,
+    completed_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE KEY unique_request_business (request_id, business_id),
+
+    CONSTRAINT fk_bra_request
+      FOREIGN KEY (request_id) REFERENCES customer_requests(id)
+      ON DELETE CASCADE,
+
+    CONSTRAINT fk_bra_business
+      FOREIGN KEY (business_id) REFERENCES business_users(id)
+      ON DELETE CASCADE
+);
 ALTER TABLE customer_requests
 ADD COLUMN completed_at DATETIME NULL;
 
