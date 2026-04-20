@@ -174,8 +174,33 @@ WHERE id > 0
       'completed'
     )
   );
+  
+  CREATE TABLE IF NOT EXISTS business_interest_forms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    business_name VARCHAR(150) NOT NULL,
+    owner_name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    service_type VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS help_support_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ALTER TABLE customer_requests
 ADD COLUMN completed_at DATETIME NULL;
+
+ALTER TABLE customer_requests
+ADD COLUMN accepted_at TIMESTAMP NULL,
+ADD COLUMN started_at TIMESTAMP NULL;
+
 
 ALTER TABLE business_reviews
 ADD COLUMN business_reply_text TEXT NULL,
@@ -191,7 +216,12 @@ SELECT * FROM customer_requests;
 SELECT * FROM saved_businesses;
 SELECT * FROM contact_messages;
 SELECT * FROM request_custom_vehicles;
+SELECT * FROM business_interest_forms;
+SELECT * FROM help_support_requests; 
 
 SELECT id, review_title, business_reply_text, business_replied_at, business_replied_by
 FROM business_reviews
 ORDER BY id DESC;
+
+
+

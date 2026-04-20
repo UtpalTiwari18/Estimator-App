@@ -24,15 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const savedCustomer = JSON.parse(localStorage.getItem("estimatorCustomerAuth"));
 
   function clearCustomerSession() {
-  localStorage.removeItem("estimatorCustomerAuth");
-  localStorage.removeItem("user");
-  localStorage.removeItem("compareBusinesses");
-  localStorage.removeItem("estimatorCompareBusinesses");
-  sessionStorage.removeItem("estimatorCustomerAuth");
-  sessionStorage.removeItem("user");
-  sessionStorage.removeItem("compareBusinesses");
-  sessionStorage.removeItem("estimatorCompareBusinesses");
-}
+    localStorage.removeItem("estimatorCustomerAuth");
+    localStorage.removeItem("user");
+    localStorage.removeItem("compareBusinesses");
+    localStorage.removeItem("estimatorCompareBusinesses");
+    sessionStorage.removeItem("estimatorCustomerAuth");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("compareBusinesses");
+    sessionStorage.removeItem("estimatorCompareBusinesses");
+  }
 
   if (!savedCustomer) {
     window.location.href = "customerLogin.html";
@@ -79,13 +79,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    clearCustomerSession();
-    window.location.href = "home.html";
-  });
-}
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      clearCustomerSession();
+      window.location.href = "home.html";
+    });
+  }
 
   function getLoggedInCustomer() {
     try {
@@ -93,10 +93,6 @@ if (logoutBtn) {
     } catch (error) {
       return null;
     }
-  }
-
-  function isLoggedIn() {
-    return !!getLoggedInCustomer();
   }
 
   function getCustomerDisplayName(customer) {
@@ -390,11 +386,23 @@ Thank you.`;
   }
 
   const sliderTrack = document.getElementById("sliderTrack");
+  const testimonialSlider = document.getElementById("testimonialSlider");
   const prevButton = document.getElementById("prevButton");
   const nextButton = document.getElementById("nextButton");
   const sliderDots = document.getElementById("sliderDots");
 
   let testimonialIndex = 0;
+  let testimonialAutoplay = null;
+  const testimonialDelay = 4000;
+
+  function getStars(rating) {
+    const safeRating = Math.max(0, Math.min(5, Number(rating) || 0));
+    return "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+  }
+
+  function getInitial(name) {
+    return String(name || "U").trim().charAt(0).toUpperCase() || "U";
+  }
 
   function updateTestimonialSlider() {
     if (!sliderTrack) return;
@@ -413,28 +421,155 @@ Thank you.`;
         dot.addEventListener("click", function () {
           testimonialIndex = index;
           updateTestimonialSlider();
+          restartTestimonialAutoplay();
         });
         sliderDots.appendChild(dot);
       });
     }
   }
 
+  function goToNextTestimonial() {
+    const cards = sliderTrack?.querySelectorAll(".testimonialCard") || [];
+    if (!cards.length) return;
+    testimonialIndex = (testimonialIndex + 1) % cards.length;
+    updateTestimonialSlider();
+  }
+
+  function goToPrevTestimonial() {
+    const cards = sliderTrack?.querySelectorAll(".testimonialCard") || [];
+    if (!cards.length) return;
+    testimonialIndex = (testimonialIndex - 1 + cards.length) % cards.length;
+    updateTestimonialSlider();
+  }
+
+  function startTestimonialAutoplay() {
+    stopTestimonialAutoplay();
+
+    const cards = sliderTrack?.querySelectorAll(".testimonialCard") || [];
+    if (cards.length <= 1) return;
+
+    testimonialAutoplay = setInterval(() => {
+      goToNextTestimonial();
+    }, testimonialDelay);
+  }
+
+  function stopTestimonialAutoplay() {
+    if (testimonialAutoplay) {
+      clearInterval(testimonialAutoplay);
+      testimonialAutoplay = null;
+    }
+  }
+
+  function restartTestimonialAutoplay() {
+    stopTestimonialAutoplay();
+    startTestimonialAutoplay();
+  }
+
+  function renderTestimonials(testimonials) {
+    if (!sliderTrack) return;
+
+    sliderTrack.innerHTML = "";
+
+    if (!testimonials || !testimonials.length) {
+      sliderTrack.innerHTML = `
+        <div class="testimonialCard">
+          <div class="cardTop">
+            <div class="starRating">★★★★★</div>
+            <span class="verifyBadge">Verified</span>
+          </div>
+
+          <p class="testimonialQuote">
+            No testimonials yet. Be the first to leave a review on Estimator.
+          </p>
+
+          <div class="userInfo">
+            <div class="userAvatar">E</div>
+            <div>
+              <div class="userName">Estimator User</div>
+              <div class="userMeta">Community • First Review</div>
+            </div>
+          </div>
+        </div>
+      `;
+      testimonialIndex = 0;
+      updateTestimonialSlider();
+      startTestimonialAutoplay();
+      return;
+    }
+
+    testimonials.forEach((item) => {
+      const customerName = item.customer_name || "Estimator User";
+      const reviewText = item.review_text || "Great experience using Estimator.";
+      const serviceUsed = item.service_used || "Service";
+      const zipCode = item.zip_code || "Local User";
+      const rating = Number(item.overall_rating) || 5;
+
+      const card = document.createElement("div");
+      card.className = "testimonialCard";
+
+      card.innerHTML = `
+        <div class="cardTop">
+          <div class="starRating">${getStars(rating)}</div>
+          <span class="verifyBadge">Verified</span>
+        </div>
+
+        <p class="testimonialQuote">
+          ${escapeHtml(reviewText)}
+        </p>
+
+        <div class="userInfo">
+          <div class="userAvatar">${escapeHtml(getInitial(customerName))}</div>
+          <div>
+            <div class="userName">${escapeHtml(customerName)}</div>
+            <div class="userMeta">
+              ${escapeHtml(zipCode)} • ${escapeHtml(serviceUsed)}
+            </div>
+          </div>
+        </div>
+      `;
+
+      sliderTrack.appendChild(card);
+    });
+
+    testimonialIndex = 0;
+    updateTestimonialSlider();
+    startTestimonialAutoplay();
+  }
+
+  async function loadTestimonials() {
+    try {
+      const res = await fetch(`${API_BASE}/api/home-testimonials`);
+      const data = await res.json();
+
+      if (!data.success) {
+        renderTestimonials([]);
+        return;
+      }
+
+      renderTestimonials(data.testimonials || []);
+    } catch (error) {
+      console.error("Failed to load testimonials:", error);
+      renderTestimonials([]);
+    }
+  }
+
   if (prevButton) {
     prevButton.addEventListener("click", function () {
-      const cards = sliderTrack?.querySelectorAll(".testimonialCard") || [];
-      if (!cards.length) return;
-      testimonialIndex = (testimonialIndex - 1 + cards.length) % cards.length;
-      updateTestimonialSlider();
+      goToPrevTestimonial();
+      restartTestimonialAutoplay();
     });
   }
 
   if (nextButton) {
     nextButton.addEventListener("click", function () {
-      const cards = sliderTrack?.querySelectorAll(".testimonialCard") || [];
-      if (!cards.length) return;
-      testimonialIndex = (testimonialIndex + 1) % cards.length;
-      updateTestimonialSlider();
+      goToNextTestimonial();
+      restartTestimonialAutoplay();
     });
+  }
+
+  if (testimonialSlider) {
+    testimonialSlider.addEventListener("mouseenter", stopTestimonialAutoplay);
+    testimonialSlider.addEventListener("mouseleave", startTestimonialAutoplay);
   }
 
   const heroSearchForm = document.getElementById("heroSearchForm");
@@ -804,9 +939,10 @@ Thank you.`;
   loadCustomerCount();
   fillZipCodeFromLocation();
   updateServiceSlider();
-  updateTestimonialSlider();
+  loadTestimonials();
 
   window.addEventListener("resize", function () {
     updateServiceSlider();
+    updateTestimonialSlider();
   });
 });

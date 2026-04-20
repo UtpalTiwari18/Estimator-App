@@ -157,7 +157,7 @@
         <p>Join Estimator App as a business partner and connect with customers through a platform designed for speed, professionalism, and better project intake.</p>
         <div class="hero-actions">
           <a href="contact.html" class="btn btn-primary">Contact Us</a>
-          <a href="become-a-business.html" class="btn btn-secondary">Join as a Business</a>
+          <a href="businessSignUp.html" class="btn btn-secondary">Join as a Business</a>
         </div>
       </div>
       <div class="hero-card">
@@ -230,46 +230,58 @@
     <div class="section-header">
       <span class="badge">Apply Today</span>
       <h2>Business interest form</h2>
-      <p>This demo form shows how businesses can express interest in joining the platform.</p>
+      <p>Fill out the form below and we will review your business interest submission.</p>
     </div>
+
     <div class="card">
       <form id="contactForm" class="grid grid-2">
         <div class="form-group">
           <label for="businessName">Business Name *</label>
           <input class="input" id="businessName" name="businessName" type="text" required>
         </div>
+
         <div class="form-group">
           <label for="ownerName">Owner / Representative *</label>
           <input class="input" id="ownerName" name="ownerName" type="text" required>
         </div>
+
         <div class="form-group">
           <label for="email">Business Email *</label>
           <input class="input" id="email" name="email" type="email" required>
         </div>
+
         <div class="form-group">
           <label for="phone">Phone Number *</label>
           <input class="input" id="phone" name="phone" type="tel" required>
         </div>
+
         <div class="form-group">
           <label for="serviceType">Service Type *</label>
-          <select id="serviceType" required>
+          <select class="input" id="serviceType" name="serviceType" required>
             <option value="">Select one</option>
-            <option>Construction</option>
-            <option>Repairs</option>
-            <option>Home Services</option>
-            <option>Commercial Services</option>
+            <option value="Interior Services">Interior Services</option>
+            <option value="Exterior Services">Exterior Services</option>
+            <option value="Mechanical Services">Mechanical Services</option>
+            <option value="Electrical Services">Electrical Services</option>
+            <option value="Tire & Wheel Services">Tire & Wheel Services</option>
+            <option value="Customization & Upgrades">Customization & Upgrades</option>
+            <option value="Multi-Service Auto Shop">Multi-Service Auto Shop</option>
+            <option value="Mobile Auto Service">Mobile Auto Service</option>
           </select>
         </div>
+
         <div class="form-group">
           <label for="city">City *</label>
           <input class="input" id="city" name="city" type="text" required>
         </div>
+
         <div class="form-group" style="grid-column:1 / -1;">
           <label for="message">Tell us about your business *</label>
-          <textarea id="message" required></textarea>
+          <textarea class="input" id="message" name="message" required></textarea>
         </div>
+
         <div style="grid-column:1 / -1;">
-          <button class="btn btn-primary" type="submit">Submit Interest</button>
+          <button class="btn btn-primary" id="submitInterestBtn" type="submit">Submit Interest</button>
           <div id="formNotice" class="notice"></div>
         </div>
       </form>

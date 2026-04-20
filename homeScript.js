@@ -17,6 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchResultsList = document.getElementById("searchResultsList");
   const searchResultsText = document.getElementById("searchResultsText");
 
+  const sliderTrack = document.getElementById("sliderTrack");
+  const testimonialSlider = document.getElementById("testimonialSlider");
+  const prevButton = document.getElementById("prevButton");
+  const nextButton = document.getElementById("nextButton");
+  const sliderDots = document.getElementById("sliderDots");
+
+  let currentSlide = 0;
+  let testimonialCards = [];
+  let autoplayInterval = null;
+  const autoplayDelay = 4000;
+
   function escapeHtml(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -289,7 +300,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", function (e) {
     const signupButton = e.target.closest(".guestSignupBtn");
     if (!signupButton) return;
-
     window.location.href = "customerSignUp.html";
   });
 
@@ -312,7 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         let url = `${API_BASE}/api/search-businesses?keyword=${encodeURIComponent(keyword)}`;
-
         if (zip) {
           url += `&zip=${encodeURIComponent(zip)}`;
         }
@@ -332,6 +341,196 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getStars(rating) {
+    const safeRating = Math.max(0, Math.min(5, Number(rating) || 0));
+    return "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+  }
+
+  function getInitial(name) {
+    return String(name || "U").trim().charAt(0).toUpperCase() || "U";
+  }
+
+  function updateSliderPosition() {
+    if (!sliderTrack || testimonialCards.length === 0) return;
+    sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateDots();
+  }
+
+  function updateDots() {
+    if (!sliderDots) return;
+
+    const dots = sliderDots.querySelectorAll(".dotButton");
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentSlide);
+    });
+  }
+
+  function createDots() {
+    if (!sliderDots) return;
+    sliderDots.innerHTML = "";
+
+    testimonialCards.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = `dotButton ${index === currentSlide ? "active" : ""}`;
+      dot.setAttribute("aria-label", `Go to testimonial ${index + 1}`);
+
+      dot.addEventListener("click", () => {
+        currentSlide = index;
+        updateSliderPosition();
+        restartAutoplay();
+      });
+
+      sliderDots.appendChild(dot);
+    });
+  }
+
+  function goToNextSlide() {
+    if (!testimonialCards.length) return;
+    currentSlide = (currentSlide + 1) % testimonialCards.length;
+    updateSliderPosition();
+  }
+
+  function goToPrevSlide() {
+    if (!testimonialCards.length) return;
+    currentSlide = (currentSlide - 1 + testimonialCards.length) % testimonialCards.length;
+    updateSliderPosition();
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+
+    if (testimonialCards.length <= 1) return;
+
+    autoplayInterval = setInterval(() => {
+      goToNextSlide();
+    }, autoplayDelay);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  function setupTestimonialSlider() {
+    testimonialCards = Array.from(document.querySelectorAll(".testimonialCard"));
+    currentSlide = 0;
+    createDots();
+    updateSliderPosition();
+    startAutoplay();
+  }
+
+  if (prevButton) {
+    prevButton.addEventListener("click", () => {
+      goToPrevSlide();
+      restartAutoplay();
+    });
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener("click", () => {
+      goToNextSlide();
+      restartAutoplay();
+    });
+  }
+
+  if (testimonialSlider) {
+    testimonialSlider.addEventListener("mouseenter", stopAutoplay);
+    testimonialSlider.addEventListener("mouseleave", startAutoplay);
+  }
+
+  function renderTestimonials(testimonials) {
+    if (!sliderTrack) return;
+
+    sliderTrack.innerHTML = "";
+
+    if (!testimonials || !testimonials.length) {
+      sliderTrack.innerHTML = `
+        <div class="testimonialCard">
+          <div class="cardTop">
+            <div class="starRating">★★★★★</div>
+            <span class="verifyBadge">Verified</span>
+          </div>
+
+          <p class="testimonialQuote">
+            No testimonials yet. Be the first to leave a review on Estimator.
+          </p>
+
+          <div class="userInfo">
+            <div class="userAvatar">E</div>
+            <div>
+              <div class="userName">Estimator User</div>
+              <div class="userMeta">Community • First Review</div>
+            </div>
+          </div>
+        </div>
+      `;
+      setupTestimonialSlider();
+      return;
+    }
+
+    testimonials.forEach((item) => {
+      const customerName = item.customer_name || "Estimator User";
+      const reviewText = item.review_text || "Great experience using Estimator.";
+      const serviceUsed = item.service_used || "Service";
+      const zipCode = item.zip_code || "Local User";
+      const rating = Number(item.overall_rating) || 5;
+
+      const card = document.createElement("div");
+      card.className = "testimonialCard";
+
+      card.innerHTML = `
+        <div class="cardTop">
+          <div class="starRating">${getStars(rating)}</div>
+          <span class="verifyBadge">Verified</span>
+        </div>
+
+        <p class="testimonialQuote">
+          ${escapeHtml(reviewText)}
+        </p>
+
+        <div class="userInfo">
+          <div class="userAvatar">${escapeHtml(getInitial(customerName))}</div>
+          <div>
+            <div class="userName">${escapeHtml(customerName)}</div>
+            <div class="userMeta">
+              ${escapeHtml(zipCode)} • ${escapeHtml(serviceUsed)}
+            </div>
+          </div>
+        </div>
+      `;
+
+      sliderTrack.appendChild(card);
+    });
+
+    setupTestimonialSlider();
+  }
+
+  async function loadTestimonials() {
+    try {
+      const res = await fetch(`${API_BASE}/api/home-testimonials`);
+      const data = await res.json();
+
+      if (!data.success) {
+        renderTestimonials([]);
+        return;
+      }
+
+      renderTestimonials(data.testimonials || []);
+    } catch (error) {
+      console.error("Failed to load testimonials:", error);
+      renderTestimonials([]);
+    }
+  }
+
   loadCustomerCount();
   fillZipCodeFromLocation();
+  loadTestimonials();
 });

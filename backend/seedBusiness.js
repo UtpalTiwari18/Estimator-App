@@ -90,18 +90,140 @@ const streetNames = [
   "Coit Rd", "Plano Pkwy", "Legacy Dr", "Independence Pkwy", "Randol Mill Rd"
 ];
 
-const serviceSets = [
-  "Oil change, brake repair, tire replacement",
-  "Interior detailing, exterior wash, ceramic coating",
-  "Battery replacement, diagnostics, starter repair",
-  "Wheel alignment, tire rotation, balancing",
-  "Paint correction, scratch repair, detailing",
-  "Mobile mechanic, oil change, brake service",
-  "Engine diagnostics, AC service, battery replacement",
-  "Windshield repair, detailing, headlight restoration",
-  "Suspension repair, brake repair, tire replacement",
-  "ECU diagnostics, wiring repair, alternator service"
-];
+// These are the exact services from your dropdown
+const servicesByCategory = {
+  interior: [
+    "Interior Detailing",
+    "Seat Cleaning",
+    "Carpet Shampoo",
+    "Dashboard Restoration",
+    "Odor Removal",
+    "AC Sanitization"
+  ],
+  exterior: [
+    "Car Wash & Detailing",
+    "Paint Correction",
+    "Ceramic Coating",
+    "Wax & Polish",
+    "Scratch Removal",
+    "Headlight Restoration",
+    "Windshield Repair"
+  ],
+  mechanical: [
+    "Engine Diagnostics",
+    "Oil Change",
+    "Brake Service",
+    "Suspension Repair",
+    "Battery Replacement",
+    "Transmission Service",
+    "Cooling System Repair"
+  ],
+  electrical: [
+    "ECU Diagnostics",
+    "Sensor Replacement",
+    "Wiring Repair",
+    "Alternator Service",
+    "Starter Repair",
+    "Lighting Installation"
+  ],
+  tireWheel: [
+    "Tire Replacement",
+    "Wheel Alignment",
+    "Wheel Balancing",
+    "Tire Rotation",
+    "Rim Repair"
+  ],
+  customization: [
+    "Audio Installation",
+    "Reverse Camera Setup",
+    "Window Tinting",
+    "Performance Tuning",
+    "Body Kit Installation"
+  ]
+};
+
+const categoryKeys = Object.keys(servicesByCategory);
+
+function getRandomServices(index) {
+  const primaryCategory = categoryKeys[index % categoryKeys.length];
+  const primaryServices = servicesByCategory[primaryCategory];
+
+  const serviceCount = (index % 3) + 1; // 1 to 3 services
+  const picked = [];
+
+  for (let i = 0; i < serviceCount; i++) {
+    const service = primaryServices[(index + i) % primaryServices.length];
+    if (!picked.includes(service)) {
+      picked.push(service);
+    }
+  }
+
+  // every 4th business gets one extra service from another category
+  if (index % 4 === 0) {
+    const secondaryCategory = categoryKeys[(index + 2) % categoryKeys.length];
+    const secondaryServices = servicesByCategory[secondaryCategory];
+    const extraService = secondaryServices[index % secondaryServices.length];
+
+    if (!picked.includes(extraService)) {
+      picked.push(extraService);
+    }
+  }
+
+  return picked.join(", ");
+}
+
+function inferBusinessTypeFromServices(services) {
+  const serviceText = services.toLowerCase();
+
+  if (
+    serviceText.includes("tire") ||
+    serviceText.includes("wheel") ||
+    serviceText.includes("rim")
+  ) {
+    return "tireShop";
+  }
+
+  if (
+    serviceText.includes("interior") ||
+    serviceText.includes("detailing") ||
+    serviceText.includes("ceramic") ||
+    serviceText.includes("wax") ||
+    serviceText.includes("paint correction")
+  ) {
+    return "detailer";
+  }
+
+  if (
+    serviceText.includes("ecu") ||
+    serviceText.includes("sensor") ||
+    serviceText.includes("wiring") ||
+    serviceText.includes("alternator") ||
+    serviceText.includes("starter") ||
+    serviceText.includes("lighting")
+  ) {
+    return "electricalShop";
+  }
+
+  if (
+    serviceText.includes("body kit") ||
+    serviceText.includes("window tinting")
+  ) {
+    return "bodyShop";
+  }
+
+  if (
+    serviceText.includes("engine") ||
+    serviceText.includes("oil") ||
+    serviceText.includes("brake") ||
+    serviceText.includes("suspension") ||
+    serviceText.includes("transmission") ||
+    serviceText.includes("cooling")
+  ) {
+    return "mechanic";
+  }
+
+  return "workshop";
+}
 
 function makeBusinessName(index, businessType, city) {
   const prefixes = [
@@ -112,9 +234,9 @@ function makeBusinessName(index, businessType, city) {
   const suffixMap = {
     workshop: "Auto Garage",
     detailer: "Detail Studio",
-    mechanic: "Mobile Mechanics",
+    mechanic: "Auto Repair",
     tireShop: "Tire Center",
-    bodyShop: "Collision Center",
+    bodyShop: "Customization Garage",
     electricalShop: "Diagnostics Lab"
   };
 
@@ -150,8 +272,9 @@ function makeOwnerName(index) {
 
 function generateBusiness(index) {
   const location = cityZipPairs[index % cityZipPairs.length];
-  const businessType = businessTypes[index % businessTypes.length];
   const ownerName = makeOwnerName(index);
+  const services = getRandomServices(index);
+  const businessType = inferBusinessTypeFromServices(services);
   const businessName = makeBusinessName(index, businessType, location.city);
   const addressLine1 = makeAddressLine1(index);
   const addressLine2 = makeAddressLine2(index);
@@ -166,7 +289,7 @@ function generateBusiness(index) {
     email: `${emailSlug}@gmail.com`,
     phone,
     website: `https://www.${websiteSlug}.com`,
-    services: serviceSets[index % serviceSets.length],
+    services,
     addressLine1,
     addressLine2,
     city: location.city,

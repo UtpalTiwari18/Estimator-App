@@ -347,6 +347,11 @@ app.post("/api/requests", async (req, res) => {
       vehicleMileage
     } = req.body;
 
+    const normalizedVehicleSource =
+      String(vehicleSource || "").trim().toLowerCase() === "custom"
+        ? "custom"
+        : "saved";
+
     if (
       !customerId ||
       !zipCode ||
@@ -359,6 +364,13 @@ app.post("/api/requests", async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Required fields are missing."
+      });
+    }
+
+    if (normalizedVehicleSource === "saved" && !savedVehicleId) {
+      return res.status(400).json({
+        success: false,
+        message: "Saved vehicle is required when using a saved vehicle."
       });
     }
 
@@ -396,8 +408,8 @@ app.post("/api/requests", async (req, res) => {
         preferredDate || null,
         preferredTime || null,
         budget || null,
-        vehicleSource || "saved",
-        savedVehicleId || null,
+        normalizedVehicleSource,
+        normalizedVehicleSource === "saved" ? savedVehicleId : null,
         vehicleMake,
         vehicleModel,
         vehicleYear || null,
@@ -409,10 +421,39 @@ app.post("/api/requests", async (req, res) => {
       ]
     );
 
+    const requestId = result.insertId;
+
+    if (normalizedVehicleSource === "custom") {
+      await db.execute(
+        `INSERT INTO request_custom_vehicles (
+          request_id,
+          customer_id,
+          make,
+          model,
+          year,
+          color,
+          license_plate,
+          vin,
+          mileage
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          requestId,
+          customerId,
+          vehicleMake,
+          vehicleModel,
+          vehicleYear || null,
+          vehicleColor || null,
+          vehicleLicensePlate || null,
+          vehicleVin || null,
+          vehicleMileage || null
+        ]
+      );
+    }
+
     return res.status(201).json({
       success: true,
       message: "Request submitted successfully.",
-      requestId: result.insertId
+      requestId
     });
   } catch (error) {
     console.error("Submit request error:", error);
@@ -422,7 +463,6 @@ app.post("/api/requests", async (req, res) => {
     });
   }
 });
-
 // ===============================
 // GET MY REQUESTS (CUSTOMER SIDE)
 // ===============================
@@ -590,23 +630,50 @@ app.put("/api/business/requests/:id/status", async (req, res) => {
       });
     }
 
-    let result;
+    let query = "";
+    let values = [];
 
-    if (normalizedStatus === "Completed") {
-      [result] = await db.execute(
-        `UPDATE customer_requests
-         SET status = ?, completed_at = NOW()
-         WHERE id = ?`,
-        [normalizedStatus, requestId]
-      );
+    if (normalizedStatus === "Accepted") {
+      query = `
+        UPDATE customer_requests
+        SET status = ?,
+            accepted_at = NOW()
+        WHERE id = ?
+      `;
+      values = [normalizedStatus, requestId];
+    } else if (normalizedStatus === "Work in progress") {
+      query = `
+        UPDATE customer_requests
+        SET status = ?,
+            started_at = NOW()
+        WHERE id = ?
+      `;
+      values = [normalizedStatus, requestId];
+    } else if (normalizedStatus === "Completed") {
+      query = `
+        UPDATE customer_requests
+        SET status = ?,
+            completed_at = NOW()
+        WHERE id = ?
+      `;
+      values = [normalizedStatus, requestId];
+    } else if (normalizedStatus === "Declined") {
+      query = `
+        UPDATE customer_requests
+        SET status = ?
+        WHERE id = ?
+      `;
+      values = [normalizedStatus, requestId];
     } else {
-      [result] = await db.execute(
-        `UPDATE customer_requests
-         SET status = ?, completed_at = NULL
-         WHERE id = ?`,
-        [normalizedStatus, requestId]
-      );
+      query = `
+        UPDATE customer_requests
+        SET status = ?
+        WHERE id = ?
+      `;
+      values = [normalizedStatus, requestId];
     }
+
+    const [result] = await db.execute(query, values);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({
@@ -1972,7 +2039,117 @@ app.put("/api/business/profile/:businessId", async (req, res) => {
   }
 });
 
+app.get("/api/home-testimonials", async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT
+        customer_name,
+        overall_rating,
+        service_used,
+        zip_code,
+        review_text,
+        created_at
+      FROM app_reviews
+      WHERE overall_rating = 5
+      ORDER BY created_at DESC
+      LIMIT 8
+    `);
 
+    res.json({
+      success: true,
+      testimonials: rows
+    });
+  } catch (error) {
+    console.error("HOME TESTIMONIALS ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to load testimonials."
+    });
+  }
+});
+// ===============================
+// BUSINESS INTEREST FORM SUBMIT
+// ===============================
+app.post("/api/business-interest", async (req, res) => {
+  try {
+    const {
+      businessName,
+      ownerName,
+      email,
+      phone,
+      serviceType,
+      city,
+      message
+    } = req.body;
+
+    if (
+      !businessName ||
+      !ownerName ||
+      !email ||
+      !phone ||
+      !serviceType ||
+      !city ||
+      !message
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required."
+      });
+    }
+
+    const [result] = await db.execute(
+      `INSERT INTO business_interest_forms
+      (business_name, owner_name, email, phone, service_type, city, message)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [businessName, ownerName, email, phone, serviceType, city, message]
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Business interest form submitted successfully.",
+      id: result.insertId
+    });
+  } catch (error) {
+    console.error("Business interest submit error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to submit business interest form."
+    });
+  }
+});
+// ===============================
+// HELP CENTER: SUBMIT SUPPORT REQUEST
+// ===============================
+app.post("/api/help-support", async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required."
+      });
+    }
+
+    const [result] = await db.execute(
+      `INSERT INTO help_support_requests (name, email, message)
+       VALUES (?, ?, ?)`,
+      [name.trim(), email.trim(), message.trim()]
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Support request submitted successfully.",
+      id: result.insertId
+    });
+  } catch (error) {
+    console.error("Help support submit error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to submit support request."
+    });
+  }
+});
 // ===============================
 // START SERVER
 // ===============================

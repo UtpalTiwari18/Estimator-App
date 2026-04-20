@@ -308,95 +308,23 @@
   <section class="testimonialsSection">
     <div class="testimonialsHeader">
       <h2>What drivers are saying</h2>
-      <p>Trusted by customers who needed fast and reliable service.</p>
+      <p>Trusted feedback from customers who used Estimator.</p>
     </div>
 
     <div class="testimonialSlider" id="testimonialSlider">
-      <button class="navButton prevButton" id="prevButton">&#10094;</button>
+      <button class="navButton prevButton" id="prevButton" type="button" aria-label="Previous testimonial">
+        &#10094;
+      </button>
 
       <div class="sliderViewport">
         <div class="sliderTrack" id="sliderTrack">
-
-          <div class="testimonialCard">
-            <div class="cardTop">
-              <div class="starRating">★★★★★</div>
-              <span class="verifyBadge">Verified</span>
-            </div>
-
-            <p class="testimonialQuote">
-              Estimator made it super easy to compare local shops and book quickly.
-            </p>
-
-            <div class="userInfo">
-              <div class="userAvatar">J</div>
-              <div>
-                <div class="userName">James R.</div>
-                <div class="userMeta">Dallas, TX • Brake Repair</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonialCard">
-            <div class="cardTop">
-              <div class="starRating">★★★★★</div>
-              <span class="verifyBadge">Verified</span>
-            </div>
-
-            <p class="testimonialQuote">
-              The search was simple and I found a nearby shop in minutes.
-            </p>
-
-            <div class="userInfo">
-              <div class="userAvatar">A</div>
-              <div>
-                <div class="userName">Ashley M.</div>
-                <div class="userMeta">Fort Worth, TX • Battery Replacement</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonialCard">
-            <div class="cardTop">
-              <div class="starRating">★★★★★</div>
-              <span class="verifyBadge">Verified</span>
-            </div>
-
-            <p class="testimonialQuote">
-              I picked the best nearby mechanic instantly.
-            </p>
-
-            <div class="userInfo">
-              <div class="userAvatar">S</div>
-              <div>
-                <div class="userName">Samantha P.</div>
-                <div class="userMeta">Plano, TX • Oil Change</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonialCard">
-            <div class="cardTop">
-              <div class="starRating">★★★★★</div>
-              <span class="verifyBadge">Verified</span>
-            </div>
-
-            <p class="testimonialQuote">
-              Needed urgent tire repair and Estimator helped me find a shop within minutes.
-            </p>
-
-            <div class="userInfo">
-              <div class="userAvatar">M</div>
-              <div>
-                <div class="userName">Mason T.</div>
-                <div class="userMeta">Arlington, TX • Tire Repair</div>
-              </div>
-            </div>
-          </div>
-
+          <!-- Testimonials load from database -->
         </div>
       </div>
 
-      <button class="navButton nextButton" id="nextButton">&#10095;</button>
+      <button class="navButton nextButton" id="nextButton" type="button" aria-label="Next testimonial">
+        &#10095;
+      </button>
     </div>
 
     <div class="sliderDots" id="sliderDots"></div>
@@ -450,57 +378,58 @@
       <p>© 2026 Estimator. All Rights Reserved.</p>
     </div>
   </footer>
-   <div class="messageModalOverlay" id="messageModalOverlay">
-  <div class="messageModal">
-    <div class="messageModalHeader">
-      <div>
-        <h3 id="messageModalTitle">Message Business</h3>
-        <p id="messageModalSubtitle">Send a message directly from Estimator.</p>
+
+  <div class="messageModalOverlay" id="messageModalOverlay">
+    <div class="messageModal">
+      <div class="messageModalHeader">
+        <div>
+          <h3 id="messageModalTitle">Message Business</h3>
+          <p id="messageModalSubtitle">Send a message directly from Estimator.</p>
+        </div>
+        <button type="button" class="messageModalClose" id="messageModalClose">&times;</button>
       </div>
-      <button type="button" class="messageModalClose" id="messageModalClose">&times;</button>
+
+      <form id="messageForm" class="messageForm">
+        <input type="hidden" id="messageBusinessId" />
+
+        <div class="messageFieldGroup">
+          <label for="messageFrom">From</label>
+          <input type="text" id="messageFrom" readonly />
+        </div>
+
+        <div class="messageFieldGroup">
+          <label for="messageTo">To</label>
+          <input type="text" id="messageTo" readonly />
+        </div>
+
+        <div class="messageFieldGroup">
+          <label for="messageSubject">Subject</label>
+          <input
+            type="text"
+            id="messageSubject"
+            placeholder="Enter subject"
+            maxlength="150"
+            required
+          />
+        </div>
+
+        <div class="messageFieldGroup">
+          <label for="messageBody">Message</label>
+          <textarea
+            id="messageBody"
+            rows="8"
+            placeholder="Write your message here"
+            required
+          ></textarea>
+        </div>
+
+        <div class="messageModalActions">
+          <button type="button" class="messageCancelBtn" id="messageCancelBtn">Cancel</button>
+          <button type="submit" class="messageSendBtn" id="messageSendBtn">Send Message</button>
+        </div>
+      </form>
     </div>
-
-    <form id="messageForm" class="messageForm">
-      <input type="hidden" id="messageBusinessId" />
-
-      <div class="messageFieldGroup">
-        <label for="messageFrom">From</label>
-        <input type="text" id="messageFrom" readonly />
-      </div>
-
-      <div class="messageFieldGroup">
-        <label for="messageTo">To</label>
-        <input type="text" id="messageTo" readonly />
-      </div>
-
-      <div class="messageFieldGroup">
-        <label for="messageSubject">Subject</label>
-        <input
-          type="text"
-          id="messageSubject"
-          placeholder="Enter subject"
-          maxlength="150"
-          required
-        />
-      </div>
-
-      <div class="messageFieldGroup">
-        <label for="messageBody">Message</label>
-        <textarea
-          id="messageBody"
-          rows="8"
-          placeholder="Write your message here"
-          required
-        ></textarea>
-      </div>
-
-      <div class="messageModalActions">
-        <button type="button" class="messageCancelBtn" id="messageCancelBtn">Cancel</button>
-        <button type="submit" class="messageSendBtn" id="messageSendBtn">Send Message</button>
-      </div>
-    </form>
   </div>
-</div>
 
   <script src="customerHomePage.js"></script>
 </body>
