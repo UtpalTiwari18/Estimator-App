@@ -267,6 +267,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .filter(Boolean)
       .join(" ");
 
+    const canDelete = status !== "Done";
+
     return `
       <div class="requestItemCard" data-request-id="${escapeHtml(requestId)}" data-status="${escapeHtml(status)}">
         <div class="requestItemTop">
@@ -323,9 +325,15 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
         <div class="requestActionsRow">
-          <button class="deleteRequestButton" type="button" data-request-id="${escapeHtml(requestId)}">
-            Delete Request
-          </button>
+          ${
+            canDelete
+              ? `<button class="deleteRequestButton" type="button" data-request-id="${escapeHtml(requestId)}">
+                   Delete Request
+                 </button>`
+              : `<button class="deleteRequestButton disabledDeleteButton" type="button" disabled>
+                   Completed Request
+                 </button>`
+          }
         </div>
       </div>
     `;
@@ -429,7 +437,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function attachDeleteEvents() {
-    const deleteButtons = document.querySelectorAll(".deleteRequestButton");
+    const deleteButtons = document.querySelectorAll(".deleteRequestButton[data-request-id]");
 
     deleteButtons.forEach(function (button) {
       button.addEventListener("click", async function () {

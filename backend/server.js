@@ -703,18 +703,31 @@ app.delete("/api/requests/delete-request/:id", async (req, res) => {
   try {
     const requestId = req.params.id;
 
-    const [result] = await db.execute(
-      `DELETE FROM customer_requests
-       WHERE id = ?`,
+    const [rows] = await db.execute(
+      `SELECT status FROM customer_requests WHERE id = ?`,
       [requestId]
     );
 
-    if (result.affectedRows === 0) {
+    if (!rows.length) {
       return res.status(404).json({
         success: false,
         message: "Request not found."
       });
     }
+
+    const status = String(rows[0].status || "").trim().toLowerCase();
+
+    if (status === "completed" || status === "done") {
+      return res.status(400).json({
+        success: false,
+        message: "Completed requests cannot be deleted."
+      });
+    }
+
+    const [result] = await db.execute(
+      `DELETE FROM customer_requests WHERE id = ?`,
+      [requestId]
+    );
 
     return res.status(200).json({
       success: true,
@@ -728,7 +741,6 @@ app.delete("/api/requests/delete-request/:id", async (req, res) => {
     });
   }
 });
-
 // ===============================
 // GET BUSINESS REVIEWS BY BUSINESS
 // ===============================
