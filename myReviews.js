@@ -17,6 +17,7 @@ function setupHeaderMenu() {
   const menuArea = document.getElementById("menuArea");
   const servicesMenu = document.getElementById("servicesMenu");
   const servicesLink = document.getElementById("servicesLink");
+  const megaDropdown = document.getElementById("megaDropdown");
   const categories = document.querySelectorAll(".megaCategory");
 
   if (menuButton && menuArea) {
@@ -29,12 +30,21 @@ function setupHeaderMenu() {
   if (servicesMenu && servicesLink) {
     servicesLink.addEventListener("click", (e) => {
       e.preventDefault();
+      e.stopPropagation();
       servicesMenu.classList.toggle("open");
+      servicesMenu.classList.toggle("active");
     });
+
+    if (megaDropdown) {
+      megaDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
 
     document.addEventListener("click", (e) => {
       if (!servicesMenu.contains(e.target)) {
         servicesMenu.classList.remove("open");
+        servicesMenu.classList.remove("active");
       }
     });
   }
@@ -60,17 +70,38 @@ function setupHeaderMenu() {
 function setupUserDropdown() {
   const userMenu = document.getElementById("userMenu");
   const userButton = document.getElementById("userButton");
+  const userDropdown = document.getElementById("userDropdown");
   const logoutBtn = document.getElementById("logoutBtn");
 
   if (userMenu && userButton) {
     userButton.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
+
       userMenu.classList.toggle("open");
+      userMenu.classList.toggle("active");
+
+      if (userDropdown) {
+        userDropdown.classList.toggle("open");
+        userDropdown.classList.toggle("active");
+      }
     });
+
+    if (userDropdown) {
+      userDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
 
     document.addEventListener("click", (e) => {
       if (!userMenu.contains(e.target)) {
         userMenu.classList.remove("open");
+        userMenu.classList.remove("active");
+
+        if (userDropdown) {
+          userDropdown.classList.remove("open");
+          userDropdown.classList.remove("active");
+        }
       }
     });
   }
@@ -86,10 +117,15 @@ function setupUserDropdown() {
 }
 
 function getLoggedInCustomer() {
-  return (
-    JSON.parse(localStorage.getItem("estimatorCustomerAuth")) ||
-    JSON.parse(localStorage.getItem("user"))
-  );
+  try {
+    return (
+      JSON.parse(localStorage.getItem("estimatorCustomerAuth")) ||
+      JSON.parse(localStorage.getItem("user"))
+    );
+  } catch (error) {
+    console.error("Error reading customer session:", error);
+    return null;
+  }
 }
 
 function loadUserName() {
@@ -213,8 +249,6 @@ async function loadMyReviews() {
 
     const businessReviews = Array.isArray(businessData.reviews) ? businessData.reviews : [];
     const appReviews = Array.isArray(appData.reviews) ? appData.reviews : [];
-
-    console.log("BUSINESS REVIEWS RESPONSE:", businessReviews);
 
     if (businessReviewCount) businessReviewCount.textContent = businessReviews.length;
     if (appReviewCount) appReviewCount.textContent = appReviews.length;
