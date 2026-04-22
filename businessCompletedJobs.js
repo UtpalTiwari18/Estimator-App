@@ -27,10 +27,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  // supports both:
+  // 1. localStorage = { id, businessName, ownerName, email, zip }
+  // 2. localStorage = { business: { id, businessName, ownerName, email, zip } }
+  const businessInfo = savedBusiness.business ? savedBusiness.business : savedBusiness;
+
+  const businessId = businessInfo.id;
+  const businessZip = String(businessInfo.zip || "").trim();
+  const ownerName = businessInfo.ownerName || "";
+
   if (managerName) {
-    managerName.textContent = savedBusiness.ownerName
-      ? `Mg. ${savedBusiness.ownerName}`
-      : "Mg.";
+    managerName.textContent = ownerName ? `Mg. ${ownerName}` : "Mg.";
   }
 
   if (userButton && userMenu) {
@@ -64,16 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function loadCompletedJobs() {
     try {
-      const zip = String(savedBusiness.zip || "").trim();
-
-      if (!zip) {
-        completedJobsList.innerHTML = `<div class="emptyState">Business ZIP not found in login session.</div>`;
+      if (!businessId || !businessZip) {
+        completedJobsList.innerHTML = `<div class="emptyState">Business login session is missing ID or ZIP.</div>`;
         completedJobsTotal.textContent = "0 Jobs";
         return;
       }
 
       const response = await fetch(
-        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}`
+        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(businessZip)}&business_id=${encodeURIComponent(businessId)}`
       );
 
       const data = await response.json();
@@ -83,9 +88,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const allRequests = Array.isArray(data.requests) ? data.requests : [];
-      const completedJobs = allRequests.filter(
-        (item) => normalizeStatus(item.status) === "Completed"
-      );
+
+      const completedJobs = allRequests.filter((item) => {
+        const mainStatus = normalizeStatus(item.status);
+        const myStatus = normalizeStatus(item.my_action_status);
+        return mainStatus === "Completed" || myStatus === "Completed";
+      });
 
       completedJobsTotal.textContent = `${completedJobs.length} Job${completedJobs.length === 1 ? "" : "s"}`;
 
@@ -110,7 +118,9 @@ document.addEventListener("DOMContentLoaded", function () {
       return `
         <div class="completedJobCard">
           <h3>${escapeHtml(job.service_needed || "Completed Job")}</h3>
-          <p class="completedDateTop"><strong>Completed Date:</strong> ${escapeHtml(formatDateTime(job.completed_at))}</p>
+          <p class="completedDateTop">
+            <strong>Completed Date:</strong> ${escapeHtml(formatDateTime(job.completed_at))}
+          </p>
 
           <div class="completedJobMeta">
             <p><strong>Category:</strong> ${escapeHtml(job.service_category || "Not provided")}</p>
@@ -120,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>Preferred Date:</strong> ${escapeHtml(formatDate(job.preferred_date))}</p>
             <p><strong>Preferred Time:</strong> ${escapeHtml(job.preferred_time || "Not provided")}</p>
             <p><strong>Budget:</strong> ${escapeHtml(job.budget || "Not provided")}</p>
-            <p><strong>Status:</strong> <span class="statusBadge completed">${escapeHtml(job.status || "Completed")}</span></p>
+            <p><strong>Status:</strong> <span class="statusBadge completed">${escapeHtml(normalizeStatus(job.my_action_status || job.status))}</span></p>
             <p><strong>Vehicle:</strong> ${escapeHtml(vehicleText || "Not provided")}</p>
             <p><strong>License Plate:</strong> ${escapeHtml(job.vehicle_license_plate || "Not provided")}</p>
             <p><strong>VIN:</strong> ${escapeHtml(job.vehicle_vin || "Not provided")}</p>
