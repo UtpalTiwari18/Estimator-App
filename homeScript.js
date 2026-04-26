@@ -17,12 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchResultsList = document.getElementById("searchResultsList");
   const searchResultsText = document.getElementById("searchResultsText");
 
+  const popularServicesTrack = document.getElementById("popularServicesTrack");
+  const servicePrevButton = document.getElementById("servicePrevButton");
+  const serviceNextButton = document.getElementById("serviceNextButton");
+  const serviceDots = document.getElementById("serviceDots");
+
   const sliderTrack = document.getElementById("sliderTrack");
   const testimonialSlider = document.getElementById("testimonialSlider");
   const prevButton = document.getElementById("prevButton");
   const nextButton = document.getElementById("nextButton");
   const sliderDots = document.getElementById("sliderDots");
 
+  let serviceIndex = 0;
   let currentSlide = 0;
   let testimonialCards = [];
   let autoplayInterval = null;
@@ -71,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     servicesLink.addEventListener("click", (event) => {
       const isMobile = window.matchMedia("(max-width: 900px)").matches;
       if (!isMobile) return;
+
       event.preventDefault();
       servicesMenu.classList.toggle("isOpen");
       servicesMenu.classList.toggle("open");
@@ -228,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", function (e) {
     if (!suggestionsBox || !keywordInput) return;
+
     if (!suggestionsBox.contains(e.target) && e.target !== keywordInput) {
       suggestionsBox.style.display = "none";
     }
@@ -249,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
           No matching businesses were found. Try another service${zip ? " or another zip code" : ""}.
         </div>
       `;
+
       searchResultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
@@ -300,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", function (e) {
     const signupButton = e.target.closest(".guestSignupBtn");
     if (!signupButton) return;
+
     window.location.href = "customerSignUp.html";
   });
 
@@ -322,6 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         let url = `${API_BASE}/api/search-businesses?keyword=${encodeURIComponent(keyword)}`;
+
         if (zip) {
           url += `&zip=${encodeURIComponent(zip)}`;
         }
@@ -341,6 +352,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getServiceCardsPerView() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 992) return 2;
+    return 3;
+  }
+
+  function updateServiceSlider() {
+    if (!popularServicesTrack) return;
+
+    const cards = popularServicesTrack.querySelectorAll(".popularServiceCard");
+    if (!cards.length) return;
+
+    const perView = getServiceCardsPerView();
+    const maxIndex = Math.max(0, cards.length - perView);
+
+    if (serviceIndex > maxIndex) {
+      serviceIndex = maxIndex;
+    }
+
+    const gap = parseFloat(window.getComputedStyle(popularServicesTrack).gap) || 22;
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const moveX = serviceIndex * (cardWidth + gap);
+
+    popularServicesTrack.style.transform = `translateX(-${moveX}px)`;
+
+    if (serviceDots) {
+      serviceDots.innerHTML = "";
+
+      for (let i = 0; i <= maxIndex; i++) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+
+        if (i === serviceIndex) {
+          dot.classList.add("active");
+        }
+
+        dot.addEventListener("click", function () {
+          serviceIndex = i;
+          updateServiceSlider();
+        });
+
+        serviceDots.appendChild(dot);
+      }
+    }
+  }
+
+  if (servicePrevButton) {
+    servicePrevButton.addEventListener("click", function () {
+      serviceIndex = Math.max(0, serviceIndex - 1);
+      updateServiceSlider();
+    });
+  }
+
+  if (serviceNextButton) {
+    serviceNextButton.addEventListener("click", function () {
+      const cards = popularServicesTrack?.querySelectorAll(".popularServiceCard") || [];
+      const perView = getServiceCardsPerView();
+      const maxIndex = Math.max(0, cards.length - perView);
+
+      serviceIndex = Math.min(maxIndex, serviceIndex + 1);
+      updateServiceSlider();
+    });
+  }
+
   function getStars(rating) {
     const safeRating = Math.max(0, Math.min(5, Number(rating) || 0));
     return "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
@@ -352,6 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateSliderPosition() {
     if (!sliderTrack || testimonialCards.length === 0) return;
+
     sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
     updateDots();
   }
@@ -360,6 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!sliderDots) return;
 
     const dots = sliderDots.querySelectorAll(".dotButton");
+
     dots.forEach((dot, index) => {
       dot.classList.toggle("active", index === currentSlide);
     });
@@ -367,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createDots() {
     if (!sliderDots) return;
+
     sliderDots.innerHTML = "";
 
     testimonialCards.forEach((_, index) => {
@@ -387,12 +465,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function goToNextSlide() {
     if (!testimonialCards.length) return;
+
     currentSlide = (currentSlide + 1) % testimonialCards.length;
     updateSliderPosition();
   }
 
   function goToPrevSlide() {
     if (!testimonialCards.length) return;
+
     currentSlide = (currentSlide - 1 + testimonialCards.length) % testimonialCards.length;
     updateSliderPosition();
   }
@@ -472,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       `;
+
       setupTestimonialSlider();
       return;
     }
@@ -532,5 +613,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadCustomerCount();
   fillZipCodeFromLocation();
+  updateServiceSlider();
   loadTestimonials();
+
+  window.addEventListener("resize", function () {
+    updateServiceSlider();
+    updateSliderPosition();
+  });
 });

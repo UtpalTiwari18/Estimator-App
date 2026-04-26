@@ -3,86 +3,87 @@ const API_BASE =
     ? "http://localhost:5000"
     : "https://estimator-app-icmp.onrender.com";
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupMobileMenu();
-  setupUserDropdown();
-  setupLogout();
+document.addEventListener("DOMContentLoaded", function () {
+  const userMenu = document.getElementById("userMenu");
+  const userButton = document.getElementById("userButton");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const managerName = document.getElementById("managerName");
+  const menuButton = document.getElementById("menuButton");
+  const menuArea = document.getElementById("menuArea");
 
-  const auth =
-    JSON.parse(localStorage.getItem("estimatorBusinessAuth")) ||
-    JSON.parse(localStorage.getItem("businessUser")) ||
-    JSON.parse(localStorage.getItem("business")) ||
-    null;
+  let savedBusiness = null;
 
-  if (!auth || !auth.id) {
+  try {
+    const rawBusiness =
+      localStorage.getItem("estimatorBusinessAuth") ||
+      localStorage.getItem("businessUser") ||
+      localStorage.getItem("business");
+
+    if (rawBusiness) {
+      savedBusiness = JSON.parse(rawBusiness);
+    }
+  } catch (error) {
+    console.error("Error reading business auth:", error);
+  }
+
+  if (!savedBusiness) {
     window.location.href = "businessLogin.html";
     return;
   }
 
-  const managerNameEl = document.getElementById("managerName");
-  if (managerNameEl) {
-    managerNameEl.textContent = auth.ownerName || auth.businessName || "Business";
+  const businessInfo = savedBusiness.business ? savedBusiness.business : savedBusiness;
+  const businessId = businessInfo.id;
+
+  if (managerName) {
+    managerName.textContent = businessInfo.ownerName
+      ? `Mg. ${businessInfo.ownerName}`
+      : "Mg.";
   }
 
-  loadBusinessProfile(auth.id);
-  setupProfileSubmit(auth.id);
-});
+  if (userButton && userMenu) {
+    userButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      userMenu.classList.toggle("active");
+    });
 
-function setupMobileMenu() {
-  const menuButton = document.getElementById("menuButton");
-  const menuArea = document.getElementById("menuArea");
-
-  if (menuButton && menuArea) {
-    menuButton.addEventListener("click", () => {
-      menuArea.classList.toggle("showMenu");
+    document.addEventListener("click", function (e) {
+      if (!userMenu.contains(e.target)) {
+        userMenu.classList.remove("active");
+      }
     });
   }
-}
 
-function setupUserDropdown() {
-  const userButton = document.getElementById("userButton");
-  const userDropdown = document.getElementById("userDropdown");
-  const userMenu = document.getElementById("userMenu");
+  if (menuButton && menuArea) {
+    menuButton.addEventListener("click", function () {
+      menuArea.classList.toggle("open");
+    });
+  }
 
-  if (!userButton || !userDropdown || !userMenu) return;
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
 
-  userButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    userDropdown.classList.toggle("show");
-  });
+      localStorage.removeItem("estimatorBusinessAuth");
+      localStorage.removeItem("businessUser");
+      localStorage.removeItem("business");
+      localStorage.removeItem("estimatorCustomerAuth");
+      localStorage.removeItem("user");
 
-  document.addEventListener("click", (e) => {
-    if (!userMenu.contains(e.target)) {
-      userDropdown.classList.remove("show");
-    }
-  });
-}
+      window.location.href = "home.html";
+    });
+  }
 
-function setupLogout() {
-  const logoutBtn = document.getElementById("logoutBtn");
-
-  if (!logoutBtn) return;
-
-  logoutBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    localStorage.removeItem("estimatorBusinessAuth");
-    localStorage.removeItem("businessUser");
-    localStorage.removeItem("business");
-    localStorage.removeItem("estimatorCustomerAuth");
-    localStorage.removeItem("user");
-
-    window.location.href = "home.html";
-  });
-}
+  loadBusinessProfile(businessId);
+  setupProfileSubmit(businessId);
+});
 
 async function loadBusinessProfile(businessId) {
   try {
     const response = await fetch(`${API_BASE}/api/business/profile/${businessId}`);
     const data = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !data.business) {
       throw new Error(data.message || "Unable to load business profile.");
     }
 
@@ -100,11 +101,20 @@ async function loadBusinessProfile(businessId) {
       id: data.business.id,
       businessName: data.business.businessName,
       ownerName: data.business.ownerName,
-      email: data.business.email
+      email: data.business.email,
+      zip: data.business.zip
     };
 
     localStorage.setItem("estimatorBusinessAuth", JSON.stringify(updatedAuth));
+
+    const managerName = document.getElementById("managerName");
+    if (managerName) {
+      managerName.textContent = data.business.ownerName
+        ? `Mg. ${data.business.ownerName}`
+        : "Mg.";
+    }
   } catch (error) {
+    console.error("Load business profile error:", error);
     showMessage(error.message || "Failed to load business profile.", "error");
   }
 }
@@ -147,7 +157,7 @@ function setupProfileSubmit(businessId) {
 
   if (!form) return;
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const payload = {
@@ -165,8 +175,10 @@ function setupProfileSubmit(businessId) {
       zip: document.getElementById("zip").value.trim()
     };
 
-    saveBtn.disabled = true;
-    saveBtn.textContent = "Saving...";
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Saving...";
+    }
 
     try {
       const response = await fetch(`${API_BASE}/api/business/profile/${businessId}`, {
@@ -179,7 +191,7 @@ function setupProfileSubmit(businessId) {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !data.business) {
         throw new Error(data.message || "Unable to update profile.");
       }
 
@@ -196,22 +208,28 @@ function setupProfileSubmit(businessId) {
         id: data.business.id,
         businessName: data.business.businessName,
         ownerName: data.business.ownerName,
-        email: data.business.email
+        email: data.business.email,
+        zip: data.business.zip
       };
 
       localStorage.setItem("estimatorBusinessAuth", JSON.stringify(updatedAuth));
 
-      const managerNameEl = document.getElementById("managerName");
-      if (managerNameEl) {
-        managerNameEl.textContent = data.business.ownerName || data.business.businessName || "Business";
+      const managerName = document.getElementById("managerName");
+      if (managerName) {
+        managerName.textContent = data.business.ownerName
+          ? `Mg. ${data.business.ownerName}`
+          : "Mg.";
       }
 
       showMessage("Business profile updated successfully.", "success");
     } catch (error) {
+      console.error("Update business profile error:", error);
       showMessage(error.message || "Failed to update profile.", "error");
     } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = "Save Changes";
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Changes";
+      }
     }
   });
 }
