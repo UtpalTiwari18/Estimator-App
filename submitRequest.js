@@ -1,4 +1,66 @@
 // ===============================
+// CONFIG / AUTH
+// ===============================
+const apiBaseUrl = "http://127.0.0.1:5000";
+
+function getStoredCustomerAuth() {
+  const possibleKeys = [
+    "estimatorCustomerAuth",
+    "customerAuth",
+    "user",
+    "estimatorUser"
+  ];
+
+  for (const key of possibleKeys) {
+    const raw = localStorage.getItem(key);
+    if (!raw) continue;
+
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed) return parsed;
+    } catch (error) {
+      console.warn(`Could not parse localStorage key: ${key}`, error);
+    }
+  }
+
+  return null;
+}
+
+function normalizeCustomer(auth) {
+  if (!auth) return null;
+
+  return {
+    id:
+      auth.customerId ||
+      auth.id ||
+      auth.customer_id ||
+      auth.userId ||
+      null,
+    firstName:
+      auth.firstName ||
+      auth.first_name ||
+      auth.firstname ||
+      "",
+    lastName:
+      auth.lastName ||
+      auth.last_name ||
+      auth.lastname ||
+      "",
+    email:
+      auth.email ||
+      auth.customerEmail ||
+      ""
+  };
+}
+
+const rawCustomerAuth = getStoredCustomerAuth();
+const savedCustomer = normalizeCustomer(rawCustomerAuth);
+
+if (!savedCustomer || !savedCustomer.id) {
+  window.location.href = "customerLogin.html";
+}
+
+// ===============================
 // USER DROPDOWN + NAME
 // ===============================
 const userButton = document.getElementById("userButton");
@@ -6,17 +68,8 @@ const userMenu = document.getElementById("userMenu");
 const logoutBtn = document.getElementById("logoutBtn");
 const userName = document.getElementById("userName");
 
-const savedCustomer = JSON.parse(localStorage.getItem("estimatorCustomerAuth"));
-const apiBaseUrl = "http://127.0.0.1:5000";
-
-if (!savedCustomer) {
-  window.location.href = "customerLogin.html";
-}
-
-if (savedCustomer && savedCustomer.firstName && userName) {
-  userName.textContent = savedCustomer.firstName;
-} else if (userName) {
-  userName.textContent = "Guest";
+if (userName) {
+  userName.textContent = savedCustomer.firstName || "Customer";
 }
 
 if (userButton && userMenu) {
@@ -42,6 +95,9 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", function (e) {
     e.preventDefault();
     localStorage.removeItem("estimatorCustomerAuth");
+    localStorage.removeItem("customerAuth");
+    localStorage.removeItem("user");
+    localStorage.removeItem("estimatorUser");
     window.location.href = "home.html";
   });
 }
@@ -103,7 +159,17 @@ const vehicleLicensePlate = document.getElementById("vehicleLicensePlate");
 const vehicleVin = document.getElementById("vehicleVin");
 const vehicleMileage = document.getElementById("vehicleMileage");
 
+const zipCodeInput = document.getElementById("zipCode");
+const serviceCategoryInput = document.getElementById("serviceCategory");
+const serviceNeededInput = document.getElementById("serviceNeeded");
+const problemDescriptionInput = document.getElementById("problemDescription");
+const preferredDateInput = document.getElementById("preferredDate");
+const preferredTimeInput = document.getElementById("preferredTime");
+const budgetInput = document.getElementById("budget");
+
 const vehicleSourceRadios = document.querySelectorAll('input[name="vehicleSource"]');
+const savedVehicleRadio = document.querySelector('input[name="vehicleSource"][value="saved"]');
+const customVehicleRadio = document.querySelector('input[name="vehicleSource"][value="custom"]');
 
 let customerVehicles = [];
 
@@ -116,19 +182,32 @@ function showRequestMessage(type, text) {
   if (!type) {
     requestFormMessage.className = "requestFormMessage";
     requestFormMessage.textContent = "";
+    requestFormMessage.style.display = "none";
     return;
   }
 
-  requestFormMessage.className = "requestFormMessage " + type;
+  requestFormMessage.className = `requestFormMessage ${type}`;
   requestFormMessage.textContent = text;
+  requestFormMessage.style.display = "block";
+}
+
+function showBottomSuccessMessage(text) {
+  showRequestMessage("success", text);
+  if (requestFormMessage) {
+    requestFormMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  setTimeout(function () {
+    showRequestMessage("", "");
+  }, 4000);
 }
 
 function getCustomerId() {
-  return savedCustomer?.customerId || savedCustomer?.id || null;
+  return savedCustomer?.id || null;
 }
 
 function getSelectedVehicleSource() {
-  return document.querySelector('input[name="vehicleSource"]:checked')?.value || "saved";
+  return document.querySelector('input[name="vehicleSource"]:checked')?.value || "custom";
 }
 
 function fillVehicleFields(vehicle) {
@@ -154,31 +233,18 @@ function clearVehicleFields() {
 }
 
 function setVehicleFieldsReadOnly(isReadOnly) {
-  vehicleMake.readOnly = isReadOnly;
-  vehicleModel.readOnly = isReadOnly;
-  vehicleYear.readOnly = isReadOnly;
-  vehicleColor.readOnly = isReadOnly;
-  vehicleLicensePlate.readOnly = isReadOnly;
-  vehicleVin.readOnly = isReadOnly;
-  vehicleMileage.readOnly = isReadOnly;
-
-  if (isReadOnly) {
-    vehicleMake.classList.add("vehicleReadonly");
-    vehicleModel.classList.add("vehicleReadonly");
-    vehicleYear.classList.add("vehicleReadonly");
-    vehicleColor.classList.add("vehicleReadonly");
-    vehicleLicensePlate.classList.add("vehicleReadonly");
-    vehicleVin.classList.add("vehicleReadonly");
-    vehicleMileage.classList.add("vehicleReadonly");
-  } else {
-    vehicleMake.classList.remove("vehicleReadonly");
-    vehicleModel.classList.remove("vehicleReadonly");
-    vehicleYear.classList.remove("vehicleReadonly");
-    vehicleColor.classList.remove("vehicleReadonly");
-    vehicleLicensePlate.classList.remove("vehicleReadonly");
-    vehicleVin.classList.remove("vehicleReadonly");
-    vehicleMileage.classList.remove("vehicleReadonly");
-  }
+  [
+    vehicleMake,
+    vehicleModel,
+    vehicleYear,
+    vehicleColor,
+    vehicleLicensePlate,
+    vehicleVin,
+    vehicleMileage
+  ].forEach(function (field) {
+    field.readOnly = isReadOnly;
+    field.classList.toggle("vehicleReadonly", isReadOnly);
+  });
 }
 
 function populateSavedVehicleDropdown(vehicles) {
@@ -201,48 +267,117 @@ function populateSavedVehicleDropdown(vehicles) {
   });
 }
 
-function applyVehicleSourceState() {
-  const vehicleSource = getSelectedVehicleSource();
+function disableSavedVehicleOption() {
+  if (savedVehicleRadio) {
+    savedVehicleRadio.disabled = true;
+    savedVehicleRadio.checked = false;
+  }
 
-  if (vehicleSource === "saved") {
-    savedVehicleBlock.style.display = "block";
-
-    if (customerVehicles.length > 0) {
-      setVehicleFieldsReadOnly(true);
-
-      const selectedVehicleId = savedVehicleSelect.value;
-      if (selectedVehicleId) {
-        const vehicle = customerVehicles.find(function (item) {
-          return String(item.id) === String(selectedVehicleId);
-        });
-
-        if (vehicle) {
-          fillVehicleFields(vehicle);
-        }
-      } else {
-        clearVehicleFields();
-      }
-    } else {
-      setVehicleFieldsReadOnly(false);
-      clearVehicleFields();
-      showRequestMessage("error", "No saved vehicles found. Please use another car or add a vehicle first.");
-    }
-  } else {
+  if (savedVehicleBlock) {
     savedVehicleBlock.style.display = "none";
+  }
+
+  if (savedVehicleSelect) {
     savedVehicleSelect.value = "";
-    setVehicleFieldsReadOnly(false);
-    clearVehicleFields();
   }
 }
 
+function enableSavedVehicleOption() {
+  if (savedVehicleRadio) {
+    savedVehicleRadio.disabled = false;
+  }
+}
+
+function switchToSavedVehicleMode() {
+  if (!customerVehicles.length) {
+    switchToCustomVehicleMode(true, true);
+    return;
+  }
+
+  enableSavedVehicleOption();
+
+  if (savedVehicleRadio) {
+    savedVehicleRadio.checked = true;
+  }
+
+  if (savedVehicleBlock) {
+    savedVehicleBlock.style.display = "block";
+  }
+
+  setVehicleFieldsReadOnly(true);
+
+  const selectedVehicleId = savedVehicleSelect.value || String(customerVehicles[0].id);
+  savedVehicleSelect.value = selectedVehicleId;
+
+  const selectedVehicle = customerVehicles.find(function (vehicle) {
+    return String(vehicle.id) === String(selectedVehicleId);
+  });
+
+  if (selectedVehicle) {
+    fillVehicleFields(selectedVehicle);
+  }
+
+  showRequestMessage("", "");
+}
+
+function switchToCustomVehicleMode(clearFields = true, showNoVehicleMessage = false) {
+  if (customVehicleRadio) {
+    customVehicleRadio.checked = true;
+  }
+
+  if (savedVehicleBlock) {
+    savedVehicleBlock.style.display = "none";
+  }
+
+  if (savedVehicleSelect) {
+    savedVehicleSelect.value = "";
+  }
+
+  setVehicleFieldsReadOnly(false);
+
+  if (clearFields) {
+    clearVehicleFields();
+  }
+
+  if (showNoVehicleMessage) {
+    showRequestMessage("error", "No saved vehicles found. Please use another car.");
+  } else {
+    showRequestMessage("", "");
+  }
+}
+
+function applyVehicleSourceState() {
+  const source = getSelectedVehicleSource();
+
+  if (source === "saved") {
+    if (customerVehicles.length === 0) {
+      disableSavedVehicleOption();
+      switchToCustomVehicleMode(true, true);
+      return;
+    }
+
+    switchToSavedVehicleMode();
+    return;
+  }
+
+  if (customerVehicles.length > 0) {
+    enableSavedVehicleOption();
+  } else {
+    disableSavedVehicleOption();
+  }
+
+  // Important: custom mode should be blank, not autofilled
+  switchToCustomVehicleMode(true, false);
+}
+
 // ===============================
-// LOAD VEHICLES FROM DATABASE
+// LOAD CUSTOMER VEHICLES
 // ===============================
 async function loadCustomerVehicles() {
   const customerId = getCustomerId();
 
   if (!customerId) {
-    showRequestMessage("error", "Customer ID not found. Please log in again.");
+    showRequestMessage("error", "Customer not found. Please log in again.");
     return;
   }
 
@@ -251,7 +386,10 @@ async function loadCustomerVehicles() {
     const data = await res.json();
 
     if (!res.ok || !data.success) {
-      showRequestMessage("error", data.message || "Failed to load vehicles.");
+      customerVehicles = [];
+      populateSavedVehicleDropdown([]);
+      disableSavedVehicleOption();
+      switchToCustomVehicleMode(true, true);
       return;
     }
 
@@ -259,24 +397,24 @@ async function loadCustomerVehicles() {
     populateSavedVehicleDropdown(customerVehicles);
 
     if (customerVehicles.length > 0) {
+      enableSavedVehicleOption();
       savedVehicleSelect.value = String(customerVehicles[0].id);
-      fillVehicleFields(customerVehicles[0]);
-      setVehicleFieldsReadOnly(true);
+      switchToSavedVehicleMode();
     } else {
-      clearVehicleFields();
-      setVehicleFieldsReadOnly(false);
-      showRequestMessage("error", "No saved vehicles found. Please add one in My Vehicle.");
+      disableSavedVehicleOption();
+      switchToCustomVehicleMode(true, true);
     }
-
-    applyVehicleSourceState();
   } catch (error) {
     console.error("Load vehicles error:", error);
-    showRequestMessage("error", "Could not load your saved vehicles.");
+    customerVehicles = [];
+    populateSavedVehicleDropdown([]);
+    disableSavedVehicleOption();
+    switchToCustomVehicleMode(true, true);
   }
 }
 
 // ===============================
-// VEHICLE SELECT CHANGE
+// VEHICLE DROPDOWN CHANGE
 // ===============================
 if (savedVehicleSelect) {
   savedVehicleSelect.addEventListener("change", function () {
@@ -287,12 +425,12 @@ if (savedVehicleSelect) {
       return;
     }
 
-    const vehicle = customerVehicles.find(function (item) {
-      return String(item.id) === String(selectedVehicleId);
+    const selectedVehicle = customerVehicles.find(function (vehicle) {
+      return String(vehicle.id) === String(selectedVehicleId);
     });
 
-    if (vehicle) {
-      fillVehicleFields(vehicle);
+    if (selectedVehicle) {
+      fillVehicleFields(selectedVehicle);
     }
   });
 }
@@ -313,21 +451,34 @@ if (submitRequestForm) {
   submitRequestForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const vehicleSource = getSelectedVehicleSource();
+    const customerId = getCustomerId();
+    let vehicleSource = getSelectedVehicleSource();
+
+    if (!customerId) {
+      showRequestMessage("error", "Customer not found. Please log in again.");
+      return;
+    }
+
+    if (customerVehicles.length === 0) {
+      vehicleSource = "custom";
+    }
 
     const payload = {
-      customerId: getCustomerId(),
-      customerName: `${savedCustomer?.firstName || ""} ${savedCustomer?.lastName || ""}`.trim(),
-      customerEmail: savedCustomer?.email || "",
-      zipCode: document.getElementById("zipCode")?.value.trim() || "",
-      serviceCategory: document.getElementById("serviceCategory")?.value || "",
-      serviceNeeded: document.getElementById("serviceNeeded")?.value.trim() || "",
-      problemDescription: document.getElementById("problemDescription")?.value.trim() || "",
-      preferredDate: document.getElementById("preferredDate")?.value || "",
-      preferredTime: document.getElementById("preferredTime")?.value.trim() || "",
-      budget: document.getElementById("budget")?.value.trim() || "",
+      customerId: customerId,
+      customerName: `${savedCustomer.firstName || ""} ${savedCustomer.lastName || ""}`.trim(),
+      customerEmail: savedCustomer.email || "",
+      zipCode: zipCodeInput?.value.trim() || "",
+      serviceCategory: serviceCategoryInput?.value || "",
+      serviceNeeded: serviceNeededInput?.value.trim() || "",
+      problemDescription: problemDescriptionInput?.value.trim() || "",
+      preferredDate: preferredDateInput?.value || "",
+      preferredTime: preferredTimeInput?.value.trim() || "",
+      budget: budgetInput?.value.trim() || "",
       vehicleSource: vehicleSource,
-      savedVehicleId: vehicleSource === "saved" ? savedVehicleSelect.value || null : null,
+      savedVehicleId:
+        vehicleSource === "saved" && customerVehicles.length > 0
+          ? savedVehicleSelect?.value || null
+          : null,
       vehicleMake: vehicleMake.value.trim(),
       vehicleModel: vehicleModel.value.trim(),
       vehicleYear: vehicleYear.value.trim(),
@@ -338,7 +489,6 @@ if (submitRequestForm) {
     };
 
     if (
-      !payload.customerId ||
       !payload.zipCode ||
       !payload.serviceCategory ||
       !payload.serviceNeeded ||
@@ -347,11 +497,17 @@ if (submitRequestForm) {
       !payload.vehicleModel
     ) {
       showRequestMessage("error", "Please fill in all required fields.");
+      if (requestFormMessage) {
+        requestFormMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
       return;
     }
 
     if (vehicleSource === "saved" && !payload.savedVehicleId) {
       showRequestMessage("error", "Please select one of your saved vehicles.");
+      if (requestFormMessage) {
+        requestFormMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
       return;
     }
 
@@ -368,41 +524,46 @@ if (submitRequestForm) {
 
       if (!res.ok) {
         showRequestMessage("error", data.message || "Failed to submit request.");
+        if (requestFormMessage) {
+          requestFormMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
         return;
       }
 
-      showRequestMessage("success", "Your request has been submitted successfully.");
       submitRequestForm.reset();
 
       if (customerVehicles.length > 0) {
         savedVehicleSelect.value = String(customerVehicles[0].id);
-        fillVehicleFields(customerVehicles[0]);
+        switchToSavedVehicleMode();
       } else {
-        clearVehicleFields();
+        switchToCustomVehicleMode(true, false);
       }
 
-      document.querySelector('input[name="vehicleSource"][value="saved"]').checked = true;
-      applyVehicleSourceState();
+      showBottomSuccessMessage("✅ Your request has been submitted successfully.");
     } catch (error) {
       console.error("Submit request error:", error);
       showRequestMessage("error", "Server not reachable.");
+      if (requestFormMessage) {
+        requestFormMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     }
   });
 }
 
+// ===============================
+// RESET
+// ===============================
 if (resetRequestForm) {
   resetRequestForm.addEventListener("click", function () {
     setTimeout(function () {
       showRequestMessage("", "");
+
       if (customerVehicles.length > 0) {
         savedVehicleSelect.value = String(customerVehicles[0].id);
-        fillVehicleFields(customerVehicles[0]);
+        switchToSavedVehicleMode();
       } else {
-        clearVehicleFields();
+        switchToCustomVehicleMode(true, false);
       }
-
-      document.querySelector('input[name="vehicleSource"][value="saved"]').checked = true;
-      applyVehicleSourceState();
     }, 0);
   });
 }

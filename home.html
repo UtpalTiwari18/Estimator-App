@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +9,7 @@
 
   <link rel="stylesheet" href="homeStyle.css" />
 
-   <title>Home | Estimator</title>
+  <title>Home | Estimator</title>
 </head>
 
 <body>
@@ -15,32 +17,26 @@
   <header class="navBar">
     <div class="navInner">
 
-      <!-- Logo (Home link) -->
       <a href="home.html" class="logoArea">
         <h2 class="logoText">Estimator</h2>
       </a>
 
-      <!-- Mobile toggle -->
       <button class="menuButton" id="menuButton" type="button" aria-label="Open menu">
         <span class="menuLine"></span>
         <span class="menuLine"></span>
         <span class="menuLine"></span>
       </button>
 
-      <!-- Nav content -->
       <nav class="menuArea" id="menuArea">
 
-        <!-- Left navigation -->
         <div class="navLinks">
 
-          <!-- Our Services (Mega Dropdown) -->
           <div class="servicesMenu" id="servicesMenu">
             <a class="menuLink servicesLink" id="servicesLink" href="javascript:void(0)">
               Our Services <span class="dropdownIcon">▾</span>
             </a>
 
             <div class="megaDropdown" id="megaDropdown">
-              <!-- Left column -->
               <div class="megaLeft">
                 <div class="megaSectionTitle">Workshop Services</div>
 
@@ -69,7 +65,6 @@
                 </button>
               </div>
 
-              <!-- Right column -->
               <div class="megaRight">
 
                 <div class="megaPanel isVisible" id="interiorPanel">
@@ -79,7 +74,6 @@
                   <a class="megaItem" href="#service-dashboard">Dashboard Restoration</a>
                   <a class="megaItem" href="#service-odor">Odor Removal</a>
                   <a class="megaItem" href="#service-ac">AC Sanitization</a>
-                  
                 </div>
 
                 <div class="megaPanel" id="exteriorPanel">
@@ -131,12 +125,9 @@
             </div>
           </div>
 
-          <!-- Business signup -->
           <a class="menuLink businessLink" href="businessSignUp.html">Sign up as Business</a>
-
         </div>
 
-        <!-- Right actions (customers) -->
         <div class="navActions">
           <a class="actionLink" href="customerSignup.html">
             <button class="primaryButton" type="button">Sign up</button>
@@ -149,416 +140,284 @@
     </div>
   </header>
 
+  <section class="heroSection">
+    <h1 class="heroTagline">
+      Where <span class="highlightCare">car care</span> meets
+      <span class="highlightConvenience">convenience</span>.
+    </h1>
 
-<section class="heroSection">
+    <div class="heroImageWrapper">
+      <img src="./images/EstimatorLogoBgRemoved.png" alt="Estimator Logo" class="heroLogo">
+    </div>
 
-  <h1 class="heroTagline">
-    Where <span class="highlightCare">car care</span> meets
-    <span class="highlightConvenience">convenience</span>.
-  </h1>
+    <form class="heroSearch" id="heroSearchForm">
+      <div class="searchBar searchBarWrap">
 
-<div class="heroImageWrapper">
-    <img src="./images/EstimatorLogoBgRemoved.png" alt="Estimator Logo" class="heroLogo">
-</div>
-  
-  <!-- Search Bar (Below Image) -->
-  <form class="heroSearch" id="heroSearchForm">
-    <div class="searchBar">
+        <div class="searchFieldWrap">
+          <input
+            type="text"
+            class="searchInput"
+            id="keywordInput"
+            placeholder="Enter a service needed"
+            autocomplete="off"
+          />
+          <div id="suggestionsBox" class="suggestionsBox"></div>
+        </div>
 
-      <input
-        type="text"
-        class="searchInput"
-        id="keywordInput"
-        placeholder="Tell us what service your vehicle needs!"
-      />
+        <div class="divider"></div>
 
-      <div class="divider"></div>
+        <input
+          type="text"
+          class="zipInput"
+          id="zipInput"
+          placeholder="Zip Code "
+          maxlength="5"
+          inputmode="numeric"
+        />
 
-      <input
-        type="text"
-        class="zipInput"
-        id="zipInput"
-        placeholder="Zip Code"
-        maxlength="5"
-        inputmode="numeric"
-      />
+        <button class="searchButton" type="submit">
+          Search
+        </button>
 
-      <button class="searchButton" type="submit">
-        Search
+      </div>
+    </form>
+
+    <span class="customerCountText">
+      <span class="customerCountIcon">✦</span>
+      <span class="customerCountNumber" id="customerCountNumber">102</span>
+      <span class="customerCountMessage">
+        drivers proudly served on time — your car is next!
+      </span>
+      <span class="customerCountIcon">✦</span>
+    </span>
+  </section>
+
+  <section class="searchResultsSection" id="searchResultsSection" style="display: none;">
+    <div class="searchResultsHeader">
+      <h2>Matching Businesses</h2>
+      <p id="searchResultsText">Search by service. Zip code is optional.</p>
+    </div>
+    <div id="searchResultsList" class="searchResultsList"></div>
+  </section>
+
+  <section class="popularServicesSection">
+    <div class="popularServicesHeader">
+      <h2><span>Popular Services</span></h2>
+      <p>Top requested automotive services near you.</p>
+    </div>
+
+    <div class="popularServicesSlider" id="popularServicesSlider">
+
+      <button class="serviceNavButton servicePrevButton" id="servicePrevButton" type="button">
+        &#10094;
+      </button>
+
+      <div class="popularServicesViewport">
+        <div class="popularServicesTrack" id="popularServicesTrack">
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/oilChange.png" alt="Oil Change" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Oil Change</h3>
+              <p>Quick and affordable maintenance from trusted local shops.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/brakeRepair.png" alt="Brake Repair" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Brake Repair</h3>
+              <p>Certified mechanics for safe and reliable braking performance.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/fullDetailing.png" alt="Full Detailing" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Full Detailing</h3>
+              <p>Interior and exterior care that restores your vehicle.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/tireReplacement.png" alt="Tire Replacement" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Tire Replacement</h3>
+              <p>Fast tire installs, rotations, and balancing near you.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/batteryReplacement.png" alt="Battery Replacement" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Battery Replacement</h3>
+              <p>Reliable battery testing and replacement to keep you moving.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/ceramicCoating.png" alt="Ceramic Coating" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Ceramic Coating</h3>
+              <p>Long-lasting protection and deep gloss for your car exterior.</p>
+            </div>
+          </div>
+
+          <div class="popularServiceCard">
+            <div class="popularServiceImageWrap">
+              <img src="./images/engineDiagnostic.png" alt="Engine Diagnostics" class="popularServiceImage">
+            </div>
+            <div class="popularServiceContent">
+              <h3>Engine Diagnostics</h3>
+              <p>Advanced scanning and troubleshooting for performance issues.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="serviceNavButton serviceNextButton" id="serviceNextButton" type="button">
+        &#10095;
+      </button>
+    </div>
+
+    <div class="serviceDots" id="serviceDots"></div>
+  </section>
+
+  <section class="businessPromoSection">
+    <div class="businessPromoWrapper">
+
+      <div class="businessPromoLeft">
+        <span class="businessPromoBadge">For Automotive Businesses</span>
+        <h2>Are you a business? Why should you use <span>Estimator</span>?</h2>
+        <p>
+          Estimator helps workshops, mobile detailers, mechanics, and service providers
+          connect with customers who are already looking for automotive services nearby.
+          Get discovered faster, build trust, and grow your business in one place.
+        </p>
+
+        <div class="businessPromoPoints">
+          <div class="businessPromoPoint">
+            <h3>Get More Local Leads</h3>
+            <p>Appear in front of nearby customers actively searching for services you offer.</p>
+          </div>
+
+          <div class="businessPromoPoint">
+            <h3>Showcase Your Services</h3>
+            <p>Create a strong profile with your business details, specialties, and service list.</p>
+          </div>
+
+          <div class="businessPromoPoint">
+            <h3>Build Trust Faster</h3>
+            <p>Highlight your quality, service reputation, and professionalism to win more bookings.</p>
+          </div>
+        </div>
+
+        <div class="businessPromoActions">
+          <a href="businessSignUp.html" class="businessPromoBtn">Sign up as Business</a>
+        </div>
+      </div>
+
+      <div class="businessPromoRight">
+        <div class="businessPromoCard">
+          <img src="./images/growYourBusiness.png" alt="Business using Estimator" class="businessPromoImage">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="testimonialsSection">
+
+    <div class="testimonialsHeader">
+      <h2>What people are saying</h2>
+      <p>Quick feedback from drivers who used Estimator.</p>
+    </div>
+
+    <div class="testimonialSlider" id="testimonialSlider">
+
+      <button class="navButton prevButton" id="prevButton" type="button">
+        &#10094;
+      </button>
+
+      <div class="sliderViewport">
+        <div class="sliderTrack" id="sliderTrack">
+          <!-- Testimonials will be loaded from database -->
+        </div>
+      </div>
+
+      <button class="navButton nextButton" id="nextButton" type="button">
+        &#10095;
       </button>
 
     </div>
-  </form>
-<div class="customerCountWrap">
-  <p class="customerCountText">
-    <span class="customerCountIcon">✦</span>
-    <span id="customerCountNumber" class="customerCountNumber">0</span>
-    <span class="customerCountLabel">drivers proudly served on time — your car is next!</span>
-    <span class="customerCountIcon">✦</span>
-  </p>
-</div>
-</section>
 
-<!-- ===============================
-        POPULAR SERVICES
-================================ -->
-<section class="popularServicesSection">
-  <div class="popularServicesHeader">
-    <h2><span>Popular Services</span></h2>
-    <p>Top requested automotive services near you.</p>
-  </div>
-
-  <div class="popularServicesSlider" id="popularServicesSlider">
-
-    <button class="serviceNavButton servicePrevButton" id="servicePrevButton" type="button">
-      &#10094;
-    </button>
-
-    <div class="popularServicesViewport">
-      <div class="popularServicesTrack" id="popularServicesTrack">
-
-        <!-- Service 1 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/oilChange.png" alt="Oil Change" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Oil Change</h3>
-            <p>Quick and affordable maintenance from trusted local shops.</p>
-          </div>
-        </div>
-
-        <!-- Service 2 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/brakeRepair.png" alt="Brake Repair" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Brake Repair</h3>
-            <p>Certified mechanics for safe and reliable braking performance.</p>
-          </div>
-        </div>
-
-        <!-- Service 3 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/fullDetailing.png" alt="Full Detailing" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Full Detailing</h3>
-            <p>Interior and exterior care that restores your vehicle.</p>
-          </div>
-        </div>
-
-        <!-- Service 4 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/tireReplacement.png" alt="Tire Replacement" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Tire Replacement</h3>
-            <p>Fast tire installs, rotations, and balancing near you.</p>
-          </div>
-        </div>
-
-        <!-- Service 5 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/batteryReplacement.png" alt="Battery Replacement" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Battery Replacement</h3>
-            <p>Reliable battery testing and replacement to keep you moving.</p>
-          </div>
-        </div>
-
-        <!-- Service 6 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/ceramicCoating.png" alt="Ceramic Coating" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Ceramic Coating</h3>
-            <p>Long-lasting protection and deep gloss for your car exterior.</p>
-          </div>
-        </div>
-
-        <!-- Service 7 -->
-        <div class="popularServiceCard">
-          <div class="popularServiceImageWrap">
-            <img src="./images/engineDiagnostic.png" alt="Engine Diagnostics" class="popularServiceImage">
-          </div>
-          <div class="popularServiceContent">
-            <h3>Engine Diagnostics</h3>
-            <p>Advanced scanning and troubleshooting for performance issues.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <button class="serviceNavButton serviceNextButton" id="serviceNextButton" type="button">
-      &#10095;
-    </button>
-  </div>
-
-  <div class="serviceDots" id="serviceDots"></div>
-</section>
-
-<!-- ===============================
-      BUSINESS MARKETING SECTION
-================================ -->
-<section class="businessPromoSection">
-  <div class="businessPromoWrapper">
-
-    <div class="businessPromoLeft">
-      <span class="businessPromoBadge">For Automotive Businesses</span>
-      <h2>Are you a business? Why should you use <span>Estimator</span>?</h2>
-      <p>
-        Estimator helps workshops, mobile detailers, mechanics, and service providers
-        connect with customers who are already looking for automotive services nearby.
-        Get discovered faster, build trust, and grow your business in one place.
-      </p>
-
-      <div class="businessPromoPoints">
-        <div class="businessPromoPoint">
-          <h3>Get More Local Leads</h3>
-          <p>Appear in front of nearby customers actively searching for services you offer.</p>
-        </div>
-
-        <div class="businessPromoPoint">
-          <h3>Showcase Your Services</h3>
-          <p>Create a strong profile with your business details, specialties, and service list.</p>
-        </div>
-
-        <div class="businessPromoPoint">
-          <h3>Build Trust Faster</h3>
-          <p>Highlight your quality, service reputation, and professionalism to win more bookings.</p>
-        </div>
-      </div>
-
-      <div class="businessPromoActions">
-        <a href="businessSignUp.html" class="businessPromoBtn">Sign up as Business</a>
-      </div>
-    </div>
-
-    <div class="businessPromoRight">
-      <div class="businessPromoCard">
-        <img src="./images/growYourBusiness.png" alt="Business using Estimator" class="businessPromoImage">
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-
-
-<!-- ===============================
-     customerTestimonialsSection
-================================ -->
-<section class="testimonialsSection">
-
-    <!-- Header -->
-    <div class="testimonialsHeader">
-        <h2>What people are saying</h2>
-        <p>Quick feedback from drivers who used Estimator.</p>
-    </div>
-
-    <!-- Slider -->
-    <div class="testimonialSlider" id="testimonialSlider">
-
-        <!-- Previous Button -->
-        <button class="navButton prevButton" id="prevButton">
-            &#10094;
-        </button>
-
-        <!-- Viewport -->
-        <div class="sliderViewport">
-            <div class="sliderTrack" id="sliderTrack">
-
-                <!-- ================= Testimonial 1 ================= -->
-                <div class="testimonialCard">
-
-                    <div class="cardTop">
-                        <div class="starRating">★★★★★</div>
-                        <span class="verifyBadge">Verified</span>
-                    </div>
-
-                    <p class="testimonialQuote">
-                        I found a mobile detailer in under 2 minutes.
-                        Price was fair and the work was perfect.
-                    </p>
-
-                    <div class="userInfo">
-                        <div class="userAvatar">A</div>
-
-                        <div>
-                            <div class="userName">Alyssa R.</div>
-                            <div class="userMeta">
-                                Dallas, TX • Full Detail
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ================= Testimonial 2 ================= -->
-                <div class="testimonialCard">
-
-                    <div class="cardTop">
-                        <div class="starRating">★★★★★</div>
-                        <span class="verifyBadge">Verified</span>
-                    </div>
-
-                    <p class="testimonialQuote">
-                        Booking brake service was extremely easy.
-                        Got same-day repair without calling multiple shops.
-                    </p>
-
-                    <div class="userInfo">
-                        <div class="userAvatar">J</div>
-
-                        <div>
-                            <div class="userName">James K.</div>
-                            <div class="userMeta">
-                                Irving, TX • Brake Service
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ================= Testimonial 3 ================= -->
-                <div class="testimonialCard">
-
-                    <div class="cardTop">
-                        <div class="starRating">★★★★☆</div>
-                        <span class="verifyBadge">Top Pro</span>
-                    </div>
-
-                    <p class="testimonialQuote">
-                        Comparing quotes saved me money.
-                        I picked the best nearby mechanic instantly.
-                    </p>
-
-                    <div class="userInfo">
-                        <div class="userAvatar">S</div>
-
-                        <div>
-                            <div class="userName">Samantha P.</div>
-                            <div class="userMeta">
-                                Plano, TX • Oil Change
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ================= Testimonial 4 ================= -->
-                <div class="testimonialCard">
-
-                    <div class="cardTop">
-                        <div class="starRating">★★★★★</div>
-                        <span class="verifyBadge">Verified</span>
-                    </div>
-
-                    <p class="testimonialQuote">
-                        Needed urgent tire repair and Estimator helped
-                        me find a shop within minutes.
-                    </p>
-
-                    <div class="userInfo">
-                        <div class="userAvatar">M</div>
-
-                        <div>
-                            <div class="userName">Mason T.</div>
-                            <div class="userMeta">
-                                Arlington, TX • Tire Repair
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Next Button -->
-        <button class="navButton nextButton" id="nextButton">
-            &#10095;
-        </button>
-
-    </div>
-
-    <!-- Pagination Dots -->
     <div class="sliderDots" id="sliderDots"></div>
+  </section>
 
-</section>
+  <footer class="mainFooter">
 
-<!-- ===============================
-            FOOTER
-================================ -->
-<footer class="mainFooter">
+    <div class="footerContainer">
 
-  <div class="footerContainer">
+      <div class="footerBrand">
+        <h2 class="footerLogo">Estimator</h2>
+        <p>
+          Connecting drivers with trusted local car service professionals.
+          Fast. Local. Trusted.
+        </p>
+      </div>
 
-    <!-- Brand -->
-    <div class="footerBrand">
-      <h2 class="footerLogo">Estimator</h2>
-      <p>
-        Connecting drivers with trusted local car service professionals.
-        Fast. Local. Trusted.
-      </p>
+      <div class="footerColumn">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Exterior Detailing</a></li>
+          <li><a href="#">Interior Cleaning</a></li>
+          <li><a href="#">Oil Change</a></li>
+          <li><a href="#">Brake Service</a></li>
+          <li><a href="#">Tire Repair</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="become-a-business.html">Become a Business</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footerColumn">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="help-center.html">Help Center</a></li>
+          <li><a href="safety.html">Safety</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+
     </div>
 
-    <!-- Services -->
-    <div class="footerColumn">
-      <h3>Services</h3>
-      <ul>
-        <li><a href="#">Exterior Detailing</a></li>
-        <li><a href="#">Interior Cleaning</a></li>
-        <li><a href="#">Oil Change</a></li>
-        <li><a href="#">Brake Service</a></li>
-        <li><a href="#">Tire Repair</a></li>
-      </ul>
+    <div class="footerBottom">
+      <p>© 2026 Estimator. All Rights Reserved.</p>
     </div>
 
-    <!-- Company -->
-    <div class="footerColumn">
-      <h3>Company</h3>
-      <ul>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="how-it-works.html">How It Works</a></li>
-        <li><a href="become-a-business.html">Become a Business</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    
+  </footer>
 
-</section>
-
-    <!-- Support -->
-    <div class="footerColumn">
-      <h3>Support</h3>
-      <ul>
-        <li><a href="help-center.html">Help Center</a></li>
-        <li><a href="safety.html">Safety</a></li>
-        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        <li><a href="terms-of-service.html">Terms of Service</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- Bottom Bar -->
-  <div class="footerBottom">
-    <p>© 2026 Estimator. All Rights Reserved.</p>
-  </div>
-
-</footer>
   <script src="homeScript.js"></script>
-
 </body>
-
 </html>

@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
   }
 
-  loginForm.addEventListener("submit", function (event) {
+  loginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const emailValue = emailInput.value.trim();
@@ -43,7 +43,44 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    showMessage("Login form looks good. Ready to connect to backend.", "ok");
+    try {
+      const response = await fetch("http://localhost:5000/api/business/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: emailValue,
+          password: passwordValue
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        showMessage(data.message || "Login failed.", "err");
+        return;
+      }
+
+      const businessData = {
+        id: data.business.id,
+        businessName: data.business.businessName,
+        ownerName: data.business.ownerName,
+        email: data.business.email,
+        zip: data.business.zip
+      };
+
+      localStorage.setItem("estimatorBusinessAuth", JSON.stringify(businessData));
+
+      showMessage("Login successful. Redirecting...", "ok");
+
+      setTimeout(function () {
+        window.location.href = "businessHomePage.html";
+      }, 500);
+    } catch (error) {
+      console.error("Business login error:", error);
+      showMessage("Server error. Please try again.", "err");
+    }
   });
 
   emailInput.addEventListener("input", clearMessage);

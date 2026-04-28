@@ -92,8 +92,157 @@ CREATE TABLE vehicles (
   FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
 );
 
+
+CREATE TABLE IF NOT EXISTS customer_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    customer_name VARCHAR(200) NOT NULL,
+    customer_email VARCHAR(150),
+    zip_code VARCHAR(10) NOT NULL,
+    service_category VARCHAR(100) NOT NULL,
+    service_needed VARCHAR(255) NOT NULL,
+    problem_description TEXT NOT NULL,
+    preferred_date DATE NULL,
+    preferred_time VARCHAR(100) NULL,
+    budget VARCHAR(100) NULL,
+    vehicle_source VARCHAR(20) NOT NULL,
+    saved_vehicle_id INT NULL,
+    vehicle_make VARCHAR(100) NOT NULL,
+    vehicle_model VARCHAR(100) NOT NULL,
+    vehicle_year VARCHAR(20) NULL,
+    vehicle_color VARCHAR(50) NULL,
+    vehicle_license_plate VARCHAR(50) NULL,
+    vehicle_vin VARCHAR(100) NULL,
+    vehicle_mileage VARCHAR(50) NULL,
+    status VARCHAR(50) DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS saved_businesses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    business_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_saved_business (customer_id, business_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
+    FOREIGN KEY (business_id) REFERENCES business_users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    topic VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS request_custom_vehicles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  request_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  make VARCHAR(100) NOT NULL,
+  model VARCHAR(100) NOT NULL,
+  year VARCHAR(20) NULL,
+  color VARCHAR(50) NULL,
+  license_plate VARCHAR(50) NULL,
+  vin VARCHAR(100) NULL,
+  mileage VARCHAR(50) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_request_custom_vehicle_request
+    FOREIGN KEY (request_id) REFERENCES customer_requests(id)
+    ON DELETE CASCADE
+);
+
+ALTER TABLE request_custom_vehicles
+ADD CONSTRAINT fk_request_custom_vehicle_customer
+FOREIGN KEY (customer_id) REFERENCES customers(id)
+ON DELETE CASCADE;
+
+UPDATE customer_requests
+SET status = 'Pending'
+WHERE id > 0
+  AND (
+    status IS NULL
+    OR TRIM(status) = ''
+    OR LOWER(TRIM(status)) NOT IN (
+      'pending',
+      'declined',
+      'accepted',
+      'work in progress',
+      'completed'
+    )
+  );
+  
+  CREATE TABLE IF NOT EXISTS business_interest_forms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    business_name VARCHAR(150) NOT NULL,
+    owner_name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    service_type VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS help_support_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS business_request_actions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    request_id INT NOT NULL,
+    business_id INT NOT NULL,
+    action_status VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    action_at DATETIME NULL,
+    started_at DATETIME NULL,
+    completed_at DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE KEY unique_request_business (request_id, business_id),
+
+    CONSTRAINT fk_bra_request
+      FOREIGN KEY (request_id) REFERENCES customer_requests(id)
+      ON DELETE CASCADE,
+
+    CONSTRAINT fk_bra_business
+      FOREIGN KEY (business_id) REFERENCES business_users(id)
+      ON DELETE CASCADE
+);
+ALTER TABLE customer_requests
+ADD COLUMN completed_at DATETIME NULL;
+
+ALTER TABLE customer_requests
+ADD COLUMN accepted_at TIMESTAMP NULL,
+ADD COLUMN started_at TIMESTAMP NULL;
+
+
+ALTER TABLE business_reviews
+ADD COLUMN business_reply_text TEXT NULL,
+ADD COLUMN business_replied_at DATETIME NULL,
+ADD COLUMN business_replied_by VARCHAR(150) NULL;
+
 SELECT * FROM customers;
 SELECT * FROM business_users;
 SELECT * FROM business_reviews;
 SELECT * FROM app_reviews;
 SELECT * FROM vehicles;
+SELECT * FROM customer_requests;
+SELECT * FROM saved_businesses;
+SELECT * FROM contact_messages;
+SELECT * FROM request_custom_vehicles;
+SELECT * FROM business_interest_forms;
+SELECT * FROM help_support_requests; 
+
+SELECT id, review_title, business_reply_text, business_replied_at, business_replied_by
+FROM business_reviews
+ORDER BY id DESC;
+
+
+

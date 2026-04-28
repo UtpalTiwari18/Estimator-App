@@ -65,17 +65,18 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadIncomingRequestsPage() {
     try {
       const zip = String(savedBusiness.zip || "").trim();
+      const businessId = Number(savedBusiness.id);
 
-      if (!zip) {
-        incomingRequestsList.innerHTML = `<div class="emptyState">Business ZIP not found in login session.</div>`;
-        acceptedJobsList.innerHTML = `<div class="emptyState">Business ZIP not found in login session.</div>`;
+      if (!zip || !businessId) {
+        incomingRequestsList.innerHTML = `<div class="emptyState">Business ZIP or business ID not found in login session.</div>`;
+        acceptedJobsList.innerHTML = `<div class="emptyState">Business ZIP or business ID not found in login session.</div>`;
         incomingRequestsTotal.textContent = "0 Requests";
         acceptedJobsTotal.textContent = "0 Jobs";
         return;
       }
 
       const response = await fetch(
-        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}`
+        `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}&business_id=${encodeURIComponent(businessId)}`
       );
 
       const data = await response.json();
@@ -85,8 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const allRequests = Array.isArray(data.requests) ? data.requests : [];
-      const pendingRequests = allRequests.filter((item) => normalizeStatus(item.status) === "Pending");
-      const acceptedJobs = allRequests.filter((item) => normalizeStatus(item.status) === "Accepted");
+
+      const pendingRequests = allRequests.filter((item) => {
+        return normalizeStatus(item.status) === "Pending";
+      });
+
+      const acceptedJobs = allRequests.filter((item) => {
+        return normalizeStatus(item.my_action_status) === "Accepted";
+      });
 
       incomingRequestsTotal.textContent = `${pendingRequests.length} Request${pendingRequests.length === 1 ? "" : "s"}`;
       acceptedJobsTotal.textContent = `${acceptedJobs.length} Job${acceptedJobs.length === 1 ? "" : "s"}`;
@@ -166,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <p><strong>Preferred Date:</strong> ${escapeHtml(formatDate(job.preferred_date))}</p>
             <p><strong>Preferred Time:</strong> ${escapeHtml(job.preferred_time || "Not provided")}</p>
             <p><strong>Budget:</strong> ${escapeHtml(job.budget || "Not provided")}</p>
-            <p><strong>Status:</strong> <span class="statusBadge accepted">${escapeHtml(job.status || "Accepted")}</span></p>
+            <p><strong>Status:</strong> <span class="statusBadge accepted">Accepted</span></p>
             <p><strong>Vehicle:</strong> ${escapeHtml(vehicleText || "Not provided")}</p>
             <p><strong>License Plate:</strong> ${escapeHtml(job.vehicle_license_plate || "Not provided")}</p>
             <p><strong>VIN:</strong> ${escapeHtml(job.vehicle_vin || "Not provided")}</p>
@@ -194,8 +201,9 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", async function () {
         const requestId = this.dataset.requestId;
         const status = this.dataset.status;
+        const businessId = Number(savedBusiness.id);
 
-        if (!requestId || !status) return;
+        if (!requestId || !status || !businessId) return;
 
         try {
           const response = await fetch(
@@ -205,7 +213,10 @@ document.addEventListener("DOMContentLoaded", function () {
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify({ status })
+              body: JSON.stringify({
+                status,
+                businessId
+              })
             }
           );
 
@@ -218,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
           await loadIncomingRequestsPage();
         } catch (error) {
           console.error("Update request error:", error);
-          alert("Unable to update request.");
+          alert(error.message || "Unable to update request.");
         }
       });
     });
@@ -231,8 +242,9 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", async function () {
         const requestId = this.dataset.requestId;
         const status = this.dataset.status;
+        const businessId = Number(savedBusiness.id);
 
-        if (!requestId || !status) return;
+        if (!requestId || !status || !businessId) return;
 
         this.disabled = true;
         this.textContent = "Starting...";
@@ -245,7 +257,10 @@ document.addEventListener("DOMContentLoaded", function () {
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify({ status })
+              body: JSON.stringify({
+                status,
+                businessId
+              })
             }
           );
 
@@ -259,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
           await loadIncomingRequestsPage();
         } catch (error) {
           console.error("Start job error:", error);
-          alert("Unable to start job.");
+          alert(error.message || "Unable to start job.");
           this.disabled = false;
           this.textContent = "Start Job";
         }
@@ -291,4 +306,4 @@ document.addEventListener("DOMContentLoaded", function () {
     div.textContent = value == null ? "" : String(value);
     return div.innerHTML;
   }
-});
+}); 

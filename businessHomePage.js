@@ -17,16 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const dashboardActiveJobs = document.getElementById("dashboardActiveJobs");
   const dashboardRecentReviews = document.getElementById("dashboardRecentReviews");
 
-  function clearCustomerSession() {
-  localStorage.removeItem("estimatorCustomerAuth");
-  localStorage.removeItem("user");
-  localStorage.removeItem("compareBusinesses");
-  localStorage.removeItem("estimatorCompareBusinesses");
-  sessionStorage.removeItem("estimatorCustomerAuth");
-  sessionStorage.removeItem("user");
-  sessionStorage.removeItem("compareBusinesses");
-  sessionStorage.removeItem("estimatorCompareBusinesses");
-}
+  function clearBusinessSession() {
+    localStorage.removeItem("estimatorBusinessAuth");
+    sessionStorage.removeItem("estimatorBusinessAuth");
+  }
 
   let savedBusiness = null;
 
@@ -63,13 +57,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
- if (logoutBtn) {
-  logoutBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    clearCustomerSession();
-    window.location.href = "home.html";
-  });
-}
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      clearBusinessSession();
+      window.location.href = "home.html";
+    });
+  }
 
   if (menuButton && menuArea) {
     menuButton.addEventListener("click", function () {
@@ -82,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadDashboardData() {
     try {
       const zip = String(savedBusiness.zip || "").trim();
-      const businessId = savedBusiness.id || savedBusiness.businessId;
+      const businessId = Number(savedBusiness.id || savedBusiness.businessId);
 
       if (!zip) {
         renderErrorState("Business ZIP not found in login session.");
@@ -95,7 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const [requestsResponse, reviewsResponse] = await Promise.all([
-        fetch(`${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}`),
+        fetch(
+          `${API_BASE}/api/business/requests?zip=${encodeURIComponent(zip)}&business_id=${encodeURIComponent(businessId)}`
+        ),
         fetch(`${API_BASE}/api/reviews/business/${encodeURIComponent(businessId)}`)
       ]);
 
@@ -113,9 +109,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const allRequests = Array.isArray(requestsData.requests) ? requestsData.requests : [];
       const allReviews = Array.isArray(reviewsData.reviews) ? reviewsData.reviews : [];
 
-      const pendingRequests = allRequests.filter((item) => normalizeStatus(item.status) === "Pending");
-      const activeJobs = allRequests.filter((item) => normalizeStatus(item.status) === "Work in progress");
-      const completedJobs = allRequests.filter((item) => normalizeStatus(item.status) === "Completed");
+      const pendingRequests = allRequests.filter((item) => {
+        return normalizeStatus(item.status) === "Pending";
+      });
+
+      const activeJobs = allRequests.filter((item) => {
+        return normalizeStatus(item.my_action_status) === "Work in progress";
+      });
+
+      const completedJobs = allRequests.filter((item) => {
+        return normalizeStatus(item.my_action_status) === "Completed";
+      });
 
       if (incomingRequestCount) incomingRequestCount.textContent = pendingRequests.length;
       if (activeJobCount) activeJobCount.textContent = activeJobs.length;
@@ -129,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       renderRecentReviews(allReviews);
     } catch (error) {
       console.error("Dashboard load error:", error);
-      renderErrorState("Unable to load dashboard data.");
+      renderErrorState(error.message || "Unable to load dashboard data.");
     }
   }
 
@@ -182,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <p><strong>Customer:</strong> ${escapeHtml(job.customer_name || "Customer")}</p>
           <p><strong>ZIP:</strong> ${escapeHtml(job.zip_code || "")}</p>
           <p><strong>Vehicle:</strong> ${escapeHtml(vehicleText || "Not provided")}</p>
-          <p><strong>Status:</strong> ${escapeHtml(job.status || "Work in progress")}</p>
+          <p><strong>Status:</strong> ${escapeHtml(job.my_action_status || "Work in progress")}</p>
         </div>
       `;
     }).join("");
